@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.annimon:stream:1.1.5'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile 'com.google.code.gson:gson:2.4'
+    testCompile 'junit:junit:4.12'
+}
