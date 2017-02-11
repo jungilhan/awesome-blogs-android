@@ -16,6 +16,9 @@ public class Entry extends Model {
     @SerializedName("summary")
     private String summary;
 
+    @SerializedName("link")
+    private String link;
+
     public String getAuthor() {
         return author;
     }
@@ -32,13 +35,18 @@ public class Entry extends Model {
         return summary;
     }
 
+    public String getLink() {
+        return link;
+    }
+
     @Override
     public String toString() {
         return "Entry{" +
-            "author='" + author + '\'' +
-            ", title='" + title + '\'' +
-            ", updatedAt='" + updatedAt + '\'' +
+            "link='" + link + '\'' +
             ", summary='" + summary + '\'' +
+            ", updatedAt='" + updatedAt + '\'' +
+            ", title='" + title + '\'' +
+            ", author='" + author + '\'' +
             '}';
     }
 }

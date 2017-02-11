@@ -12,11 +12,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
 
-public class AwesomeBlogs {
+public class Api {
 
-    private final Api api;
+    private final AwesomeBlogs awesomeBlogs;
 
-    public AwesomeBlogs(boolean loggable) {
+    public Api(boolean loggable) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -28,14 +28,14 @@ public class AwesomeBlogs {
             .baseUrl("http://awesome-blogs.petabytes.org")
             .build();
 
-        api = retrofit.create(Api.class);
+        awesomeBlogs = retrofit.create(AwesomeBlogs.class);
     }
 
-    public Api api() {
-        return api;
+    public AwesomeBlogs awesomeBlogs() {
+        return awesomeBlogs;
     }
 
-    public interface Api {
+    public interface AwesomeBlogs {
 
         @GET("/feeds.json")
         Observable<Response<Feed>> feeds(@Query("group") String group);
