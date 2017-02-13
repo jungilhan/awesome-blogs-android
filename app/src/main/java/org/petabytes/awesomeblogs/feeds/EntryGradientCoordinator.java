@@ -8,13 +8,10 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.petabytes.api.model.Entry;
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.awesomeblogs.web.WebViewActivity;
-import org.petabytes.awesomeblogs.util.Dates;
+import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -45,8 +42,7 @@ class EntryGradientCoordinator extends Coordinator {
             case 2: view.setBackgroundResource(R.drawable.background_gradient_2); break;
         }
         titleView.setText(entry.getTitle());
-        authorView.setText("by " + entry.getAuthor() + "  /  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime()));
+        authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
 
         bind(Observable.just(entry.getSummary().trim())
             .map(summary -> Jsoup.parse(summary).text())
@@ -55,6 +51,7 @@ class EntryGradientCoordinator extends Coordinator {
 
     @OnClick(R.id.container)
     void onContainerClick() {
-        context.startActivity(WebViewActivity.intent(context, entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
     }
 }

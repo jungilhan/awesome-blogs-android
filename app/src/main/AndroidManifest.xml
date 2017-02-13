@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".web.WebViewActivity" />
+        <activity android:name=".summary.SummaryActivity" />
     </application>
 
 </manifest>

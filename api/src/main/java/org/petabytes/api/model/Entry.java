@@ -2,6 +2,10 @@ package org.petabytes.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.petabytes.api.util.Dates;
+
+import java.text.ParsePosition;
+
 public class Entry extends Model {
 
     @SerializedName("author")
@@ -48,5 +52,10 @@ public class Entry extends Model {
             ", title='" + title + '\'' +
             ", author='" + author + '\'' +
             '}';
+    }
+
+    public static String getFormattedAuthorUpdatedAt(Entry entry) {
+        return "by " + entry.getAuthor() + "  /  " + Dates.getRelativeTimeString(
+            Dates.getDefaultDateFormats().parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime());
     }
 }

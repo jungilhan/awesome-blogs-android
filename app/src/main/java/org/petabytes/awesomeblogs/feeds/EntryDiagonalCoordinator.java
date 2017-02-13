@@ -7,14 +7,11 @@ import android.widget.TextView;
 
 import org.petabytes.api.model.Entry;
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.awesomeblogs.util.Dates;
-import org.petabytes.awesomeblogs.web.WebViewActivity;
+import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -47,19 +44,23 @@ class EntryDiagonalCoordinator extends Coordinator {
         }
         titleView1.setText(entries.get(0).getTitle());
         titleView2.setText(entries.get(1).getTitle());
-        authorView1.setText("by " + entries.get(0).getAuthor() + "  /  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parse(entries.get(0).getUpdatedAt(), new ParsePosition(0)).getTime()));
-        authorView2.setText("by " + entries.get(1).getAuthor() + "  /  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parse(entries.get(1).getUpdatedAt(), new ParsePosition(0)).getTime()));
+        authorView1.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(0)));
+        authorView2.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(1)));
     }
 
     @OnClick(R.id.top_container)
     void onTopContainerClick() {
-        context.startActivity(WebViewActivity.intent(context, entries.get(0).getLink()));
+        Entry entry = entries.get(0);
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
     }
 
     @OnClick(R.id.bottom_container)
     void onBottomContainerClick() {
-        context.startActivity(WebViewActivity.intent(context, entries.get(1).getLink()));
+        Entry entry = entries.get(1);
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entries.get(0)), entry.getSummary(), entry.getLink()));
     }
+
+
 }

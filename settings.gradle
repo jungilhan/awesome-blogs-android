@@ -1,1 +1,1 @@
-include ':app', ':api', ':coordinator'
+include ':app', ':api', ':coordinator', 'markDownView'

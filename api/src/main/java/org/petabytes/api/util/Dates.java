@@ -1,4 +1,4 @@
-package org.petabytes.awesomeblogs.util;
+package org.petabytes.api.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package org.petabytes.awesomeblogs.util;
+package org.petabytes.api.util;
 
 import junit.framework.Assert;
 
@@ -15,5 +15,4 @@ public class DatesTest {
         Assert.assertEquals("1 days ago", Dates.getRelativeTimeString(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1)));
         Assert.assertEquals("35 days ago", Dates.getRelativeTimeString(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(35)));
     }
-
 }

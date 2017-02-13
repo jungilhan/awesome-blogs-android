@@ -12,6 +12,7 @@ import rx.functions.Action1;
 
 public class Coordinator extends com.squareup.coordinators.Coordinator {
 
+    private View view;
     private RxBinder rxBinder;
 
     public Coordinator() {
@@ -20,12 +21,17 @@ public class Coordinator extends com.squareup.coordinators.Coordinator {
 
     @Override
     public void attach(View view) {
+        this.view = view;
         ButterKnife.bind(this, view);
     }
 
     @Override
     public void detach(View view) {
         rxBinder.unsubscribe();
+    }
+
+    protected View getView() {
+        return view;
     }
 
     protected <T> void bind(@NonNull Observable<T> observable, @NonNull Action1<? super T> onNext) {

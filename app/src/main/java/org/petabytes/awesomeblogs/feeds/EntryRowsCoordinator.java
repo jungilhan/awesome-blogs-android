@@ -10,15 +10,11 @@ import com.annimon.stream.IntStream;
 import org.jsoup.Jsoup;
 import org.petabytes.api.model.Entry;
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.awesomeblogs.util.Dates;
-import org.petabytes.awesomeblogs.util.Strings;
-import org.petabytes.awesomeblogs.web.WebViewActivity;
+import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
@@ -48,8 +44,7 @@ class EntryRowsCoordinator extends Coordinator {
         IntStream.range(0, entries.size())
             .forEach(i -> {
                 titleViews[i].setText(entries.get(i).getTitle());
-                authorViews[i].setText("by " + entries.get(i).getAuthor() + "  /  " + Dates.getRelativeTimeString(
-                    Dates.getDefaultDateFormats().parse(entries.get(i).getUpdatedAt(), new ParsePosition(0)).getTime()));
+                authorViews[i].setText(Entry.getFormattedAuthorUpdatedAt(entries.get(i)));
 
                 bind(Observable.just(entries.get(i).getSummary())
                     .map(summary -> Jsoup.parse(summary).text())
@@ -62,24 +57,27 @@ class EntryRowsCoordinator extends Coordinator {
 
     @OnClick({R.id.row_1, R.id.row_2, R.id.row_3, R.id.row_4, R.id.row_5})
     void onRowClick(View view) {
-        String url = Strings.EMPTY;
+        Entry entry;
         switch (view.getId()) {
             case R.id.row_1:
-                url = entries.get(0).getLink();
+                entry = entries.get(0);
                 break;
             case R.id.row_2:
-                url = entries.get(1).getLink();
+                entry = entries.get(1);
                 break;
             case R.id.row_3:
-                url = entries.get(2).getLink();
+                entry = entries.get(2);
                 break;
             case R.id.row_4:
-                url = entries.get(3).getLink();
+                entry = entries.get(3);
                 break;
             case R.id.row_5:
-                url = entries.get(4).getLink();
+                entry = entries.get(4);
                 break;
+            default:
+                throw new RuntimeException("Invalid id");
         }
-        context.startActivity(WebViewActivity.intent(context, url));
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
     }
 }
