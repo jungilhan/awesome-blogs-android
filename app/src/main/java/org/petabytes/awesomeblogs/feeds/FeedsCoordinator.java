@@ -88,8 +88,15 @@ class FeedsCoordinator extends Coordinator {
     private static List<Map<Type, List<Entry>>> categorize(@NonNull List<Entry> entries) {
         List<Map<Type, List<Entry>>> categorized = new ArrayList<>();
         List<Entry> clone = new ArrayList<>(entries);
+        int type = new Random().nextInt(2);
+        if (type == 0 && clone.size() >= 2) {
+            categorized.add(Collections.singletonMap(DIAGONAL, Arrays.asList(clone.remove(0), clone.remove(0))));
+        } else {
+            categorized.add(Collections.singletonMap(GRADIENT, Arrays.asList(clone.remove(0))));
+        }
+
         while (clone.size() > 0) {
-            int type = new Random().nextInt(3);
+            type = new Random().nextInt(3);
             if (type == 1 && clone.size() >= 2) {
                 categorized.add(Collections.singletonMap(DIAGONAL, Arrays.asList(clone.remove(0), clone.remove(0))));
             } else if (type == 2 && clone.size() >= 5) {
