@@ -11,6 +11,10 @@
   font-size: 16px;
   line-height: 1.6;
   word-wrap: break-word;
+  padding-left: 5%;
+  padding-top: 7%;
+  padding-right: 5%;
+  padding-bottom: 7%;
 }
 
 .markdown-body a {
@@ -326,7 +330,7 @@
   padding-bottom: 0.3em;
   font-size: 1.75em;
   line-height: 1.225;
-  border-bottom: 1px solid #eee;
+  border-bottom: 0px solid #eee;
 }
 
 .markdown-body h2 .anchor {
