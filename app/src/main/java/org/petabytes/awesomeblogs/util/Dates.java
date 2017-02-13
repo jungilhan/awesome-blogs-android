@@ -1,5 +1,7 @@
 package org.petabytes.awesomeblogs.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Dates {
@@ -15,5 +17,9 @@ public class Dates {
         } else {
             return TimeUnit.MILLISECONDS.toDays(now - millis) + " days ago";
         }
+    }
+
+    public static SimpleDateFormat getDefaultDateFormats() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.getDefault());
     }
 }

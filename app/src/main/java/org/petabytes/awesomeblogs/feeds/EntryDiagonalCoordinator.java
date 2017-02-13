@@ -48,11 +48,9 @@ class EntryDiagonalCoordinator extends Coordinator {
         titleView1.setText(entries.get(0).getTitle());
         titleView2.setText(entries.get(1).getTitle());
         authorView1.setText("by " + entries.get(0).getAuthor() + "  /  " + Dates.getRelativeTimeString(
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-                .parse(entries.get(0).getUpdatedAt(), new ParsePosition(0)).getTime()));
+            Dates.getDefaultDateFormats().parse(entries.get(0).getUpdatedAt(), new ParsePosition(0)).getTime()));
         authorView2.setText("by " + entries.get(1).getAuthor() + "  /  " + Dates.getRelativeTimeString(
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-                .parse(entries.get(1).getUpdatedAt(), new ParsePosition(0)).getTime()));
+            Dates.getDefaultDateFormats().parse(entries.get(1).getUpdatedAt(), new ParsePosition(0)).getTime()));
     }
 
     @OnClick(R.id.top_container)

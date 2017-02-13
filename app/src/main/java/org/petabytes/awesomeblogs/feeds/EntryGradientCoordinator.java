@@ -46,8 +46,7 @@ class EntryGradientCoordinator extends Coordinator {
         }
         titleView.setText(entry.getTitle());
         authorView.setText("by " + entry.getAuthor() + "  /  " + Dates.getRelativeTimeString(
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-                .parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime()));
+            Dates.getDefaultDateFormats().parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime()));
 
         bind(Observable.just(entry.getSummary().trim())
             .map(summary -> Jsoup.parse(summary).text())

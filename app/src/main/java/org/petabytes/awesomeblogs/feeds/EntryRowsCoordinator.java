@@ -49,8 +49,7 @@ class EntryRowsCoordinator extends Coordinator {
             .forEach(i -> {
                 titleViews[i].setText(entries.get(i).getTitle());
                 authorViews[i].setText("by " + entries.get(i).getAuthor() + "  /  " + Dates.getRelativeTimeString(
-                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-                        .parse(entries.get(i).getUpdatedAt(), new ParsePosition(0)).getTime()));
+                    Dates.getDefaultDateFormats().parse(entries.get(i).getUpdatedAt(), new ParsePosition(0)).getTime()));
 
                 bind(Observable.just(entries.get(i).getSummary())
                     .map(summary -> Jsoup.parse(summary).text())
