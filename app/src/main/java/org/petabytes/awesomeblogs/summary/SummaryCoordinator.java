@@ -45,7 +45,7 @@ class SummaryCoordinator extends Coordinator {
         super.attach(view);
         bind(Observable.just(summary)
             .map(summary -> new Remark().convert(summary))
-            .map(summary -> "## " + title + "\n ###### " + authorUpdatedAt + "\n" + summary)
+            .map(summary -> "## [" + title + "](" + link + ")\n ###### " + authorUpdatedAt + "\n" + summary)
             .map(summary -> summary.replace("'", "\\'"))
             .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(summary));
     }

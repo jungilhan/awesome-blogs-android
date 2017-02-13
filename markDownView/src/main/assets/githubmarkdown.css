@@ -286,6 +286,12 @@
   line-height: 1.4;
 }
 
+.markdown-body h1 a,
+.markdown-body h2 a {
+  color: #333;
+  text-decoration: none;
+}
+
 .markdown-body h1 .octicon-link,
 .markdown-body h2 .octicon-link,
 .markdown-body h3 .octicon-link,
