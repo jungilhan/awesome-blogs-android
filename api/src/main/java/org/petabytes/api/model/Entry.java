@@ -55,7 +55,7 @@ public class Entry extends Model {
     }
 
     public static String getFormattedAuthorUpdatedAt(Entry entry) {
-        return "by " + entry.getAuthor() + "  /  " + Dates.getRelativeTimeString(
+        return "by " + entry.getAuthor() + "  ·  " + Dates.getRelativeTimeString(
             Dates.getDefaultDateFormats().parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime());
     }
 }
