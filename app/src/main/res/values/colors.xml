@@ -13,10 +13,14 @@
     <color name="grey">#8e8e8e</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="divider">#e3e3e3</color>
+    <color name="bounds">#80f67066</color>
     <color name="background_0">#6854cb</color>
     <color name="background_1">#6fadac</color>
     <color name="background_2">#bbad9b</color>
     <color name="background_3">#b96a8c</color>
     <color name="background_4">#f67066</color>
     <color name="background_5">#36465d</color>
+    <color name="background_6">#54A8E1</color>
+    <color name="background_7">#FFC400</color>
+    <color name="background_8">#333</color>
 </resources>

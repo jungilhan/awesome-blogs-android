@@ -36,10 +36,15 @@ class EntryGradientCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        switch (new Random().nextInt(3)) {
+        switch (new Random().nextInt(8)) {
             case 0: view.setBackgroundResource(R.drawable.background_gradient_0); break;
             case 1: view.setBackgroundResource(R.drawable.background_gradient_1); break;
             case 2: view.setBackgroundResource(R.drawable.background_gradient_2); break;
+            case 3: view.setBackgroundResource(R.drawable.background_gradient_3); break;
+            case 4: view.setBackgroundResource(R.drawable.background_gradient_4); break;
+            case 5: view.setBackgroundResource(R.drawable.background_gradient_5); break;
+            case 6: view.setBackgroundResource(R.drawable.background_gradient_6); break;
+            case 7: view.setBackgroundResource(R.drawable.background_gradient_7); break;
         }
         titleView.setText(entry.getTitle());
         authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));

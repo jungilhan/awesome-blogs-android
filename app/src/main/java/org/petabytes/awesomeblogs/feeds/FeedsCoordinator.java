@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.squareup.coordinators.Coordinators;
 
@@ -82,7 +83,10 @@ class FeedsCoordinator extends Coordinator {
                     }
                 }));
                 pagerView.getAdapter().notifyDataSetChanged();
-            }, throwable -> Timber.e(throwable, throwable.getMessage()), () -> {});
+            }, throwable -> {
+                Timber.e(throwable, throwable.getMessage());
+                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }, () -> {});
     }
 
     private static List<Map<Type, List<Entry>>> categorize(@NonNull List<Entry> entries) {

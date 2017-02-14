@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_diagonal_0"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/top_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="32dp"
+        style="@style/AppWidget.ForegroundSelectableBorderless">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                tools:text="Title"/>
+
+            <TextView
+                android:id="@+id/author_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black_40"
+                android:textSize="16sp"
+                tools:text="Author"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="32dp"
+        style="@style/AppWidget.ForegroundSelectableBorderless">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="3"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                tools:text="Title"/>
+
+            <TextView
+                android:id="@+id/author_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/white_a0"
+                android:textSize="15sp"
+                tools:text="Author"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </FrameLayout>
+</android.support.v7.widget.LinearLayoutCompat>
