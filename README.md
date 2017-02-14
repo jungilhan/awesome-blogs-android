@@ -1,4 +1,4 @@
-# Android client for awesome blogs
+# Android client for awesome blogs (가제)
 
 ![Screenshot](https://github.com/jungilhan/awesome-blogs-android/raw/develop/screenshot.png)
 
@@ -6,6 +6,7 @@
 
 ### 남아있는 작업
  * 카테고리 추가
+ * 로컬 Cache 만들기
  * 페이지 전환 애니메이션 추가
  * Landscape 모드 레이아웃 작성하기
  * 아이콘 제작
