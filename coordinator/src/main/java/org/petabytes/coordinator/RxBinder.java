@@ -13,7 +13,6 @@ import timber.log.Timber;
 
 public class RxBinder {
 
-    private final String TAG = "RxBinder";
     private final CompositeSubscription subscriptions;
 
     public RxBinder() {
@@ -43,7 +42,7 @@ public class RxBinder {
 
             @Override
             public void onError(Throwable e) {
-                Timber.e(TAG, e.getMessage(), e);
+                Timber.e(e.getMessage(), e);
                 if (onError != null) {
                     onError.call(e);
                 }
@@ -51,7 +50,7 @@ public class RxBinder {
 
             @Override
             public void onCompleted() {
-                Timber.i(TAG, "onCompleted");
+                Timber.i("onCompleted");
                 if (onComplete != null) {
                     onComplete.call();
                 }

@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.overzealous.remark.Remark;
 
+import org.petabytes.api.source.local.Entry;
+import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.coordinator.Coordinator;
 
@@ -24,20 +26,23 @@ class SummaryCoordinator extends Coordinator {
     @BindView(R.id.summary) MarkdownView summaryView;
 
     private final Context context;
-    private final String authorUpdatedAt;
+    private final String author;
+    private final String updatedAt;
     private final String title;
     private final String summary;
     private final String link;
     private final Action0 onCloseAction;
 
-    SummaryCoordinator(@NonNull Context context, @NonNull String title, @NonNull String authorUpdatedAt,
-                       @NonNull String summary, @NonNull String link, @NonNull Action0 onCloseAction) {
+    SummaryCoordinator(@NonNull Context context, @NonNull String title, @NonNull String author,
+                       @NonNull String updatedAt, @NonNull String summary, @NonNull String link, @NonNull Action0 onCloseAction) {
         this.context = context;
         this.title = title;
-        this.authorUpdatedAt = authorUpdatedAt;
+        this.author = author;
+        this.updatedAt = updatedAt;
         this.summary = summary;
         this.link = link;
         this.onCloseAction = onCloseAction;
+        AwesomeBlogsApp.get().api().markAsRead(title, author, updatedAt, summary, link, System.currentTimeMillis());
     }
 
     @Override
@@ -45,7 +50,7 @@ class SummaryCoordinator extends Coordinator {
         super.attach(view);
         bind(Observable.just(summary)
             .map(summary -> new Remark().convert(summary))
-            .map(summary -> "## [" + title + "](" + link + ")\n ###### " + authorUpdatedAt + "\n" + summary)
+            .map(summary -> "## [" + title + "](" + link + ")\n ###### " + Entry.getFormattedAuthorUpdatedAt(author, updatedAt) + "\n" + summary)
             .map(summary -> summary.replace("'", "\\'"))
             .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(summary));
     }

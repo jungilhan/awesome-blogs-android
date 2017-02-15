@@ -9,6 +9,7 @@ import com.annimon.stream.IntStream;
 
 import org.jsoup.Jsoup;
 import org.petabytes.api.source.local.Entry;
+import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
@@ -42,9 +43,12 @@ class EntryRowsCoordinator extends Coordinator {
         super.attach(view);
         IntStream.range(0, entries.size())
             .forEach(i -> {
-                titleViews[i].setText(entries.get(i).getTitle());
-                authorViews[i].setText(Entry.getFormattedAuthorUpdatedAt(entries.get(i)));
-
+                bind(AwesomeBlogsApp.get().api()
+                    .isRead(entries.get(i).getLink()), isRead -> {
+                        titleViews[i].setText(entries.get(i).getTitle());
+                        titleViews[i].setTextColor(context.getResources().getColor(isRead ? R.color.grey : R.color.black));
+                        authorViews[i].setText(Entry.getFormattedAuthorUpdatedAt(entries.get(i)));
+                    });
                 bind(Observable.just(entries.get(i).getSummary())
                     .map(summary -> Jsoup.parse(summary).text())
                     .subscribeOn(Schedulers.io()), summary -> {
@@ -77,6 +81,6 @@ class EntryRowsCoordinator extends Coordinator {
                 throw new RuntimeException("Invalid id");
         }
         context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
+            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
     }
 }

@@ -46,4 +46,13 @@ public class Api implements DataSource {
                 }
             });
     }
+
+    public Observable<Boolean> isRead(@NonNull String link) {
+        return localSource.isRead(link);
+    }
+
+    public void markAsRead(@NonNull String title, @NonNull String author, @NonNull String updatedAt,
+                           @NonNull String summary, @NonNull String link, long readAt) {
+        localSource.markAsRead(title, author, updatedAt, summary, link, readAt);
+    }
 }

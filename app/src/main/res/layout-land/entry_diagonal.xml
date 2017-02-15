@@ -39,7 +39,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/black_40"
+                android:textColor="@color/black_25"
                 android:textSize="16sp"
                 tools:text="Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
@@ -77,7 +77,7 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/white_a0"
+                android:textColor="@color/white_65"
                 android:textSize="15sp"
                 tools:text="Author"/>
         </android.support.v7.widget.LinearLayoutCompat>

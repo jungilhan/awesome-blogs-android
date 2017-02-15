@@ -59,7 +59,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/black_40"
+                android:textColor="@color/black_25"
                 android:textSize="14sp"
                 tools:text="by Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
@@ -114,7 +114,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/black_40"
+                android:textColor="@color/black_25"
                 android:textSize="14sp"
                 tools:text="by Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
@@ -169,7 +169,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/black_40"
+                android:textColor="@color/black_25"
                 android:textSize="14sp"
                 tools:text="by Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
@@ -224,7 +224,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/black_40"
+                android:textColor="@color/black_25"
                 android:textSize="14sp"
                 tools:text="by Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
@@ -279,7 +279,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/black_40"
+                android:textColor="@color/black_25"
                 android:textSize="14sp"
                 tools:text="by Author"/>
         </android.support.v7.widget.LinearLayoutCompat>

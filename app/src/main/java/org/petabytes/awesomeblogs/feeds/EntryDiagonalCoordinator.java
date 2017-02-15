@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.petabytes.api.source.local.Entry;
+import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
@@ -34,6 +35,36 @@ class EntryDiagonalCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
+        bind(AwesomeBlogsApp.get().api()
+            .isRead(entries.get(0).getLink()), isRead -> {
+                titleView1.setText(entries.get(0).getTitle());
+                titleView1.setAlpha(isRead ? 0.35f : 1f);
+                authorView1.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(0)));
+            });
+        bind(AwesomeBlogsApp.get().api()
+            .isRead(entries.get(1).getLink()), isRead -> {
+                titleView2.setText(entries.get(1).getTitle());
+                titleView2.setAlpha(isRead ? 0.65f : 1f);
+                authorView2.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(1)));
+            });
+        setBackground(view);
+    }
+
+    @OnClick(R.id.top_container)
+    void onTopContainerClick() {
+        Entry entry = entries.get(0);
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+    }
+
+    @OnClick(R.id.bottom_container)
+    void onBottomContainerClick() {
+        Entry entry = entries.get(1);
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+    }
+
+    private void setBackground(@NonNull View view) {
         switch (new Random().nextInt(9)) {
             case 0: view.setBackgroundResource(R.drawable.background_diagonal_0); break;
             case 1: view.setBackgroundResource(R.drawable.background_diagonal_1); break;
@@ -45,23 +76,5 @@ class EntryDiagonalCoordinator extends Coordinator {
             case 7: view.setBackgroundResource(R.drawable.background_diagonal_7); break;
             case 8: view.setBackgroundResource(R.drawable.background_diagonal_8); break;
         }
-        titleView1.setText(entries.get(0).getTitle());
-        titleView2.setText(entries.get(1).getTitle());
-        authorView1.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(0)));
-        authorView2.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(1)));
-    }
-
-    @OnClick(R.id.top_container)
-    void onTopContainerClick() {
-        Entry entry = entries.get(0);
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
-    }
-
-    @OnClick(R.id.bottom_container)
-    void onBottomContainerClick() {
-        Entry entry = entries.get(1);
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
     }
 }

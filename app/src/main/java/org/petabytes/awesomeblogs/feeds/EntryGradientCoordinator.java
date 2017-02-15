@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.petabytes.api.source.local.Entry;
+import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
@@ -35,6 +36,25 @@ class EntryGradientCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
+        bind(AwesomeBlogsApp.get().api()
+            .isRead(entry.getLink()), isRead -> {
+                titleView.setText(entry.getTitle());
+                titleView.setAlpha(isRead ? 0.65f : 1f);
+                authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
+            });
+        bind(Observable.just(entry.getSummary().trim())
+            .map(summary -> Jsoup.parse(summary).text())
+            .subscribeOn(Schedulers.io()), summary -> summaryView.setText(summary));
+        setBackground(view);
+    }
+
+    @OnClick(R.id.container)
+    void onContainerClick() {
+        context.startActivity(SummaryActivity.intent(context,
+            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+    }
+
+    private void setBackground(@NonNull View view) {
         switch (new Random().nextInt(8)) {
             case 0: view.setBackgroundResource(R.drawable.background_gradient_0); break;
             case 1: view.setBackgroundResource(R.drawable.background_gradient_1); break;
@@ -45,17 +65,5 @@ class EntryGradientCoordinator extends Coordinator {
             case 6: view.setBackgroundResource(R.drawable.background_gradient_6); break;
             case 7: view.setBackgroundResource(R.drawable.background_gradient_7); break;
         }
-        titleView.setText(entry.getTitle());
-        authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
-
-        bind(Observable.just(entry.getSummary().trim())
-            .map(summary -> Jsoup.parse(summary).text())
-            .subscribeOn(Schedulers.io()), summary -> summaryView.setText(summary));
-    }
-
-    @OnClick(R.id.container)
-    void onContainerClick() {
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
     }
 }

@@ -9,27 +9,19 @@ import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Func1;
 
 public class AwesomeBlogsLocalSource implements DataSource {
 
-    private RealmConfiguration config;
+    private final RealmConfiguration config;
 
     public AwesomeBlogsLocalSource(@NonNull Context context) {
         Realm.init(context);
-        config = createRealmConfiguration();
-    }
-
-    public void saveFeed(final Feed feed) {
-        Realm realm = Realm.getInstance(config);
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(final Realm realm) {
-                realm.insertOrUpdate(feed);
-            }
-        });
-        realm.close();
+        config = createRealmConfiguration(context);
     }
 
     @Override
@@ -46,8 +38,55 @@ public class AwesomeBlogsLocalSource implements DataSource {
         });
     }
 
-    private RealmConfiguration createRealmConfiguration() {
-        return new RealmConfiguration.Builder()
+    public void saveFeed(@NonNull final Feed feed) {
+        Realm realm = Realm.getInstance(config);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(final Realm realm) {
+                realm.insertOrUpdate(feed);
+            }
+        });
+        realm.close();
+    }
+
+    public Observable<Boolean> isRead(@NonNull final String link) {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Read.class).equalTo("link", link).findAll().asObservable()
+            .map(new Func1<RealmResults<Read>, Boolean>() {
+                @Override
+                public Boolean call(RealmResults<Read> reads) {
+                    return !reads.isEmpty();
+                }
+            })
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
+    }
+
+    public void markAsRead(@NonNull final String title, @NonNull final String author, @NonNull final String updatedAt,
+                           @NonNull final String summary, @NonNull final String link, final long readAt) {
+        Realm realm = Realm.getInstance(config);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(final Realm realm) {
+                Read read = new Read();
+                read.setTitle(title);
+                read.setAuthor(author);
+                read.setUpdatedAt(updatedAt);
+                read.setSummary(summary);
+                read.setLink(link);
+                read.setReadAt(readAt);
+                realm.insertOrUpdate(read);
+            }
+        });
+        realm.close();
+    }
+
+    private RealmConfiguration createRealmConfiguration(@NonNull Context context) {
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
             .name("awesome_blogs.realm")
             .schemaVersion(0)
             .migration(new RealmMigration() {
@@ -55,7 +94,10 @@ public class AwesomeBlogsLocalSource implements DataSource {
                 public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
 
                 }
-            })
-            .build();
+            });
+        if (context.getPackageName().contains(".staging")) {
+            builder.deleteRealmIfMigrationNeeded();
+        }
+        return builder.build();
     }
 }

@@ -12,7 +12,8 @@ import org.petabytes.coordinator.ActivityGraph;
 public class SummaryActivity extends Activity {
 
     private static final String TITLE = "title";
-    private static final String AUTHOR_UPDATED_AT = "authorUpdatedAt";
+    private static final String AUTHOR = "author";
+    private static final String UPDATED_AT = "updated_at";
     private static final String SUMMARY = "summary";
     private static final String LINK = "link";
 
@@ -21,7 +22,7 @@ public class SummaryActivity extends Activity {
         return new ActivityGraph.Builder()
             .layoutResId(R.layout.summary)
             .coordinator(R.id.bottom_sheet, new SummaryCoordinator(this,
-                getStringExtra(TITLE), getStringExtra(AUTHOR_UPDATED_AT), getStringExtra(SUMMARY), getStringExtra(LINK),
+                getStringExtra(TITLE), getStringExtra(AUTHOR), getStringExtra(UPDATED_AT), getStringExtra(SUMMARY), getStringExtra(LINK),
                 this::finish))
             .build();
     }
@@ -31,11 +32,12 @@ public class SummaryActivity extends Activity {
         return extra != null ? extra : Strings.EMPTY;
     }
 
-    public static Intent intent(@NonNull Context context, @NonNull String title,
-                                @NonNull String authorUpdatedAt, @NonNull String summary, @NonNull String link) {
+    public static Intent intent(@NonNull Context context, @NonNull String title, @NonNull String author,
+                                @NonNull String updatedAt, @NonNull String summary, @NonNull String link) {
         Intent intent = new Intent(context, SummaryActivity.class);
         intent.putExtra(TITLE, title);
-        intent.putExtra(AUTHOR_UPDATED_AT, authorUpdatedAt);
+        intent.putExtra(AUTHOR, author);
+        intent.putExtra(UPDATED_AT, updatedAt);
         intent.putExtra(SUMMARY, summary);
         intent.putExtra(LINK, link);
         return intent;

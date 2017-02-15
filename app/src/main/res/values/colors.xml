@@ -4,12 +4,12 @@
     <color name="colorPrimaryDark">#333</color>
     <color name="colorAccent">#f67066</color>
     <color name="white">@android:color/white</color>
-    <color name="white_a0">#a0ffffff</color>
-    <color name="white_40">#40ffffff</color>
-    <color name="white_90">#90ffffff</color>
+    <color name="white_65">#a6ffffff</color>
+    <color name="white_25">#40ffffff</color>
+    <color name="white_55">#8cffffff</color>
     <color name="black">@android:color/black</color>
-    <color name="black_aa">#aa000000</color>
-    <color name="black_40">#40000000</color>
+    <color name="black_65">#a6000000</color>
+    <color name="black_25">#40000000</color>
     <color name="grey">#8e8e8e</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="divider">#e3e3e3</color>

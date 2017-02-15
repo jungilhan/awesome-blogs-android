@@ -1,21 +1,16 @@
 package org.petabytes.api.source.local;
 
-import android.support.annotation.NonNull;
-
-import org.petabytes.api.util.Dates;
-
-import java.text.ParsePosition;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Entry extends RealmObject {
+public class Read extends RealmObject {
 
     private String title;
     private String author;
     private String updatedAt;
     private String summary;
     private @PrimaryKey String link;
+    private long readAt;
 
     public String getTitle() {
         return title;
@@ -57,13 +52,11 @@ public class Entry extends RealmObject {
         this.link = link;
     }
 
-    public static String getFormattedAuthorUpdatedAt(@NonNull Entry entry) {
-        return "by " + entry.getAuthor() + "  ·  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime());
+    public long getReadAt() {
+        return readAt;
     }
 
-    public static String getFormattedAuthorUpdatedAt(@NonNull String author, @NonNull String updatedAt) {
-        return "by " + author + "  ·  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parse(updatedAt, new ParsePosition(0)).getTime());
+    public void setReadAt(long readAt) {
+        this.readAt = readAt;
     }
 }
