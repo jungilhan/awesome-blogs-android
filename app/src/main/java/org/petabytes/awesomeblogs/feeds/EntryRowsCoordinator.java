@@ -15,6 +15,7 @@ import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
@@ -51,6 +52,7 @@ class EntryRowsCoordinator extends Coordinator {
                     });
                 bind(Observable.just(entries.get(i).getSummary())
                     .map(summary -> Jsoup.parse(summary).text())
+                    .delay(200, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io()), summary -> {
                         summaryViews[i].setText(summary.trim());
                         summaryViews[i].setMaxLines(3 - titleViews[i].getLineCount());
