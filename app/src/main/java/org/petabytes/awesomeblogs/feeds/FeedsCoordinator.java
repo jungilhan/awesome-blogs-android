@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import com.squareup.coordinators.Coordinators;
 
-import org.petabytes.api.model.Entry;
-import org.petabytes.api.model.Feed;
+import org.petabytes.api.source.local.Entry;
+import org.petabytes.api.source.local.Feed;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Views;
@@ -27,11 +27,12 @@ import java.util.Random;
 import butterknife.BindView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
-import retrofit2.Response;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.*;
+import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
+import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.GRADIENT;
+import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
 
 class FeedsCoordinator extends Coordinator {
 
@@ -53,10 +54,7 @@ class FeedsCoordinator extends Coordinator {
     public void attach(@NonNull View view) {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api()
-            .awesomeBlogs()
-            .feeds("all")
-            .filter(Response::isSuccessful)
-            .map(Response::body)
+            .getFeed("all")
             .map(Feed::getEntries)
             .map(FeedsCoordinator::categorize)
             .subscribeOn(Schedulers.io()), entries -> {

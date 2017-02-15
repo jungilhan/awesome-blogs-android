@@ -1,43 +1,49 @@
 package org.petabytes.api;
 
-import org.petabytes.api.model.Feed;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
+import org.petabytes.api.source.local.Feed;
+import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
+
 import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
-public class Api {
+public class Api implements DataSource {
 
-    private final AwesomeBlogs awesomeBlogs;
+    private final AwesomeBlogsLocalSource localSource;
+    private final AwesomeBlogsRemoteSource remoteSource;
 
-    public Api(boolean loggable) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .baseUrl("http://awesome-blogs.petabytes.org")
-            .build();
-
-        awesomeBlogs = retrofit.create(AwesomeBlogs.class);
+    public Api(@NonNull Context context, boolean loggable) {
+        localSource = new AwesomeBlogsLocalSource(context);
+        remoteSource = new AwesomeBlogsRemoteSource(new Action1<Feed>() {
+            @Override
+            public void call(@NonNull Feed feed) {
+                localSource.saveFeed(feed);
+            }
+        }, loggable);
     }
 
-    public AwesomeBlogs awesomeBlogs() {
-        return awesomeBlogs;
-    }
-
-    public interface AwesomeBlogs {
-
-        @GET("/feeds.json")
-        Observable<Response<Feed>> feeds(@Query("group") String group);
+    @Override
+    public Observable<Feed> getFeed(@NonNull final String category) {
+        return localSource.getFeed(category)
+            .flatMap(new Func1<Feed, Observable<Feed>>() {
+                @Override
+                public Observable<Feed> call(@Nullable Feed feed) {
+                    return feed != null ? Observable.just(feed)
+                        .doOnTerminate(new Action0() {
+                            @Override
+                            public void call() {
+                                remoteSource.getFeed(category)
+                                    .onErrorResumeNext(Observable.<Feed>empty())
+                                    .subscribe();
+                            }
+                        }) : remoteSource.getFeed(category);
+                }
+            });
     }
 }

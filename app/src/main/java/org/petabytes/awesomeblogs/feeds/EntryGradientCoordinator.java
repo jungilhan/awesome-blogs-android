@@ -6,12 +6,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
-import org.petabytes.api.model.Entry;
+import org.petabytes.api.source.local.Entry;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
 
-import java.text.ParsePosition;
 import java.util.Random;
 
 import butterknife.BindView;

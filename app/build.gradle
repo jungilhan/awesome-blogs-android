@@ -3,7 +3,8 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.hugo'
 
 repositories {
-    maven { url "https://jitpack.io" }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://github.com/linchaolong/stetho-realm/raw/master/maven-repo' }
 }
 
 buildscript {
@@ -37,16 +38,16 @@ def gitTimestamp() {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.2'
     defaultConfig {
-        applicationId "org.petabytes.awesomeblogs"
+        applicationId 'org.petabytes.awesomeblogs'
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
+        buildConfigField 'String', 'GIT_SHA', '\"${gitSha()}\"'
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         debug {
@@ -89,7 +90,8 @@ dependencies {
     compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
 
-    debugCompile 'com.facebook.stetho:stetho:1.4.1'
+    debugCompile 'com.facebook.stetho:stetho:1.4.2'
+    debugCompile 'com.uphyca:stetho_realm:2.0.1'
     androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

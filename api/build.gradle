@@ -1,15 +1,42 @@
-apply plugin: 'java'
+apply plugin: 'com.android.library'
+apply plugin: 'realm-android'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.realm:realm-gradle-plugin:2.3.1"
+    }
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
 
 dependencies {
+    compile 'com.android.support:support-annotations:25.1.1'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.annimon:stream:1.1.5'
+    compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    compile 'com.google.code.gson:gson:2.4'
     testCompile 'junit:junit:4.12'
 }
-
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'

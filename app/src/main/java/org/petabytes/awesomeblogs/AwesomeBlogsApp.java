@@ -4,6 +4,10 @@ import android.app.Application;
 
 import org.petabytes.api.Api;
 
+import io.realm.DynamicRealm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
+
 public class AwesomeBlogsApp extends Application {
 
     private static AwesomeBlogsApp instance;
@@ -24,6 +28,7 @@ public class AwesomeBlogsApp extends Application {
     }
 
     protected Api createApi() {
-        return new Api(false);
+        return new Api(this, false);
     }
+
 }

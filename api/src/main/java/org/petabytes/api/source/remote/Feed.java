@@ -1,11 +1,15 @@
-package org.petabytes.api.model;
+package org.petabytes.api.source.remote;
+
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Feed extends Model {
+import io.realm.RealmList;
+
+class Feed {
 
     @SerializedName("title")
     private String title;
@@ -35,5 +39,18 @@ public class Feed extends Model {
             ", updatedAt='" + updatedAt + '\'' +
             ", entries=" + entries +
             '}';
+    }
+
+    org.petabytes.api.source.local.Feed toPersist(@NonNull String category) {
+        org.petabytes.api.source.local.Feed feed = new org.petabytes.api.source.local.Feed();
+        feed.setCategory(category);
+        feed.setTitle(title);
+        feed.setUpdatedAt(updatedAt);
+        RealmList<org.petabytes.api.source.local.Entry> entries = new RealmList<>();
+        for (Entry e : this.entries) {
+            entries.add(e.toPersist());
+        }
+        feed.setEntries(entries);
+        return feed;
     }
 }

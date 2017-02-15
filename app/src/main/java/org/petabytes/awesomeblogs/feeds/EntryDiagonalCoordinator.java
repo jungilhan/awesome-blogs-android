@@ -5,12 +5,11 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import org.petabytes.api.model.Entry;
+import org.petabytes.api.source.local.Entry;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.coordinator.Coordinator;
 
-import java.text.ParsePosition;
 import java.util.List;
 import java.util.Random;
 
@@ -63,8 +62,6 @@ class EntryDiagonalCoordinator extends Coordinator {
     void onBottomContainerClick() {
         Entry entry = entries.get(1);
         context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entries.get(0)), entry.getSummary(), entry.getLink()));
+            entry.getTitle(), Entry.getFormattedAuthorUpdatedAt(entry), entry.getSummary(), entry.getLink()));
     }
-
-
 }

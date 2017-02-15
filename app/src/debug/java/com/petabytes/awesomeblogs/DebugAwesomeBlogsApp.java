@@ -1,5 +1,8 @@
 package com.petabytes.awesomeblogs;
 
+import com.facebook.stetho.Stetho;
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+
 import org.petabytes.api.Api;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 
@@ -11,10 +14,15 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
     public void onCreate() {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
+        Stetho.initialize(
+            Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                .build());
     }
 
     @Override
     protected Api createApi() {
-        return new Api(true);
+        return new Api(this, true);
     }
 }
