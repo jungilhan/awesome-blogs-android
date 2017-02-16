@@ -34,22 +34,6 @@
                 android:layout_weight="1"/>
 
             <ImageView
-                android:id="@+id/open"
-                style="@style/AppWidget.SelectableBorderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:src="@drawable/browser_black"/>
-
-            <ImageView
-                android:id="@+id/share"
-                style="@style/AppWidget.SelectableBorderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:src="@drawable/share_black"/>
-
-            <ImageView
                 android:id="@+id/more"
                 style="@style/AppWidget.SelectableBorderless"
                 android:layout_width="wrap_content"

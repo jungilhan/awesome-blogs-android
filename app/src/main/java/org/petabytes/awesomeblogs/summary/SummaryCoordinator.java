@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.overzealous.remark.Remark;
 
 import org.petabytes.api.source.local.Entry;
@@ -23,6 +24,7 @@ import rx.schedulers.Schedulers;
 
 class SummaryCoordinator extends Coordinator {
 
+    @BindView(R.id.bottom_sheet) BottomSheetLayout bottomSheetView;
     @BindView(R.id.summary) MarkdownView summaryView;
 
     private final Context context;
@@ -60,24 +62,23 @@ class SummaryCoordinator extends Coordinator {
         onCloseAction.call();
     }
 
-    @OnClick(R.id.open)
-    void onOpenInBrowserClick() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(link));
-        context.startActivity(intent);
-    }
-
-    @OnClick(R.id.share)
-    void onShareClick() {
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, title);
-        intent.putExtra(Intent.EXTRA_TEXT, link);
-        context.startActivity(Intent.createChooser(intent, "Share..."));
-    }
-
     @OnClick(R.id.more)
     void onMoreClick() {
-        Toast.makeText(context, "구현 중...", Toast.LENGTH_SHORT).show();
+        View menuView = LayoutInflater.from(context).inflate(R.layout.menu, bottomSheetView, false);
+        menuView.findViewById(R.id.share).setOnClickListener($ -> {
+            bottomSheetView.dismissSheet();
+            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, title);
+            intent.putExtra(Intent.EXTRA_TEXT, link);
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
+        });
+        menuView.findViewById(R.id.open).setOnClickListener($ -> {
+            bottomSheetView.dismissSheet();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(link));
+            context.startActivity(intent);
+        });
+        bottomSheetView.showWithSheetView(menuView);
     }
 }
