@@ -1,6 +1,7 @@
 package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -41,7 +42,6 @@ class FeedsCoordinator extends Coordinator {
     @BindView(R.id.feeds) VerticalViewPager pagerView;
 
     private final Context context;
-    private @DrawerCoordinator.Category String category;
 
     enum Type {
         GRADIENT, DIAGONAL, ROWS
@@ -65,7 +65,7 @@ class FeedsCoordinator extends Coordinator {
         bind(AwesomeBlogsApp.get().api()
             .getFeed(category)
             .map(Feed::getEntries)
-            .map(FeedsCoordinator::categorize)
+            .map(this::categorize)
             .subscribeOn(Schedulers.io()), entries -> {
                 Views.setGone(loadingView);
                 Views.setVisible(pagerView);
@@ -96,7 +96,7 @@ class FeedsCoordinator extends Coordinator {
         };
     }
 
-    private static List<Map<Type, List<Entry>>> categorize(@NonNull List<Entry> entries) {
+    private List<Map<Type, List<Entry>>> categorize(@NonNull List<Entry> entries) {
         List<Map<Type, List<Entry>>> categorized = new ArrayList<>();
         List<Entry> clone = new ArrayList<>(entries);
         int type = new Random().nextInt(2);
@@ -106,13 +106,16 @@ class FeedsCoordinator extends Coordinator {
             categorized.add(Collections.singletonMap(GRADIENT, Arrays.asList(clone.remove(0))));
         }
 
+        boolean isPortrait = context.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE;
         while (clone.size() > 0) {
             type = new Random().nextInt(3);
             if (type == 1 && clone.size() >= 2) {
                 categorized.add(Collections.singletonMap(DIAGONAL, Arrays.asList(clone.remove(0), clone.remove(0))));
-            } else if (type == 2 && clone.size() >= 5) {
-                categorized.add(Collections.singletonMap(ROWS, Arrays.asList(clone.remove(0), clone.remove(0),
-                    clone.remove(0), clone.remove(0), clone.remove(0))));
+            } else if (type == 2 && clone.size() >= (isPortrait ? 4 : 3)) {
+                List<Entry> rows = isPortrait
+                    ? Arrays.asList(clone.remove(0), clone.remove(0), clone.remove(0), clone.remove(0))
+                    : Arrays.asList(clone.remove(0), clone.remove(0), clone.remove(0));
+                categorized.add(Collections.singletonMap(ROWS, rows));
             } else {
                 categorized.add(Collections.singletonMap(GRADIENT, Arrays.asList(clone.remove(0))));
             }

@@ -1,7 +1,9 @@
 package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
+import android.view.Surface;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import org.petabytes.api.source.local.Entry;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
+import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Coordinator;
 
 import java.util.List;
@@ -24,12 +27,12 @@ import rx.schedulers.Schedulers;
 
 class EntryRowsCoordinator extends Coordinator {
 
-    @BindViews({R.id.title_1, R.id.title_2, R.id.title_3,
-        R.id.title_4, R.id.title_5}) TextView[] titleViews;
-    @BindViews({R.id.author_1, R.id.author_2, R.id.author_3,
-        R.id.author_4, R.id.author_5}) TextView[] authorViews;
-    @BindViews({R.id.summary_1, R.id.summary_2, R.id.summary_3,
-        R.id.summary_4, R.id.summary_5}) TextView[] summaryViews;
+    @BindViews({R.id.title_1, R.id.title_2,
+        R.id.title_3, R.id.title_4}) TextView[] titleViews;
+    @BindViews({R.id.author_1, R.id.author_2,
+        R.id.author_3, R.id.author_4}) TextView[] authorViews;
+    @BindViews({R.id.summary_1, R.id.summary_2,
+        R.id.summary_3, R.id.summary_4}) TextView[] summaryViews;
 
     private final Context context;
     private final List<Entry> entries;
@@ -42,6 +45,9 @@ class EntryRowsCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
+        boolean isPortrait = context.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE;
+        Views.setVisibleOrGone(view.findViewById(R.id.row_4), isPortrait);
+
         IntStream.range(0, entries.size())
             .forEach(i -> {
                 bind(AwesomeBlogsApp.get().api()
@@ -55,12 +61,12 @@ class EntryRowsCoordinator extends Coordinator {
                     .delay(200, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io()), summary -> {
                         summaryViews[i].setText(summary.trim());
-                        summaryViews[i].setMaxLines(3 - titleViews[i].getLineCount());
+                        summaryViews[i].setMaxLines((isPortrait ? 4 : 3) - titleViews[i].getLineCount());
                     });
             });
     }
 
-    @OnClick({R.id.row_1, R.id.row_2, R.id.row_3, R.id.row_4, R.id.row_5})
+    @OnClick({R.id.row_1, R.id.row_2, R.id.row_3, R.id.row_4})
     void onRowClick(View view) {
         Entry entry;
         switch (view.getId()) {
@@ -75,9 +81,6 @@ class EntryRowsCoordinator extends Coordinator {
                 break;
             case R.id.row_4:
                 entry = entries.get(3);
-                break;
-            case R.id.row_5:
-                entry = entries.get(4);
                 break;
             default:
                 throw new RuntimeException("Invalid id");

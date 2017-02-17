@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="28sp"
+            android:maxLines="3"
             tools:text="Title"/>
 
         <TextView
