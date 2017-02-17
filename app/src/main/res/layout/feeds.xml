@@ -24,5 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/circle_black"
+            style="@style/AppWidget.SelectableBorderless"/>
     </FrameLayout>
 </com.flipboard.bottomsheet.BottomSheetLayout>

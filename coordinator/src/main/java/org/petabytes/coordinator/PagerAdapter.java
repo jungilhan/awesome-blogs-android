@@ -21,6 +21,10 @@ public class PagerAdapter<T> extends android.support.v4.view.PagerAdapter {
         return items.size();
     }
 
+    public T getItem(int position) {
+        return items.get(position);
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public Object instantiateItem(@NonNull ViewGroup container, int position) {

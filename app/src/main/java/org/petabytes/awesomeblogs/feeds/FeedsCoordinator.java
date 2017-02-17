@@ -2,7 +2,9 @@ package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import java.util.Random;
 import butterknife.BindView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -42,13 +45,15 @@ class FeedsCoordinator extends Coordinator {
     @BindView(R.id.feeds) VerticalViewPager pagerView;
 
     private final Context context;
+    private final Action1<Integer> onPagerSelectedAction;
 
     enum Type {
         GRADIENT, DIAGONAL, ROWS
     }
 
-    FeedsCoordinator(@NonNull Context context) {
+    FeedsCoordinator(@NonNull Context context, @NonNull Action1<Integer> onPagerSelectedAction) {
         this.context = context;
+        this.onPagerSelectedAction = onPagerSelectedAction;
     }
 
     @DebugLog
@@ -56,6 +61,12 @@ class FeedsCoordinator extends Coordinator {
     public void attach(@NonNull View view) {
         super.attach(view);
         pagerView.setOffscreenPageLimit(2);
+        pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                onPagerSelectedAction.call(getForegroundColor(position));
+            }
+        });
     }
 
     void onCategorySelect(@DrawerCoordinator.Category String category) {
@@ -70,6 +81,8 @@ class FeedsCoordinator extends Coordinator {
                 Views.setGone(loadingView);
                 Views.setVisible(pagerView);
                 pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
+                onPagerSelectedAction.call(getForegroundColor(0));
+
         }, throwable -> {
             Timber.e(throwable, throwable.getMessage());
             Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
@@ -121,5 +134,15 @@ class FeedsCoordinator extends Coordinator {
             }
         }
         return categorized;
+    }
+
+    @ColorInt
+    private int getForegroundColor(int position) {
+        Map<Type, List<Entry>> map = (Map<Type, List<Entry>>) ((PagerAdapter) pagerView.getAdapter()).getItem(position);
+        if (map.keySet().contains(GRADIENT)) {
+            return context.getResources().getColor(R.color.white);
+        } else {
+            return context.getResources().getColor(R.color.colorPrimaryDark);
+        }
     }
 }

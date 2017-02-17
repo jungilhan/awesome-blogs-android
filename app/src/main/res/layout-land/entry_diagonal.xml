@@ -41,6 +41,7 @@
                 android:maxLines="2"
                 android:textColor="@color/black_25"
                 android:textSize="16sp"
+                android:gravity="center"
                 tools:text="Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
     </FrameLayout>
@@ -79,6 +80,7 @@
                 android:maxLines="2"
                 android:textColor="@color/white_65"
                 android:textSize="15sp"
+                android:gravity="center"
                 tools:text="Author"/>
         </android.support.v7.widget.LinearLayoutCompat>
     </FrameLayout>

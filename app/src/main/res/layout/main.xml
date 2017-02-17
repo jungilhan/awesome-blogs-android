@@ -8,7 +8,7 @@
     app:viewAbove="@layout/feeds"
     app:viewBehind="@layout/drawer"
     app:shadowDrawable="@drawable/shadow"
-    app:behindOffset="44dp"
+    app:behindOffset="74dp"
     app:touchModeAbove="fullscreen"
     app:touchModeBehind="margin"
     app:shadowWidth="16dp"/>

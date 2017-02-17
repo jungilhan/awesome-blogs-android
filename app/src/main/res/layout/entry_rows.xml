@@ -7,7 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="48dp"
     app:divider="@drawable/divider"
     app:showDividers="middle">
 
