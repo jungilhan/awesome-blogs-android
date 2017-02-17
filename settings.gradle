@@ -1,1 +1,1 @@
-include ':app', ':api', ':coordinator', 'markDownView'
+include ':app', ':api', ':coordinator', ':markDownView',  ':slidingMenu'

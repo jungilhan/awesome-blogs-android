@@ -1,17 +1,17 @@
 package org.petabytes.awesomeblogs;
 
 import android.app.Application;
+import android.preference.PreferenceManager;
+
+import com.f2prateek.rx.preferences.RxSharedPreferences;
 
 import org.petabytes.api.Api;
-
-import io.realm.DynamicRealm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmMigration;
 
 public class AwesomeBlogsApp extends Application {
 
     private static AwesomeBlogsApp instance;
-    private static Api api;
+    private Api api;
+    private RxSharedPreferences preferences;
 
     @Override
     public void onCreate() {
@@ -29,6 +29,14 @@ public class AwesomeBlogsApp extends Application {
 
     protected Api createApi() {
         return new Api(this, false);
+    }
+
+    public RxSharedPreferences preferences() {
+        return preferences == null ? preferences = createPreferences() : preferences;
+    }
+
+    RxSharedPreferences createPreferences() {
+        return RxSharedPreferences.create(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:viewAbove="@layout/feeds"
+    app:viewBehind="@layout/drawer"
+    app:shadowDrawable="@drawable/shadow"
+    app:behindOffset="44dp"
+    app:touchModeAbove="fullscreen"
+    app:touchModeBehind="margin"
+    app:shadowWidth="16dp"/>

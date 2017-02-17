@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/drawer"
+    android:padding="24dp"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:textColor="@color/drawer_title"
+        android:textSize="26sp"
+        android:text="@string/all"
+        style="@style/AppWidget.Selectable"
+        tools:text="ALL"/>
+
+    <TextView
+        android:id="@+id/developer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:textColor="@color/drawer_title"
+        android:textSize="26sp"
+        android:text="@string/dev"
+        style="@style/AppWidget.Selectable"
+        tools:text="DEVELOPER"/>
+
+    <TextView
+        android:id="@+id/tech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:textColor="@color/drawer_title"
+        android:textSize="26sp"
+        android:text="@string/tech_company"
+        style="@style/AppWidget.Selectable"
+        tools:text="TECH COMPANY"/>
+
+    <TextView
+        android:id="@+id/insightful"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:textColor="@color/drawer_title"
+        android:textSize="26sp"
+        android:text="@string/insightful"
+        style="@style/AppWidget.Selectable"
+        tools:text="INSIGHTFUL"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

@@ -2,6 +2,7 @@ package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ class FeedsCoordinator extends Coordinator {
     @BindView(R.id.feeds) VerticalViewPager pagerView;
 
     private final Context context;
+    private @DrawerCoordinator.Category String category;
 
     enum Type {
         GRADIENT, DIAGONAL, ROWS
@@ -53,38 +55,45 @@ class FeedsCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
+        pagerView.setOffscreenPageLimit(2);
+    }
+
+    void onCategorySelect(@DrawerCoordinator.Category String category) {
+        Views.setVisible(loadingView);
+        Views.setGone(pagerView);
+
         bind(AwesomeBlogsApp.get().api()
-            .getFeed("all")
+            .getFeed(category)
             .map(Feed::getEntries)
             .map(FeedsCoordinator::categorize)
             .subscribeOn(Schedulers.io()), entries -> {
                 Views.setGone(loadingView);
                 Views.setVisible(pagerView);
-                pagerView.setOffscreenPageLimit(2);
-                pagerView.setAdapter(new PagerAdapter<>(entries, new PagerFactory<Map<Type, List<Entry>>>() {
-                    @Override
-                    public View create(@NonNull Map<Type, List<Entry>> entry) {
-                        View view;
-                        if (entry.containsKey(GRADIENT)) {
-                            view = LayoutInflater.from(context).inflate(R.layout.entry_gradient, null, false);
-                            Coordinators.bind(view, $ -> new EntryGradientCoordinator(context, entry.get(GRADIENT).get(0)));
-                        } else if (entry.containsKey(DIAGONAL)) {
-                            view = LayoutInflater.from(context).inflate(R.layout.entry_diagonal, null, false);
-                            Coordinators.bind(view, $ -> new EntryDiagonalCoordinator(context, entry.get(DIAGONAL)));
-                        } else if (entry.containsKey(ROWS)) {
-                            view = LayoutInflater.from(context).inflate(R.layout.entry_rows, null, false);
-                            Coordinators.bind(view, $ -> new EntryRowsCoordinator(context, entry.get(ROWS)));
-                        } else {
-                            throw new IllegalArgumentException("Invalid entry.");
-                        }
-                        return view;
-                    }
-                }));
-                pagerView.getAdapter().notifyDataSetChanged();
-            }, throwable -> {
-                Timber.e(throwable, throwable.getMessage());
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }, () -> {});
+                pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
+        }, throwable -> {
+            Timber.e(throwable, throwable.getMessage());
+            Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+        }, () -> {});
+    }
+
+    @NonNull
+    private PagerFactory<Map<Type, List<Entry>>> createPagerFactory() {
+        return entry -> {
+            View view1;
+            if (entry.containsKey(GRADIENT)) {
+                view1 = LayoutInflater.from(context).inflate(R.layout.entry_gradient, null, false);
+                Coordinators.bind(view1, $ -> new EntryGradientCoordinator(context, entry.get(GRADIENT).get(0)));
+            } else if (entry.containsKey(DIAGONAL)) {
+                view1 = LayoutInflater.from(context).inflate(R.layout.entry_diagonal, null, false);
+                Coordinators.bind(view1, $ -> new EntryDiagonalCoordinator(context, entry.get(DIAGONAL)));
+            } else if (entry.containsKey(ROWS)) {
+                view1 = LayoutInflater.from(context).inflate(R.layout.entry_rows, null, false);
+                Coordinators.bind(view1, $ -> new EntryRowsCoordinator(context, entry.get(ROWS)));
+            } else {
+                throw new IllegalArgumentException("Invalid entry.");
+            }
+            return view1;
+        };
     }
 
     private static List<Map<Type, List<Entry>>> categorize(@NonNull List<Entry> entries) {
