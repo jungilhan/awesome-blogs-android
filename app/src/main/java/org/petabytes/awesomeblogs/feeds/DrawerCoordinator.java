@@ -61,10 +61,10 @@ class DrawerCoordinator extends Coordinator {
     private void selectView(@NonNull TextView view) {
         for (TextView categoryView : categoryViews) {
             categoryView.setSelected(false);
-            categoryView.setTypeface(null, Typeface.NORMAL);
+            categoryView.setTypeface(categoryView.getTypeface(), Typeface.NORMAL);
         }
         view.setSelected(true);
-        view.setTypeface(null, Typeface.BOLD);
+        view.setTypeface(view.getTypeface(), Typeface.BOLD);
     }
 
     private TextView getView(@Category String category) {
