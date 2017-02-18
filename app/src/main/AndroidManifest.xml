@@ -21,6 +21,10 @@
         </activity>
 
         <activity android:name=".summary.SummaryActivity" />
+        
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d681fa3447fdb8f13e18ee327c6ce8a00bcfb3dc" />
     </application>
 
 </manifest>

@@ -3,8 +3,10 @@ package org.petabytes.awesomeblogs;
 import android.app.Application;
 import android.preference.PreferenceManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
+import io.fabric.sdk.android.Fabric;
 import org.petabytes.api.Api;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -18,6 +20,7 @@ public class AwesomeBlogsApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         instance = this;
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
