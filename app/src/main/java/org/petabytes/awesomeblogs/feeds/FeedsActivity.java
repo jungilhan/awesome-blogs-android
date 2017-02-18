@@ -35,4 +35,13 @@ public class FeedsActivity extends AwesomeActivity {
     void onDrawerButtonClick() {
         slidingMenu.showMenu();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (slidingMenu.isMenuShowing()) {
+            slidingMenu.showContent();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
