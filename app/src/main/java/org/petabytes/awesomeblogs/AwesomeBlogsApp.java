@@ -7,6 +7,8 @@ import com.f2prateek.rx.preferences.RxSharedPreferences;
 
 import org.petabytes.api.Api;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class AwesomeBlogsApp extends Application {
 
     private static AwesomeBlogsApp instance;
@@ -17,6 +19,11 @@ public class AwesomeBlogsApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+            .setDefaultFontPath("fonts/NanumBarunGothicLight.otf")
+            .setFontAttrId(R.attr.fontPath)
+            .build());
     }
 
     public static AwesomeBlogsApp get() {

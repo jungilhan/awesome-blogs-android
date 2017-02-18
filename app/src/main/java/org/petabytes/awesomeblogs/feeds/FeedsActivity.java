@@ -6,13 +6,13 @@ import android.widget.ImageView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.coordinator.Activity;
+import org.petabytes.awesomeblogs.base.AwesomeActivity;
 import org.petabytes.coordinator.ActivityGraph;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FeedsActivity extends Activity {
+public class FeedsActivity extends AwesomeActivity {
 
     @BindView(R.id.menu) ImageView menuButton;
     @BindView(R.id.sliding_menu) SlidingMenu slidingMenu;

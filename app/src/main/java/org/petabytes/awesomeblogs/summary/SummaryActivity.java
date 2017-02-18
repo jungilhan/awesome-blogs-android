@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.base.AwesomeActivity;
 import org.petabytes.awesomeblogs.util.Strings;
-import org.petabytes.coordinator.Activity;
 import org.petabytes.coordinator.ActivityGraph;
 
-public class SummaryActivity extends Activity {
+public class SummaryActivity extends AwesomeActivity {
 
     private static final String TITLE = "title";
     private static final String AUTHOR = "author";

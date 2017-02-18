@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="31dp"
-        android:paddingRight="31dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
         android:paddingTop="64dp"
         android:paddingBottom="48dp">
 
@@ -50,7 +50,6 @@
             android:layout_alignParentBottom="true"
             android:gravity="left"
             android:maxLines="5"
-            android:lineSpacingExtra="2dp"
             android:textColor="@color/white_65"
             android:textSize="16sp"
             android:ellipsize="end"

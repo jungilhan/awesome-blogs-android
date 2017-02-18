@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/AppWidget.TextView</item>
     </style>
 
     <style name="AppTheme.Transparent" parent="AppTheme">
@@ -33,5 +34,9 @@
 
     <style name="AppWidget.ForegroundSelectableBorderless">
         <item name="android:foreground">@color/transparent</item>
+    </style>
+
+    <style name="AppWidget.TextView" parent="android:Widget.TextView">
+        <item name="android:lineSpacingExtra">6dp</item>
     </style>
 </resources>
