@@ -30,7 +30,8 @@ import java.util.Random;
 import butterknife.BindView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
-import rx.functions.Action1;
+import rx.functions.Action2;
+import rx.functions.Action3;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -44,13 +45,13 @@ class FeedsCoordinator extends Coordinator {
     @BindView(R.id.feeds) VerticalViewPager pagerView;
 
     private final Context context;
-    private final Action1<Integer> onPagerSelectedAction;
+    private final Action3<Integer, Integer, Integer> onPagerSelectedAction;
 
     enum Type {
         GRADIENT, DIAGONAL, ROWS
     }
 
-    FeedsCoordinator(@NonNull Context context, @NonNull Action1<Integer> onPagerSelectedAction) {
+    FeedsCoordinator(@NonNull Context context, @NonNull Action3<Integer, Integer, Integer> onPagerSelectedAction) {
         this.context = context;
         this.onPagerSelectedAction = onPagerSelectedAction;
     }
@@ -63,7 +64,7 @@ class FeedsCoordinator extends Coordinator {
         pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                onPagerSelectedAction.call(getForegroundColor(position));
+                onPagerSelectedAction.call(position, pagerView.getAdapter().getCount(), getForegroundColor(position));
             }
         });
     }
@@ -80,7 +81,7 @@ class FeedsCoordinator extends Coordinator {
                 Views.setGone(loadingView);
                 Views.setVisible(pagerView);
                 pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
-                onPagerSelectedAction.call(getForegroundColor(0));
+                onPagerSelectedAction.call(0, entries.size(), getForegroundColor(0));
         }, throwable -> {
             Timber.e(throwable, throwable.getMessage());
             Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
