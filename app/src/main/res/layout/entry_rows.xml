@@ -7,18 +7,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingBottom="8dp"
     android:paddingTop="48dp"
-    app:divider="@drawable/divider"
-    app:showDividers="middle">
+    app:showDividers="none">
 
     <FrameLayout
         android:id="@+id/row_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -74,6 +72,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:background="#fcfcfc"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -129,6 +130,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -184,6 +187,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:background="#fcfcfc"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <android.support.v7.widget.LinearLayoutCompat
