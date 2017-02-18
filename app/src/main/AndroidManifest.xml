@@ -14,7 +14,8 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme.Feeds"
         android:name=".AwesomeBlogsApp">
-        <activity android:name="org.petabytes.awesomeblogs.feeds.FeedsActivity">
+        <activity android:name="org.petabytes.awesomeblogs.feeds.FeedsActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
