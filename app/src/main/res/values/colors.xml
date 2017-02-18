@@ -21,7 +21,10 @@
     <color name="background_4">#f67066</color>
     <color name="background_5">#36465d</color>
     <color name="background_6">#54A8E1</color>
-    <color name="background_7">#FF9800</color>
+    <color name="background_7">#A5B1B7</color>
     <color name="background_8">#333</color>
+    <color name="background_9">#555B5B</color>
+    <color name="background_10">#828C90</color>
+    <color name="background_11">#E65100</color>
     <color name="drawer">#444A5A</color>
 </resources>

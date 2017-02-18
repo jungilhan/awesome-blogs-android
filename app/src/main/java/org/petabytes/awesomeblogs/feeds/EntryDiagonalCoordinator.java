@@ -65,7 +65,7 @@ class EntryDiagonalCoordinator extends Coordinator {
     }
 
     private void setBackground(@NonNull View view) {
-        switch (new Random().nextInt(9)) {
+        switch (new Random().nextInt(12)) {
             case 0: view.setBackgroundResource(R.drawable.background_diagonal_0); break;
             case 1: view.setBackgroundResource(R.drawable.background_diagonal_1); break;
             case 2: view.setBackgroundResource(R.drawable.background_diagonal_2); break;
@@ -75,6 +75,9 @@ class EntryDiagonalCoordinator extends Coordinator {
             case 6: view.setBackgroundResource(R.drawable.background_diagonal_6); break;
             case 7: view.setBackgroundResource(R.drawable.background_diagonal_7); break;
             case 8: view.setBackgroundResource(R.drawable.background_diagonal_8); break;
+            case 9: view.setBackgroundResource(R.drawable.background_diagonal_9); break;
+            case 10: view.setBackgroundResource(R.drawable.background_diagonal_10); break;
+            case 11: view.setBackgroundResource(R.drawable.background_diagonal_11); break;
         }
     }
 }

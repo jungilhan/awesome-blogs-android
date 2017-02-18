@@ -61,6 +61,11 @@ public class FeedsActivity extends AwesomeActivity {
         slidingMenu.showMenu();
     }
 
+    @OnClick(R.id.page)
+    void onPageClick() {
+
+    }
+
     @Override
     public void onBackPressed() {
         if (slidingMenu.isMenuShowing()) {
