@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AwesomeBlogs</string>
     <string name="menu">더보기</string>
-    <string name="open_in_browser">브라우저에서 보기</string>
+    <string name="open_in_browser">페이지 방문하기</string>
     <string name="share">공유하기</string>
     <string name="all">ALL</string>
     <string name="dev">DEVELOPER</string>
