@@ -11,9 +11,11 @@ import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.coordinator.Coordinator;
 
 import java.lang.annotation.Retention;
+import java.util.Collections;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
@@ -84,12 +86,16 @@ class DrawerCoordinator extends Coordinator {
     private @Category String getCategory(@NonNull View view) {
         switch (view.getId()) {
             case R.id.all:
+                Analytics.event(Analytics.Event.VIEW_ALL, Collections.emptyMap());
                 return ALL;
             case R.id.developer:
+                Analytics.event(Analytics.Event.VIEW_DEVELOPER, Collections.emptyMap());
                 return DEVELOPER;
             case R.id.tech:
+                Analytics.event(Analytics.Event.VIEW_TECH_COMPANY, Collections.emptyMap());
                 return TECH_COMPANY;
             case R.id.insightful:
+                Analytics.event(Analytics.Event.VIEW_INSIGHTFUL, Collections.emptyMap());
                 return INSIGHTFUL;
         }
         throw new IllegalArgumentException("Invalid view");

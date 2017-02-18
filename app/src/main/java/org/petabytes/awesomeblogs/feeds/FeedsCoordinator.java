@@ -30,7 +30,6 @@ import java.util.Random;
 import butterknife.BindView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
-import rx.functions.Action2;
 import rx.functions.Action3;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;

@@ -96,6 +96,7 @@ dependencies {
     compile project(':markDownView')
     compile project(':slidingMenu')
     compile 'com.android.support:design:25.1.1'
+    compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.flipboard:bottomsheet-core:1.5.0'
     compile 'com.overzealous:remark:1.0.0'
@@ -117,3 +118,4 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'

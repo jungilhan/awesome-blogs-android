@@ -13,7 +13,11 @@ import com.overzealous.remark.Remark;
 import org.petabytes.api.source.local.Entry;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.coordinator.Coordinator;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,7 +48,12 @@ class SummaryCoordinator extends Coordinator {
         this.summary = summary;
         this.link = link;
         this.onCloseAction = onCloseAction;
+
         AwesomeBlogsApp.get().api().markAsRead(title, author, updatedAt, summary, link, System.currentTimeMillis());
+        Analytics.event(Analytics.Event.VIEW_SUMMARY, new HashMap<String, String>(2) {{
+            put(Analytics.Param.TITLE, title);
+            put(Analytics.Param.LINK, link);
+        }});
     }
 
     @Override
@@ -72,13 +81,22 @@ class SummaryCoordinator extends Coordinator {
             intent.putExtra(Intent.EXTRA_SUBJECT, title);
             intent.putExtra(Intent.EXTRA_TEXT, link);
             context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
+            Analytics.event(Analytics.Event.SHARE, new HashMap<String, String>(2) {{
+                put(Analytics.Param.TITLE, title);
+                put(Analytics.Param.LINK, link);
+            }});
         });
         menuView.findViewById(R.id.open).setOnClickListener($ -> {
             bottomSheetView.dismissSheet();
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(link));
             context.startActivity(intent);
+            Analytics.event(Analytics.Event.OPEN_IN_BROWSER, new HashMap<String, String>(2) {{
+                put(Analytics.Param.TITLE, title);
+                put(Analytics.Param.LINK, link);
+            }});
         });
         bottomSheetView.showWithSheetView(menuView);
+        Analytics.event(Analytics.Event.MORE_MENU, Collections.emptyMap());
     }
 }
