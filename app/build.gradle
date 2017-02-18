@@ -53,6 +53,14 @@ android {
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
+    signingConfigs {
+        release {
+            storeFile file(String.valueOf(System.getenv("KEYSTORE")))
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
     buildTypes {
         debug {
             debuggable true
@@ -62,7 +70,9 @@ android {
         release {
             debuggable false
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            setProperty("archivesBaseName", "awesomeBlogs-${defaultConfig.versionName}-${defaultConfig.versionCode}")
         }
     }
     productFlavors {
@@ -86,7 +96,6 @@ dependencies {
     compile project(':markDownView')
     compile project(':slidingMenu')
     compile 'com.android.support:design:25.1.1'
-    compile 'com.facebook.fresco:fresco:1.0.1'
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.flipboard:bottomsheet-core:1.5.0'
     compile 'com.overzealous:remark:1.0.0'
