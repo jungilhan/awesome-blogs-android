@@ -4,18 +4,21 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.view.ViewPager;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import com.squareup.coordinators.Coordinators;
+import com.tapadoo.alerter.Alerter;
 
 import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Views;
+import org.petabytes.coordinator.Activity;
 import org.petabytes.coordinator.Coordinator;
 import org.petabytes.coordinator.PagerAdapter;
 import org.petabytes.coordinator.PagerFactory;
@@ -82,8 +85,9 @@ class FeedsCoordinator extends Coordinator {
                 pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
                 onPagerSelectedAction.call(0, entries.size(), getForegroundColor(0));
         }, throwable -> {
+            showAlert(R.string.error_title, R.string.error_unknown);
+            Views.setGone(loadingView);
             Timber.e(throwable, throwable.getMessage());
-            Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
         }, () -> {});
     }
 
@@ -142,5 +146,14 @@ class FeedsCoordinator extends Coordinator {
         } else {
             return context.getResources().getColor(R.color.colorPrimaryDark);
         }
+    }
+
+    private void showAlert(@StringRes int titleResId, @StringRes int messageResId) {
+        Alerter.create((Activity) context)
+            .setTitle(titleResId)
+            .setText(messageResId)
+            .setBackgroundColor(R.color.colorAccent)
+            .setDuration(DateUtils.HOUR_IN_MILLIS)
+            .show();
     }
 }
