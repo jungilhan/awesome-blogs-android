@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -82,7 +81,6 @@ class FeedsCoordinator extends Coordinator {
                 Views.setVisible(pagerView);
                 pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
                 onPagerSelectedAction.call(getForegroundColor(0));
-
         }, throwable -> {
             Timber.e(throwable, throwable.getMessage());
             Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();

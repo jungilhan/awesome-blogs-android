@@ -1,6 +1,8 @@
 package org.petabytes.api.util;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +21,8 @@ public class Dates {
         }
     }
 
-    public static SimpleDateFormat getDefaultDateFormats() {
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.getDefault());
+    public static DateTimeFormatter getDefaultDateFormats() {
+        return DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
+            .withLocale(Locale.getDefault());
     }
 }

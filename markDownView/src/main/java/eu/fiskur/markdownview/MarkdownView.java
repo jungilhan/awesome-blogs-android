@@ -46,7 +46,6 @@ public class MarkdownView extends RelativeLayout {
       + "    document.getElementById('content').innerHTML =\n"
       + "      marked('%s');\n"
       + "  </script>"
-
       + "</body>\n"
       + "</html>";
 

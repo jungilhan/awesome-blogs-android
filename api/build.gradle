@@ -34,6 +34,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.annimon:stream:1.1.5'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'joda-time:joda-time:2.9.7'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
