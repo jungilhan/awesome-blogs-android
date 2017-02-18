@@ -60,7 +60,7 @@ class FeedsCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        pagerView.setOffscreenPageLimit(2);
+        pagerView.setOffscreenPageLimit(1);
         pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
