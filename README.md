@@ -1,4 +1,5 @@
-## 어썸블로그 - 개발 잡덕들을 위한 본격 고퀄리티 개발 블로그 큐레이션 서비스 🕵️‍♀️
+# 어썸블로그 
+### 개발 잡덕들을 위한 본격 고퀄리티 개발 블로그 큐레이션 서비스 🕵️‍♀️
 
 ![Screenshot](https://github.com/jungilhan/awesome-blogs-android/raw/develop/screenshot.png)
 
@@ -13,3 +14,6 @@
 ・ 알면 🐶이득 어썸블로그에서 만나요!  🙌
 
 ・ 어썸블로그 리스트에 본인의 블로그가 없어서 못마땅하신 분들은 이곳 https://github.com/BenjaminKim/awesome-blogs 또는 https://github.com/jungilhan/awesome-blogs-android 으로 익명 제보 해주세요. 24시간 대기 중인 휴먼 봇이 처리해드립니다.
+
+・ 구글 플레이에서 다운로드 받으세요. <br/>
+<a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
