@@ -1,0 +1,4 @@
+ + leading plus
+*em* **strong**
+&lt; &gt; &quot; &amp; &amp;lt; '&copy;'
+` * _ { } [ ] #

@@ -93,15 +93,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':api')
     compile project(':coordinator')
+    compile project(':remark')
     compile project(':markDownView')
     compile project(':slidingMenu')
     compile 'com.android.support:design:25.1.1'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.tapadoo.android:alerter:1.0.1'
-    compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.flipboard:bottomsheet-core:1.5.0'
-    compile 'com.overzealous:remark:1.0.0'
-    compile 'org.jsoup:jsoup:1.10.1'
     compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'

@@ -1,0 +1,386 @@
+/*
+ * Copyright 2011 OverZealous Creations, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+    margin: 0 auto;
+    font-family: Palatino, Palatino Linotype, Georgia, Times, Times New Roman, serif;
+	background: #666;
+}
+p {
+	margin: 0 0 1em;
+	padding: 0;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 1em auto;
+    color: #999;
+}
+
+/************************************************************
+ * HEADERS
+ **/
+h1, h2, h3, h4 {
+    color: #333;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: Century Gothic, Apple Gothic, sans-serif;
+	margin: 0 0 1em;
+	clear: both;
+}
+h1 {
+    font-size: 30px;
+}
+h2, h3, h4 {
+	background: transparent url("../images/header-marker.png") no-repeat scroll 0 0;
+	padding-right: 2px;
+	white-space: nowrap; /* prevent wrapping so background doesn't bleed */
+}
+h2::after, h3::after, h4::after {
+	content: '.';
+	text-indent: -9999px;
+	display: inline-block;
+	background: transparent url("../images/header-marker.png") no-repeat scroll 0 0;
+	padding-right: 2px;
+	width: 21px;
+}
+h2 {
+    font-size: 24px;
+	background-position: 0 -36px;
+	line-height: 36px;
+	padding-left: 23px;
+	margin-left: -21px;
+}
+h2:after {
+	height: 36px;
+}
+h3 {
+	color: #444;
+    font-size: 20px;
+	background-position: 0 -102px;
+	line-height: 30px;
+	padding-left: 20px;
+	margin-left: -18px;
+}
+h3:after {
+	background-position: 0 -72px;
+	height: 30px;
+}
+h4 {
+	color: #555;
+    font-size: 16px;
+	background-position: 0 -156px;
+	line-height: 24px;
+	padding-left: 16px;
+	margin-left: -14px;
+}
+h4:after {
+	background-position: 0 -132px;
+	height: 24px;
+}
+h5 {
+    font-size: 14px;
+}
+
+
+/************************************************************
+ * Links
+ **/
+a {
+    color: #37a6ee;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+a:hover, a:active {
+    text-decoration: none;
+    color: #2471a1;
+}
+a:visited {
+    color: #2b45b9;
+}
+
+
+/************************************************************
+ * Code
+ **/
+pre {
+    padding: 0 24px;
+    max-width: 692px;
+    white-space: pre;
+}
+code {
+	border: 1px solid #DDD;
+	background-color: #F5F5F5;
+	padding: 0 .25em;
+    font-family: Consolas, Monaco, Lucida Console, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+}
+pre code {
+	display: block;
+	border: 1px solid #DDD;
+	background-color: #F5F5F5;
+	border-radius: .5em;
+	padding: .25em .7em;
+	max-height: 275px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+
+/************************************************************
+ * Quotes
+ **/
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+
+
+/************************************************************
+ * Tables
+ **/
+table {
+	border-collapse: collapse; width: 100%; border: 1px solid #DDD;
+}
+tr:nth-child(even) {
+	background: #F9F9F9;
+}
+td, th {
+	padding: .4em 1em;
+}
+td {
+	border-right: 1px solid #EEE;
+}
+th { text-align: left; border: 1px solid #DDD; border-bottom-color: #999;
+	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
+	background: linear-gradient(top, #ffffff 0%,#eeeeee 100%);
+}
+
+
+/************************************************************
+ * Definition Lists
+ **/
+dt:after {
+	content: ":";
+}
+dt {
+	margin-top: 1em; font-style: italic; counter-reset: deflist;
+}
+dd {
+	position: relative; margin-left: 4em;
+}
+dd:before {
+	counter-increment: deflist; content: counter(deflist) "."; position: absolute; top: 0; left: -1.3em;
+}
+
+
+
+
+/************************************************************
+ * Customized Styles
+ **/
+header h1 {
+	color: #999;
+	background: url("../images/top-header.png") no-repeat scroll 20px 50% #333333;
+	border-bottom: 1px solid #000;
+	height: 90px;
+	margin: 0;
+	padding: 0;
+	text-indent: -9999px;
+}
+
+nav {
+	background: #666;
+	border-bottom: 1px solid #333;
+	color: #ddd;
+}
+nav ul, nav li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+nav ul:after {content: '.'; display: block; clear: both; visibility: hidden; height: 0; }
+nav li {
+	float: left;
+	font-size: 12px;
+	line-height: 14px;
+	font-family: Century Gothic, Apple Gothic, sans-serif;
+	border-right: 1px solid #333;
+}
+
+nav a:link, nav a:visited {
+	display: block;
+	color: #ddd;
+	text-decoration: none;
+	padding: 4px 12px 6px;
+	-webkit-transition: all .25s ease;
+	-moz-transition: all .25s ease;
+	-ms-transition: all .25s ease;
+	-o-transition: all .25s ease;
+	transition: all .25s ease;
+}
+nav a:hover, nav a:focus {
+	color: #eee;
+	background: #777;
+	-moz-box-shadow: inset 0 -1px 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: inset 0 -1px 4px rgba(0,0,0,0.3);
+	box-shadow: inset 0 -1px 4px rgba(0,0,0,0.3);
+}
+nav a:active {
+	background: #777;
+	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+nav .selected {
+	position: relative;
+	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+nav .selected:after {
+	display: block;
+	content: '.';
+	text-indent: -9999px;
+	position: absolute;
+	top: 24px;
+	z-index: 1000;
+	background: url("../images/selected-tab.png") no-repeat scroll 0 0 transparent;
+	width: 15px;
+	height: 8px;
+	left: 50%;
+	margin-left: -8px;
+}
+@media only screen and (max-device-width: 1024px) {
+	/* make the links a little easier to hit */
+	nav li {
+		font-size: 13px;
+		line-height: 24px;
+	}
+	nav .selected:after {
+		top: 34px;
+	}
+}
+
+#content {
+	background: #FFF;
+    color: #444444;
+    line-height: 1;
+    padding: 30px;
+}
+#innerContent {
+    max-width: 740px;
+	min-width: 540px;
+}
+
+.examples #content h2 {
+	margin-top: 1em;
+}
+.examples #content ul {
+	list-style: none;
+	position: relative;
+	padding: 0;
+}
+.examples #content ul:after {content: '.'; display: block; clear: both; visibility: hidden; height: 0; }
+.examples #content ul li {
+	list-style: none;
+	float: left;
+	width: 50%;
+	padding: 0;
+	margin: 0;
+}
+.examples #content ul li p {
+	font-size: 10px;
+	font-weight: bold;
+	font-family: Century Gothic, Apple Gothic, sans-serif;
+	margin: -10px 0 4px;
+	line-height: 1;
+	text-align: right;
+	padding-right: 24px;
+	color: #AAA;
+}
+.examples #content ul li pre {
+	width: auto;
+    padding: 0 12px 0 0;
+	margin: 0 0 24px;
+}
+.examples #content ul li:nth-child(2) pre {
+	padding: 0 0 0 12px;
+}
+.examples #content ul li pre code {
+	line-height: 1.3;
+}
+
+@media only screen and (max-device-width: 320px) and (orientation: portrait) {
+	.examples #content ul li {
+		float: none;
+		width: auto;
+	}
+	.examples #content ul li:nth-child(2) pre {
+		padding: 0 12px 0 0;
+	}
+}
+
+footer {
+	clear: both;
+	border-top:  1px solid #333;
+	padding: 30px;
+}
+
+footer .copyright {
+	font-size: 12px;
+	color: #DDD;
+	text-align: center;
+	max-width: 740px;
+}
+
+footer a {
+	color: #EEE !important;
+	font-family: Century Gothic, Apple Gothic, sans-serif;
+	text-decoration: none;
+}

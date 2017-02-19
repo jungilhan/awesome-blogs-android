@@ -1,0 +1,6 @@
+ + leading plus
+*em* **strong**
+&lt; &gt; &quot; &amp; &amp;lt; '&copy;'
+&ldquo; &rdquo; &lsquo; &rsquo; &apos; &laquo; &raquo; “ ” ‘ ’ « »
+&ndash; &mdash; &hellip; – — …
+` * _ { } [ ] # |
