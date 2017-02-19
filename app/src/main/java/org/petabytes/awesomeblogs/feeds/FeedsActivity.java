@@ -13,6 +13,7 @@ import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.base.AwesomeActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Truss;
+import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.ActivityGraph;
 
 import java.util.Collections;
@@ -48,8 +49,10 @@ public class FeedsActivity extends AwesomeActivity {
                     .append("  /  ")
                     .append(total)
                     .build());
+                Views.setVisible(pageView);
             }))
             .coordinator(R.id.drawer, new DrawerCoordinator(this, category -> {
+                Views.setInvisible(pageView);
                 feedsCoordinator.onCategorySelect(category);
                 slidingMenu.showContent();
             }))
