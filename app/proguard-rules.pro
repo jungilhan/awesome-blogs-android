@@ -97,10 +97,7 @@
 -keep class com.google.maps.android.**
 -keep class libcore.**
 
--assumenosideeffects class android.util.Log {
-    public static *** d(...);
-    public static *** v(...);
-}
+-assumenosideeffects class android.util.Log { *; }
 
 # Firebase
 -keepattributes *Annotation*
