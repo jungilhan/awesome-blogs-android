@@ -3,9 +3,7 @@
 
 ![Screenshot](https://github.com/jungilhan/awesome-blogs-android/raw/develop/screenshot.png)
 
-대한민국의 어썸한 개발자, 기술 회사, IT 업계의 블로그 글들을 마크다운 형식으로 좀 더 편하게 읽어볼 수 있는 블로그 큐레이션 서비스입니다. 현재 제공하고 있는 어썸블로그의 전체 목록은 이곳에서 확인할 수 있습니다. 목록은 지속적으로 업데이트 할 예정이므로 항목이 추가되거나 삭제될 수 있습니다.
-
-https://github.com/BenjaminKim/awesome-blogs/blob/master/config/feeds.yml
+대한민국의 어썸한 개발자, 기술 회사, IT 업계의 블로그 글들을 마크다운 형식으로 좀 더 편하게 읽어볼 수 있는 블로그 큐레이션 서비스입니다. 현재 제공하고 있는 어썸블로그의 전체 목록은 [이곳에서](https://github.com/BenjaminKim/awesome-blogs/blob/master/config/feeds.yml) 확인할 수 있습니다. 목록은 지속적으로 업데이트 할 예정이므로 항목은 추가되거나 삭제될 수 있습니다.
 
 ## 빌드
 안드로이드 스튜디오의 Build Variants 설정에서 app 모듈을 productionDebug 또는 stagingDebug로 설정한 후 빌드할 수 있습니다.
