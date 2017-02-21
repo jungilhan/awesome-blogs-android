@@ -19,7 +19,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "org.petabytes.awesomeblogs",
-            "certificate_hash": "CA1483AE4C830AA89138684FD10D558DF29B88E9"
+            "certificate_hash": "ca1483ae4c830aa89138684fd10d558df29b88e9"
           }
         },
         {
@@ -55,6 +55,81 @@
         "mobilesdk_app_id": "1:86413647041:android:a14c2edd9a4df695",
         "android_client_info": {
           "package_name": "org.petabytes.awesomeblogs.staging.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86413647041-df3hingrumc32lt4kamq14nb22mqnm46.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.petabytes.awesomeblogs.staging.debug",
+            "certificate_hash": "59d446e2f09a53481ebabd3b2c152d98e7359cc7"
+          }
+        },
+        {
+          "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3O4WCXuth_K2mZkVRX_cpjPuYPrdU_R8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86413647041:android:5b8f42b63293808c",
+        "android_client_info": {
+          "package_name": "org.petabytes.awesomeblogs.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3O4WCXuth_K2mZkVRX_cpjPuYPrdU_R8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86413647041:android:f432df108286a112",
+        "android_client_info": {
+          "package_name": "org.petabytes.awesomeblogs.staging"
         }
       },
       "oauth_client": [
