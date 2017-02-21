@@ -3,17 +3,14 @@
 
 ![Screenshot](https://github.com/jungilhan/awesome-blogs-android/raw/develop/screenshot.png)
 
-・ 개발 잡덕들을 위해 뭘 좋아할지 몰라 대한민국에서 명성이 좀 있다.카더라는 블로그는 다 준비했습니다. 소고기보다 영양가 높은 개발자, 기술 회사, 기획자, 창업자, 투자자들의 글들을 가장 손쉽고 빠르게 접할 수 있는 어썸블로그. 🕵️‍♀️
+대한민국의 어썸한 개발자, 기술 회사, IT 업계의 블로그 글들을 마크다운 형식으로 좀 더 편하게 읽어볼 수 있는 블로그 큐레이션 서비스입니다. 현재 제공하고 있는 어썸블로그의 전체 목록은 이곳에서 확인할 수 있습니다. 목록은 지속적으로 업데이트 할 예정이므로 항목이 추가되거나 삭제될 수 있습니다.
 
-・ 트렌드의 언저리에 있고 싶은 힙한 개발자의 필수 지침서. 
+https://github.com/BenjaminKim/awesome-blogs/blob/master/config/feeds.yml
 
-・ 뭘 읽어야할지 모를 개발자를 위한 운명의 데스티니. 
+## 빌드
+안드로이드 스튜디오의 Build Variants 설정에서 app 모듈을 productionDebug 또는 stagingDebug로 설정한 후 빌드할 수 있습니다.
 
-・ 있어야 할 것도 없는 호불호 가득 미니멀 한 가내수공 디자인.
-
-・ 알면 🐶이득 어썸블로그에서 만나요!  🙌
-
-・ 어썸블로그 리스트에 본인의 블로그가 없어서 못마땅하신 분들은 이곳 https://github.com/BenjaminKim/awesome-blogs 또는 https://github.com/jungilhan/awesome-blogs-android 으로 익명 제보 해주세요. 24시간 대기 중인 휴먼 봇이 처리해드립니다.
-
-・ 구글 플레이에서 다운로드 받으세요. <br/>
+## 구글 플레이 스토어
+구글 플레이 스토어에서 어썸블로그 최신 버전을 다운로드 받을 수 있습니다.
+<br/>
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
