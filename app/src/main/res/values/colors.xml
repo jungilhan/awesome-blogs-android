@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">#333</color>
-    <color name="colorAccent">#f67066</color>
+    <color name="colorAccent">#F08179</color>
     <color name="white">@android:color/white</color>
     <color name="white_65">#a6ffffff</color>
     <color name="white_25">#40ffffff</color>
@@ -18,7 +18,7 @@
     <color name="background_1">#6fadac</color>
     <color name="background_2">#bbad9b</color>
     <color name="background_3">#E91E63</color>
-    <color name="background_4">#f67066</color>
+    <color name="background_4">#F08179</color>
     <color name="background_5">#36465d</color>
     <color name="background_6">#54A8E1</color>
     <color name="background_7">#A5B1B7</color>
@@ -26,5 +26,16 @@
     <color name="background_9">#555B5B</color>
     <color name="background_10">#828C90</color>
     <color name="background_11">#E65100</color>
+    <color name="background_12">#0092A7</color>
+    <color name="background_13">#2C9D91</color>
+    <color name="background_14">#7153B7</color>
+    <color name="background_15">#476DB3</color>
+    <color name="background_16">#494389</color>
+    <color name="background_17">#E4615E</color>
+    <color name="background_18">#4F6A72</color>
+    <color name="background_19">#636B7B</color>
+    <color name="background_20">#738080</color>
+    <color name="background_21">#8E8474</color>
+    <color name="background_22">#84898E</color>
     <color name="drawer">#444A5A</color>
 </resources>

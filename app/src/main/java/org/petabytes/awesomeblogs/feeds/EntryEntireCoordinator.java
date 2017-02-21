@@ -19,7 +19,7 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
-class EntryGradientCoordinator extends Coordinator {
+class EntryEntireCoordinator extends Coordinator {
 
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.author) TextView authorView;
@@ -28,7 +28,7 @@ class EntryGradientCoordinator extends Coordinator {
     private final Context context;
     private final Entry entry;
 
-    EntryGradientCoordinator(@NonNull Context context, @NonNull Entry entry) {
+    EntryEntireCoordinator(@NonNull Context context, @NonNull Entry entry) {
         this.context = context;
         this.entry = entry;
     }
@@ -55,15 +55,18 @@ class EntryGradientCoordinator extends Coordinator {
     }
 
     private void setBackground(@NonNull View view) {
-        switch (new Random().nextInt(8)) {
-            case 0: view.setBackgroundResource(R.drawable.background_gradient_0); break;
-            case 1: view.setBackgroundResource(R.drawable.background_gradient_1); break;
-            case 2: view.setBackgroundResource(R.drawable.background_gradient_2); break;
-            case 3: view.setBackgroundResource(R.drawable.background_gradient_3); break;
-            case 4: view.setBackgroundResource(R.drawable.background_gradient_4); break;
-            case 5: view.setBackgroundResource(R.drawable.background_gradient_5); break;
-            case 6: view.setBackgroundResource(R.drawable.background_gradient_6); break;
-            case 7: view.setBackgroundResource(R.drawable.background_gradient_7); break;
+        switch (new Random().nextInt(11)) {
+            case 0: view.setBackgroundResource(R.color.background_12); break;
+            case 1: view.setBackgroundResource(R.color.background_13); break;
+            case 2: view.setBackgroundResource(R.color.background_14); break;
+            case 3: view.setBackgroundResource(R.color.background_15); break;
+            case 4: view.setBackgroundResource(R.color.background_16); break;
+            case 5: view.setBackgroundResource(R.color.background_17); break;
+            case 6: view.setBackgroundResource(R.color.background_18); break;
+            case 7: view.setBackgroundResource(R.color.background_19); break;
+            case 8: view.setBackgroundResource(R.color.background_20); break;
+            case 9: view.setBackgroundResource(R.color.background_21); break;
+            case 10: view.setBackgroundResource(R.color.background_22); break;
         }
     }
 }

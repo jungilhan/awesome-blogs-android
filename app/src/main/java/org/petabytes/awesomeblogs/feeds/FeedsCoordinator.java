@@ -38,7 +38,7 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
-import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.GRADIENT;
+import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
 
 class FeedsCoordinator extends Coordinator {
@@ -50,7 +50,7 @@ class FeedsCoordinator extends Coordinator {
     private final Action3<Integer, Integer, Integer> onPagerSelectedAction;
 
     enum Type {
-        GRADIENT, DIAGONAL, ROWS
+        ENTIRE, DIAGONAL, ROWS
     }
 
     FeedsCoordinator(@NonNull Context context, @NonNull Action3<Integer, Integer, Integer> onPagerSelectedAction) {
@@ -95,9 +95,9 @@ class FeedsCoordinator extends Coordinator {
     private PagerFactory<Map<Type, List<Entry>>> createPagerFactory() {
         return entry -> {
             View view1;
-            if (entry.containsKey(GRADIENT)) {
-                view1 = LayoutInflater.from(context).inflate(R.layout.entry_gradient, null, false);
-                Coordinators.bind(view1, $ -> new EntryGradientCoordinator(context, entry.get(GRADIENT).get(0)));
+            if (entry.containsKey(ENTIRE)) {
+                view1 = LayoutInflater.from(context).inflate(R.layout.entry_entire, null, false);
+                Coordinators.bind(view1, $ -> new EntryEntireCoordinator(context, entry.get(ENTIRE).get(0)));
             } else if (entry.containsKey(DIAGONAL)) {
                 view1 = LayoutInflater.from(context).inflate(R.layout.entry_diagonal, null, false);
                 Coordinators.bind(view1, $ -> new EntryDiagonalCoordinator(context, entry.get(DIAGONAL)));
@@ -118,7 +118,7 @@ class FeedsCoordinator extends Coordinator {
         if (type == 0 && clone.size() >= 2) {
             categorized.add(Collections.singletonMap(DIAGONAL, Arrays.asList(clone.remove(0), clone.remove(0))));
         } else {
-            categorized.add(Collections.singletonMap(GRADIENT, Arrays.asList(clone.remove(0))));
+            categorized.add(Collections.singletonMap(ENTIRE, Arrays.asList(clone.remove(0))));
         }
 
         boolean isPortrait = context.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE;
@@ -132,7 +132,7 @@ class FeedsCoordinator extends Coordinator {
                     : Arrays.asList(clone.remove(0), clone.remove(0), clone.remove(0));
                 categorized.add(Collections.singletonMap(ROWS, rows));
             } else {
-                categorized.add(Collections.singletonMap(GRADIENT, Arrays.asList(clone.remove(0))));
+                categorized.add(Collections.singletonMap(ENTIRE, Arrays.asList(clone.remove(0))));
             }
         }
         return categorized;
@@ -141,7 +141,7 @@ class FeedsCoordinator extends Coordinator {
     @ColorInt
     private int getForegroundColor(int position) {
         Map<Type, List<Entry>> map = (Map<Type, List<Entry>>) ((PagerAdapter) pagerView.getAdapter()).getItem(position);
-        if (map.keySet().contains(GRADIENT)) {
+        if (map.keySet().contains(ENTIRE)) {
             return context.getResources().getColor(R.color.white);
         } else {
             return context.getResources().getColor(R.color.colorPrimaryDark);
