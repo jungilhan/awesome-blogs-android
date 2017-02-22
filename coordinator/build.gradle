@@ -17,15 +17,15 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:recyclerview-v7:25.1.1'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.annimon:stream:1.1.2'
-    compile 'com.squareup.coordinators:coordinators:0.2'
-    compile 'com.jakewharton:butterknife:8.0.1'
-    compile 'com.jakewharton.timber:timber:4.0.1'
-    compile 'com.trello:rxlifecycle:1.0'
-    compile 'com.trello:rxlifecycle-android:1.0'
-    compile 'com.trello:rxlifecycle-components:1.0'
+    compile rootProject.ext.support_appcompat_v7
+    compile rootProject.ext.support_recyclerview
+    compile rootProject.ext.rxjava
+    compile rootProject.ext.rxandroid
+    compile rootProject.ext.stream
+    compile rootProject.ext.coordinator
+    compile rootProject.ext.butterknife
+    compile rootProject.ext.timber
+    compile rootProject.ext.rxlifecycle
+    compile rootProject.ext.rxlifecycle_android
+    compile rootProject.ext.rxlifecycle_component
 }
