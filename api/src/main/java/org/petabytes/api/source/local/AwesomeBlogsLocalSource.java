@@ -28,13 +28,13 @@ public class AwesomeBlogsLocalSource implements DataSource {
 
     @Override
     public Observable<Feed> getFeed(@NonNull final String category) {
-        return Observable.fromCallable(new Func0<Feed>() {
+        return Observable.defer(new Func0<Observable<Feed>>() {
             @Override
-            public Feed call() {
+            public Observable<Feed> call() {
                 Realm realm = Realm.getInstance(config);
                 try {
                     Feed feed = realm.where(Feed.class).equalTo("category", category).findFirst();
-                    return feed != null ? realm.copyFromRealm(feed) : null;
+                    return feed != null ? Observable.just(realm.copyFromRealm(feed)) : Observable.<Feed>empty();
                 } finally {
                     realm.close();
                 }
