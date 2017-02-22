@@ -30,14 +30,14 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:25.1.1'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'com.annimon:stream:1.1.5'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'joda-time:joda-time:2.9.7'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    testCompile 'junit:junit:4.12'
+    compile rootProject.ext.support_appcompat_v7
+    compile rootProject.ext.rxjava
+    compile rootProject.ext.stream
+    compile rootProject.ext.gson
+    compile rootProject.ext.jodatime
+    compile rootProject.ext.retrofit
+    compile rootProject.ext.retrofit_rxadapter
+    compile rootProject.ext.retrofit_gsonconverter
+    compile rootProject.ext.retrofit_logging
+    testCompile rootProject.ext.junit
 }

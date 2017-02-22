@@ -1,0 +1,51 @@
+ext {
+
+    ver_retrofit = '2.1.0'
+    ver_rxlifecycle = '1.0'
+    ver_android_compat = '25.1.1'
+
+    support_appcompat_v7 = "com.android.support:appcompat-v7:$ver_android_compat"
+    support_design = "com.android.support:design:$ver_android_compat"
+    support_annotation = "com.android.support:support-annotations:$ver_android_compat"
+    support_recyclerview = "com.android.support:recyclerview-v7:$ver_android_compat"
+    support_espressocore = 'com.android.support.test.espresso:espresso-core:2.2.2'
+
+    rxjava = 'io.reactivex:rxjava:1.2.6'
+    rxandroid = 'io.reactivex:rxandroid:1.2.1'
+    rxlifecycle = "com.trello:rxlifecycle:$ver_rxlifecycle"
+    rxlifecycle_android = "com.trello:rxlifecycle-android:$ver_rxlifecycle"
+    rxlifecycle_component = "com.trello:rxlifecycle-components:$ver_rxlifecycle"
+    rxpreferences = 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
+
+    retrofit = "com.squareup.retrofit2:retrofit:$ver_retrofit"
+    retrofit_rxadapter = "com.squareup.retrofit2:adapter-rxjava:$ver_retrofit"
+    retrofit_gsonconverter = "com.squareup.retrofit2:converter-gson:$ver_retrofit"
+    retrofit_logging = 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
+    coordinator = 'com.squareup.coordinators:coordinators:0.2'
+    butterknife = 'com.jakewharton:butterknife:8.0.1'
+    butterknife_compiler = 'com.jakewharton:butterknife-compiler:8.0.1'
+    timber = 'com.jakewharton.timber:timber:4.0.1'
+
+    stream = 'com.annimon:stream:1.1.5'
+    gson = 'com.google.code.gson:gson:2.4'
+    jodatime = 'joda-time:joda-time:2.9.7'
+
+    jsoup = 'org.jsoup:jsoup:1.10.1'
+    commonlang = 'org.apache.commons:commons-lang3:3.5'
+    commonio = 'commons-io:commons-io:2.5'
+
+    firebase_core = 'com.google.firebase:firebase-core:10.0.1'
+    alerter = 'com.tapadoo.android:alerter:1.0.1'
+    flipboard_bottomsheet = 'com.flipboard:bottomsheet-core:1.5.0'
+    calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
+    spinkit = 'com.github.ybq:Android-SpinKit:1.1.0'
+    verticalviewpager = 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    crashlytics = 'com.crashlytics.sdk.android:crashlytics:2.6.6@aar'
+    stetho = 'com.facebook.stetho:stetho:1.4.2'
+    stetho_realm = 'com.uphyca:stetho_realm:2.0.1'
+    findbug = 'com.google.code.findbugs:jsr305:3.0.1'
+
+    assertj = 'org.assertj:assertj-core:1.7.1'
+    junit = 'junit:junit:4.12'
+}

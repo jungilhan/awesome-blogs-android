@@ -1,10 +1,10 @@
 apply plugin: 'java'
 
 dependencies {
-    compile 'org.jsoup:jsoup:1.10.1'
-    compile 'org.apache.commons:commons-lang3:3.5'
-    testCompile 'junit:junit:4.12'
-    testCompile 'commons-io:commons-io:2.5'
+    compile rootProject.ext.jsoup
+    compile rootProject.ext.commonlang
+    testCompile rootProject.ext.junit
+    testCompile rootProject.ext.commonio
 }
 
 sourceCompatibility = "1.7"
