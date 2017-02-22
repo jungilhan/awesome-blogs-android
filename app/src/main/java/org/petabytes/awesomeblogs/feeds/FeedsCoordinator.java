@@ -4,19 +4,17 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v4.view.ViewPager;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.squareup.coordinators.Coordinators;
-import com.tapadoo.alerter.Alerter;
 
 import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.util.Alerts;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Activity;
 import org.petabytes.coordinator.Coordinator;
@@ -35,7 +33,6 @@ import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
 import rx.functions.Action3;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
@@ -85,10 +82,9 @@ class FeedsCoordinator extends Coordinator {
                 pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
                 onPagerSelectedAction.call(0, entries.size(), getForegroundColor(0));
         }, throwable -> {
-            showAlert(R.string.error_title, R.string.error_unknown);
+            Alerts.show((Activity) context, R.string.error_title, R.string.error_unknown_feed);
             Views.setGone(loadingView);
-            Timber.e(throwable, throwable.getMessage());
-        }, () -> {});
+        });
     }
 
     @NonNull
@@ -146,14 +142,5 @@ class FeedsCoordinator extends Coordinator {
         } else {
             return context.getResources().getColor(R.color.colorPrimaryDark);
         }
-    }
-
-    private void showAlert(@StringRes int titleResId, @StringRes int messageResId) {
-        Alerter.create((Activity) context)
-            .setTitle(titleResId)
-            .setText(messageResId)
-            .setBackgroundColor(R.color.colorAccent)
-            .setDuration(DateUtils.HOUR_IN_MILLIS)
-            .show();
     }
 }

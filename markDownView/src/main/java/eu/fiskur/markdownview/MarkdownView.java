@@ -1,27 +1,20 @@
 package eu.fiskur.markdownview;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -101,19 +94,13 @@ public class MarkdownView extends RelativeLayout {
     webSettings.setJavaScriptEnabled(true);
 
     //To handle web links:
-    webViewClient = new MarkdownWebViewClient();
+    webViewClient = new MarkdownWebViewClient(getContext());
     webView.setWebViewClient(webViewClient);
-
     allowGestures(false);
   }
 
-  private class MarkdownWebViewClient extends WebViewClient {
-
-    @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-      Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-      getContext().startActivity(intent);
-      return true;
-    }
+  public void setOnOverrideUrlAction(Runnable onOverrideUrlAction, Runnable fallbackAction) {
+    webViewClient.setOnOverrideUrlAction(onOverrideUrlAction, fallbackAction);
   }
 
   public void showMarkdown(String markdown){
@@ -163,6 +150,36 @@ public class MarkdownView extends RelativeLayout {
       }
     }else{
       webSettings.setBuiltInZoomControls(false);
+    }
+  }
+
+  private static class MarkdownWebViewClient extends WebViewClient {
+
+    private final Context context;
+    private Runnable onOverrideUrlAction;
+    private Runnable fallbackAction;
+
+    MarkdownWebViewClient(Context context) {
+      this.context = context;
+    }
+
+    void setOnOverrideUrlAction(Runnable onOverrideUrlAction, Runnable fallbackAction) {
+      this.onOverrideUrlAction = onOverrideUrlAction;
+      this.fallbackAction = fallbackAction;
+    }
+
+    @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+      if (onOverrideUrlAction == null) {
+        Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        context.startActivity(intent);
+      } else {
+        try {
+          onOverrideUrlAction.run();
+        } catch (ActivityNotFoundException e) {
+          fallbackAction.run();
+        }
+      }
+      return true;
     }
   }
 }
