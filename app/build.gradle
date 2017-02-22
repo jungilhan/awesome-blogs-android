@@ -96,25 +96,27 @@ dependencies {
     compile project(':remark')
     compile project(':markDownView')
     compile project(':slidingMenu')
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.google.firebase:firebase-core:10.0.1'
-    compile 'com.tapadoo.android:alerter:1.0.1'
-    compile 'com.flipboard:bottomsheet-core:1.5.0'
-    compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-    compile 'com.github.ybq:Android-SpinKit:1.1.0'
-    compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
+    compile rootProject.ext.support_design
+    compile rootProject.ext.firebase_core
+    compile rootProject.ext.alerter
+    compile rootProject.ext.flipboard_bottomsheet
+    compile rootProject.ext.rxpreferences
+    compile rootProject.ext.calligraphy
+    compile rootProject.ext.spinkit
+    compile rootProject.ext.verticalviewpager
+    compile rootProject.ext.crashlytics
+    annotationProcessor rootProject.ext.butterknife_compiler
+    compile(rootProject.ext.crashlytics) {
         transitive = true;
     }
 
-    debugCompile 'com.facebook.stetho:stetho:1.4.2'
-    debugCompile 'com.uphyca:stetho_realm:2.0.1'
-    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    debugCompile rootProject.ext.stetho
+    debugCompile rootProject.ext.stetho_realm
+    androidTestCompile rootProject.ext.findbug
+    androidTestCompile(rootProject.ext.support_espressocore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    testCompile rootProject.ext.junit
+    testCompile rootProject.ext.assertj
 }
 apply plugin: 'com.google.gms.google-services'
