@@ -8,6 +8,13 @@
 ## 빌드
 안드로이드 스튜디오의 Build Variants 설정에서 app 모듈을 productionDebug 또는 stagingDebug로 설정한 후 빌드할 수 있습니다.
 
+## 코드 스타일 스킴
+풀리퀘스트 시, 코드 스타일이 맞지 않아서 코드가 변경되는 부분을 피하려면 ```Preferences > Code Style > Java```에서 다음 부분을 수정하면 됩니다.
+  * Continuation Indent - 4
+  * Field Annontations -  Do not wrap
+
+좀 더 편한 방법은 루트 디렉토리에 있는 code-style.xml을 임포트 하세요.
+
 ## 구글 플레이 스토어
 구글 플레이 스토어에서 어썸블로그 최신 버전을 다운로드 받을 수 있습니다.
 <br/>
