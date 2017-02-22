@@ -16,6 +16,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         debug {
@@ -25,6 +26,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force rootProject.ext.support_annotation
         }
     }
 }
@@ -40,4 +47,7 @@ dependencies {
     compile rootProject.ext.retrofit_gsonconverter
     compile rootProject.ext.retrofit_logging
     testCompile rootProject.ext.junit
+    androidTestCompile rootProject.ext.testrunner
+    androidTestCompile rootProject.ext.espresso_core
+    androidTestCompile rootProject.ext.assertj
 }

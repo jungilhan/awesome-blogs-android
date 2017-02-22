@@ -2,6 +2,7 @@ package org.petabytes.api.source.local;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import org.petabytes.api.DataSource;
 
@@ -17,7 +18,8 @@ import rx.functions.Func1;
 
 public class AwesomeBlogsLocalSource implements DataSource {
 
-    private final RealmConfiguration config;
+    @VisibleForTesting
+    final RealmConfiguration config;
 
     public AwesomeBlogsLocalSource(@NonNull Context context) {
         Realm.init(context);
@@ -102,4 +104,5 @@ public class AwesomeBlogsLocalSource implements DataSource {
         }
         return builder.build();
     }
+
 }
