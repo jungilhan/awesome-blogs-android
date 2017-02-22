@@ -25,48 +25,46 @@ public class AwesomeBlogsLocalSourceTest {
     public void getFeed() throws Exception {
         {
             Realm.getInstance(localSource.config)
-                    .executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            realm.deleteAll();
-                        }
-                    });
+                .executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.deleteAll();
+                    }
+                });
             List<Feed> values = localSource.getFeed("dev")
-                    .test()
-                    .awaitTerminalEvent()
-                    .assertCompleted()
-                    .getOnNextEvents();
+                .test()
+                .awaitTerminalEvent()
+                .assertCompleted()
+                .getOnNextEvents();
 
             assertThat(values)
-                    .hasSize(1)
-                    .containsNull();
+                .hasSize(1)
+                .containsNull();
         }
 
         {
             Feed feed = new Feed();
             feed.setCategory("dev");
             Realm.getInstance(localSource.config)
-                    .executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            Feed feed = new Feed();
-                            feed.setCategory("dev");
-                            realm.insert(feed);
-                        }
-                    });
+                .executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Feed feed = new Feed();
+                        feed.setCategory("dev");
+                        realm.insert(feed);
+                    }
+                });
 
             List<Feed> values = localSource.getFeed("dev")
-                    .test()
-                    .awaitTerminalEvent()
-                    .assertCompleted()
-                    .getOnNextEvents();
+                .test()
+                .awaitTerminalEvent()
+                .assertCompleted()
+                .getOnNextEvents();
 
             assertThat(values)
-                    .hasSize(1)
-                    .extracting("category")
-                    .contains("dev");
+                .hasSize(1)
+                .extracting("category")
+                .contains("dev");
         }
-
-
     }
 }
