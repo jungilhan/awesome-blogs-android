@@ -2,6 +2,7 @@ package org.petabytes.api.source.local;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import org.petabytes.api.DataSource;
 
@@ -11,13 +12,14 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Action0;
+import rx.functions.Func0;
 import rx.functions.Func1;
 
 public class AwesomeBlogsLocalSource implements DataSource {
 
-    private final RealmConfiguration config;
+    @VisibleForTesting
+    final RealmConfiguration config;
 
     public AwesomeBlogsLocalSource(@NonNull Context context) {
         Realm.init(context);
@@ -26,14 +28,16 @@ public class AwesomeBlogsLocalSource implements DataSource {
 
     @Override
     public Observable<Feed> getFeed(@NonNull final String category) {
-        return Observable.create(new Observable.OnSubscribe<Feed>() {
+        return Observable.fromCallable(new Func0<Feed>() {
             @Override
-            public void call(Subscriber<? super Feed> subscriber) {
+            public Feed call() {
                 Realm realm = Realm.getInstance(config);
-                Feed feed = realm.where(Feed.class).equalTo("category", category).findFirst();
-                subscriber.onNext(feed != null ? realm.copyFromRealm(feed) : null);
-                subscriber.onCompleted();
-                realm.close();
+                try {
+                    Feed feed = realm.where(Feed.class).equalTo("category", category).findFirst();
+                    return feed != null ? realm.copyFromRealm(feed) : null;
+                } finally {
+                    realm.close();
+                }
             }
         });
     }
@@ -100,4 +104,5 @@ public class AwesomeBlogsLocalSource implements DataSource {
         }
         return builder.build();
     }
+
 }
