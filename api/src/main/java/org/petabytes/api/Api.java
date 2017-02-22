@@ -18,7 +18,7 @@ public class Api implements DataSource {
     private final AwesomeBlogsRemoteSource remoteSource;
 
     @VisibleForTesting
-    public Api(AwesomeBlogsLocalSource localSource, AwesomeBlogsRemoteSource remoteSource) {
+    Api(AwesomeBlogsLocalSource localSource, AwesomeBlogsRemoteSource remoteSource) {
         this.localSource = localSource;
         this.remoteSource = remoteSource;
     }
