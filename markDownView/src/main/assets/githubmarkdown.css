@@ -3,11 +3,15 @@
   src: url('NanumBarunGothicLight.woff') format('woff');
 }
 
+body {
+  font-family: "Nanum Barun Gothic", "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 .markdown-body {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   color: #333;
-  font-family: "Nanum Barun Gothic", "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   line-height: 1.6;
   word-wrap: break-word;
@@ -702,4 +706,24 @@
 
 .markdown-body hr {
   border-bottom-color: #eee;
+}
+
+.footer {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.visit {
+  position: relative;
+  bottom: -20px;
+  text-align: center;
+  color: #666;
+  border: solid 1px #aaa;
+}
+
+.visit a {
+  display: block;
+  padding: 16px;
+  color: #666;
+  text-decoration: none;
 }

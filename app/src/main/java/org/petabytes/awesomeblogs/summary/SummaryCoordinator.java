@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.overzealous.remark.Remark;
@@ -67,7 +66,7 @@ class SummaryCoordinator extends Coordinator {
             .map(summary -> new Remark().convert(summary))
             .map(summary -> "## [" + title + "](" + link + ")\n ###### " + Entry.getFormattedAuthorUpdatedAt(author, updatedAt) + "\n" + summary)
             .map(summary -> summary.replace("'", "\\'"))
-            .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(summary));
+            .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(link, summary));
 
         summaryView.setOnOverrideUrlAction(
             url -> context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))),

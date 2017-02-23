@@ -35,7 +35,10 @@ public class MarkdownView extends RelativeLayout {
       + "</head>\n"
       + "<body>\n"
       + "  <div id=\"content\" class=\"markdown-body\"></div>\n"
-      + "<script>\n"
+      + "  <div class=\"footer\">"
+      + "    <h4 class=\"visit\"><a href='%s'>페이지 방문하기</a></h4>"
+      + "  </div>\n"
+      + "  <script>\n"
       + "    document.getElementById('content').innerHTML =\n"
       + "      marked('%s');\n"
       + "  </script>"
@@ -104,11 +107,15 @@ public class MarkdownView extends RelativeLayout {
   }
 
   public void showMarkdown(String markdown){
+    showMarkdown("#", markdown);
+  }
+
+  public void showMarkdown(String link, String markdown){
     if(markdown == null || markdown.isEmpty()){
       return;
     }
     markdown = markdown.replace("\n", "\\n");
-    webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE, markdown), "text/html", "utf-8", null);
+    webView.loadDataWithBaseURL("file:///android_asset/", String.format(MARKDOWN_MARKUP_TEMPLATE, link, markdown), "text/html", "utf-8", null);
   }
 
   public void showMarkdown(int rawFileId){
