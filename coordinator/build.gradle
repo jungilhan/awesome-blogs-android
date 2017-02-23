@@ -25,7 +25,4 @@ dependencies {
     compile rootProject.ext.coordinator
     compile rootProject.ext.butterknife
     compile rootProject.ext.timber
-    compile rootProject.ext.rxlifecycle
-    compile rootProject.ext.rxlifecycle_android
-    compile rootProject.ext.rxlifecycle_component
 }
