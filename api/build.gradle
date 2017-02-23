@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.support_appcompat_v7
+    compile rootProject.ext.support_annotation
     compile rootProject.ext.rxjava
     compile rootProject.ext.stream
     compile rootProject.ext.gson
