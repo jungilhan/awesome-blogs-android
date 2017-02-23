@@ -47,6 +47,7 @@ dependencies {
     compile rootProject.ext.retrofit_gsonconverter
     compile rootProject.ext.retrofit_logging
     testCompile rootProject.ext.junit
+    testCompile rootProject.ext.roboletric
     androidTestCompile rootProject.ext.testrunner
     androidTestCompile rootProject.ext.espresso_core
     androidTestCompile rootProject.ext.assertj
