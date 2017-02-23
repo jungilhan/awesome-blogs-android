@@ -70,7 +70,7 @@ class SummaryCoordinator extends Coordinator {
             .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(summary));
 
         summaryView.setOnOverrideUrlAction(
-            () -> context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link))),
+            url -> context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))),
             () -> Alerts.show((Activity) context, R.string.error_title, R.string.error_invalid_link));
     }
 

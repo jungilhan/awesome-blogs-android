@@ -99,8 +99,8 @@ public class MarkdownView extends RelativeLayout {
     allowGestures(false);
   }
 
-  public void setOnOverrideUrlAction(Runnable onOverrideUrlAction, Runnable fallbackAction) {
-    webViewClient.setOnOverrideUrlAction(onOverrideUrlAction, fallbackAction);
+  public void setOnOverrideUrlAction(MarkdownWebViewClient.OnOverrideUrlListener onOverrideUrlListener, Runnable fallbackAction) {
+    webViewClient.setOnOverrideUrlAction(onOverrideUrlListener, fallbackAction);
   }
 
   public void showMarkdown(String markdown){
@@ -156,25 +156,30 @@ public class MarkdownView extends RelativeLayout {
   private static class MarkdownWebViewClient extends WebViewClient {
 
     private final Context context;
-    private Runnable onOverrideUrlAction;
+    private OnOverrideUrlListener onOverrideUrlListener;
     private Runnable fallbackAction;
+
+    public interface OnOverrideUrlListener {
+
+      void onUrl(String url);
+    }
 
     MarkdownWebViewClient(Context context) {
       this.context = context;
     }
 
-    void setOnOverrideUrlAction(Runnable onOverrideUrlAction, Runnable fallbackAction) {
-      this.onOverrideUrlAction = onOverrideUrlAction;
+    void setOnOverrideUrlAction(OnOverrideUrlListener onOverrideUrlListener, Runnable fallbackAction) {
+      this.onOverrideUrlListener = onOverrideUrlListener;
       this.fallbackAction = fallbackAction;
     }
 
     @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-      if (onOverrideUrlAction == null) {
+      if (onOverrideUrlListener == null) {
         Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         context.startActivity(intent);
       } else {
         try {
-          onOverrideUrlAction.run();
+          onOverrideUrlListener.onUrl(url);
         } catch (ActivityNotFoundException e) {
           fallbackAction.run();
         }
