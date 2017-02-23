@@ -10,6 +10,7 @@ import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
 
 import rx.Observable;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class Api implements DataSource {
 
@@ -40,6 +41,7 @@ public class Api implements DataSource {
                 public void call(Feed data) {
                     remoteSource.getFeed(category)
                         .onErrorResumeNext(Observable.<Feed>empty())
+                        .subscribeOn(Schedulers.io())
                         .subscribe();
                 }
             })
