@@ -10,7 +10,6 @@ import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
 
 import rx.Observable;
 import rx.functions.Action1;
-import rx.functions.Func0;
 
 public class Api implements DataSource {
 
@@ -44,12 +43,7 @@ public class Api implements DataSource {
                         .subscribe();
                 }
             })
-            .switchIfEmpty(Observable.defer(new Func0<Observable<Feed>>() {
-                @Override
-                public Observable<Feed> call() {
-                    return remoteSource.getFeed(category);
-                }
-            }));
+            .switchIfEmpty(remoteSource.getFeed(category));
     }
 
     public Observable<Boolean> isRead(@NonNull String link) {
