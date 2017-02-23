@@ -38,10 +38,10 @@ class EntryEntireCoordinator extends Coordinator {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api()
             .isRead(entry.getLink()), isRead -> {
-                titleView.setText(entry.getTitle());
-                titleView.setAlpha(isRead ? 0.65f : 1f);
-                authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
-            });
+            titleView.setText(entry.getTitle());
+            titleView.setAlpha(isRead ? 0.65f : 1f);
+            authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
+        });
         bind(Observable.just(entry.getSummary().trim())
             .map(summary -> Jsoup.parse(summary).text())
             .subscribeOn(Schedulers.io()), summary -> summaryView.setText(summary));
@@ -56,6 +56,7 @@ class EntryEntireCoordinator extends Coordinator {
 
     private void setBackground(@NonNull View view) {
         switch (new Random().nextInt(11)) {
+            // @formatter:off
             case 0: view.setBackgroundResource(R.color.background_12); break;
             case 1: view.setBackgroundResource(R.color.background_13); break;
             case 2: view.setBackgroundResource(R.color.background_14); break;
@@ -67,6 +68,7 @@ class EntryEntireCoordinator extends Coordinator {
             case 8: view.setBackgroundResource(R.color.background_20); break;
             case 9: view.setBackgroundResource(R.color.background_21); break;
             case 10: view.setBackgroundResource(R.color.background_22); break;
+            // @formatter:off
         }
     }
 }

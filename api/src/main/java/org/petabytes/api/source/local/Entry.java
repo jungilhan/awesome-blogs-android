@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import org.petabytes.api.util.Dates;
 
-import java.text.ParsePosition;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

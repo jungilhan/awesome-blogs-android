@@ -6,7 +6,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class Dates {
+public abstract class Dates {
 
     public static String getRelativeTimeString(long millis) {
         long now = System.currentTimeMillis();

@@ -26,8 +26,10 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 class DrawerCoordinator extends Coordinator {
 
     @Retention(SOURCE)
-    @StringDef({ ALL, DEVELOPER, TECH_COMPANY, INSIGHTFUL})
-    @interface Category {}
+    @StringDef({ALL, DEVELOPER, TECH_COMPANY, INSIGHTFUL})
+    @interface Category {
+    }
+
     static final String ALL = "all";
     static final String DEVELOPER = "dev";
     static final String TECH_COMPANY = "company";
@@ -83,7 +85,8 @@ class DrawerCoordinator extends Coordinator {
         throw new IllegalArgumentException("Invalid category");
     }
 
-    private @Category String getCategory(@NonNull View view) {
+    @Category
+    private String getCategory(@NonNull View view) {
         switch (view.getId()) {
             case R.id.all:
                 Analytics.event(Analytics.Event.VIEW_ALL, Collections.emptyMap());

@@ -9,7 +9,7 @@ import com.tapadoo.alerter.Alerter;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.coordinator.Activity;
 
-public class Alerts {
+public abstract class Alerts {
 
     public static void show(@NonNull Activity context, @StringRes int titleResId, @StringRes int messageResId) {
         show(context, titleResId, messageResId, (long) (1.7f * DateUtils.SECOND_IN_MILLIS));
