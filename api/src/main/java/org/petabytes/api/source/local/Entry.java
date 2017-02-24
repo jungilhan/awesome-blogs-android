@@ -1,6 +1,7 @@
 package org.petabytes.api.source.local;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.petabytes.api.util.Dates;
 
@@ -53,6 +54,17 @@ public class Entry extends RealmObject {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof Entry)) {
+            return false;
+        }
+        return TextUtils.equals(link, ((Entry) other).getLink());
     }
 
     public static String getFormattedAuthorUpdatedAt(@NonNull Entry entry) {

@@ -19,10 +19,8 @@ import rx.functions.Func1;
 public class AwesomeBlogsRemoteSource implements DataSource {
 
     private final AwesomeBlogs awesomeBlogs;
-    private final Action1<org.petabytes.api.source.local.Feed> onFeedFetchedAction;
 
-    public AwesomeBlogsRemoteSource(@NonNull Action1<org.petabytes.api.source.local.Feed> onFeedFetchedAction, boolean loggable) {
-        this.onFeedFetchedAction = onFeedFetchedAction;
+    public AwesomeBlogsRemoteSource(boolean loggable) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -57,7 +55,7 @@ public class AwesomeBlogsRemoteSource implements DataSource {
                 public org.petabytes.api.source.local.Feed call(Feed feed) {
                     return feed.toPersist(category);
                 }
-            }).doOnNext(onFeedFetchedAction);
+            });
     }
 
     interface AwesomeBlogs {

@@ -104,6 +104,7 @@ dependencies {
     compile rootProject.ext.calligraphy
     compile rootProject.ext.spinkit
     compile rootProject.ext.verticalviewpager
+    compile rootProject.ext.topsnackbar
     compile rootProject.ext.crashlytics
     annotationProcessor rootProject.ext.butterknife_compiler
     compile(rootProject.ext.crashlytics) {

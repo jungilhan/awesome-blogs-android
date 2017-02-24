@@ -2,12 +2,17 @@ package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.squareup.coordinators.Coordinators;
 
 import org.petabytes.api.source.local.Entry;
@@ -45,6 +50,7 @@ class FeedsCoordinator extends Coordinator {
 
     private final Context context;
     private final Action3<Integer, Integer, Integer> onPagerSelectedAction;
+    private @DrawerCoordinator.Category String category;
 
     enum Type {
         ENTIRE, DIAGONAL, ROWS
@@ -66,9 +72,15 @@ class FeedsCoordinator extends Coordinator {
                 onPagerSelectedAction.call(position, pagerView.getAdapter().getCount(), getForegroundColor(position));
             }
         });
+
+        bind(AwesomeBlogsApp.get().api()
+            .getFreshEntries()
+            .filter(pair -> TextUtils.equals(category, pair.first) && !pair.second.isEmpty())
+            , this::notifyFreshEntries);
     }
 
     void onCategorySelect(@DrawerCoordinator.Category String category) {
+        this.category = category;
         Views.setVisible(loadingView);
         Views.setGone(pagerView);
 
@@ -142,5 +154,25 @@ class FeedsCoordinator extends Coordinator {
         } else {
             return context.getResources().getColor(R.color.colorPrimaryDark);
         }
+    }
+
+    private void notifyFreshEntries(@NonNull Pair<String, List<Entry>> pair) {
+        TSnackbar snack = TSnackbar.make(getView(),
+            pair.second.size() == 1
+                ? context.getString(R.string.fresh_entries_title_0, pair.second.get(0).getTitle())
+                : context.getString(R.string.fresh_entries_title_1, pair.second.get(0).getTitle(), (pair.second.size() - 1))
+            , 3500);
+
+        TextView messageView = (TextView) snack.getView().findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+        messageView.setTextColor(Color.WHITE);
+        messageView.setMaxLines(2);
+        snack.getView().setBackgroundResource(R.color.colorPrimaryDark);
+        snack.setActionTextColor(context.getResources().getColor(R.color.colorAccent));
+        snack.setMaxWidth(3000);
+        snack.getView().setOnClickListener($ -> {
+            onCategorySelect(pair.first);
+            snack.dismiss();
+        });
+        snack.show();
     }
 }

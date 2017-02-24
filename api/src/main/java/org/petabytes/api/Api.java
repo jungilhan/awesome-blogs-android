@@ -3,10 +3,14 @@ package org.petabytes.api;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.util.Pair;
 
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
+import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
 import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -26,12 +30,7 @@ public class Api implements DataSource {
 
     public Api(@NonNull Context context, boolean loggable) {
         localSource = new AwesomeBlogsLocalSource(context);
-        remoteSource = new AwesomeBlogsRemoteSource(new Action1<Feed>() {
-            @Override
-            public void call(@NonNull Feed feed) {
-                localSource.saveFeed(feed);
-            }
-        }, loggable);
+        remoteSource = new AwesomeBlogsRemoteSource(loggable);
     }
 
     @Override
@@ -41,6 +40,19 @@ public class Api implements DataSource {
                 @Override
                 public void call(Feed data) {
                     remoteSource.getFeed(category)
+                        .doOnNext(new Action1<Feed>() {
+                            @Override
+                            public void call(Feed feed) {
+                                localSource.filterFreshEntries(feed)
+                                    .subscribe();
+                            }
+                        })
+                        .doOnNext(new Action1<Feed>() {
+                            @Override
+                            public void call(Feed feed) {
+                                localSource.saveFeed(feed);
+                            }
+                        })
                         .onErrorResumeNext(Observable.<Feed>empty())
                         .subscribeOn(Schedulers.io())
                         .subscribe();
@@ -49,9 +61,19 @@ public class Api implements DataSource {
             .switchIfEmpty(Observable.defer(new Func0<Observable<Feed>>() {
                 @Override
                 public Observable<Feed> call() {
-                    return remoteSource.getFeed(category);
+                    return remoteSource.getFeed(category)
+                        .doOnNext(new Action1<Feed>() {
+                            @Override
+                            public void call(Feed feed) {
+                                localSource.saveFeed(feed);
+                            }
+                        });
                 }
             }));
+    }
+
+    public Observable<Pair<String, List<Entry>>> getFreshEntries() {
+        return localSource.getFreshEntries();
     }
 
     public Observable<Boolean> isRead(@NonNull String link) {
