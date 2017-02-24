@@ -1,6 +1,9 @@
 package org.petabytes.awesomeblogs.util;
 
-public abstract class Strings {
+public final class Strings {
+
+    private Strings() {
+    }
 
     public static String EMPTY = "";
     public static String NEW_LINE = "\n";

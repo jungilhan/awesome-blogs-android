@@ -9,7 +9,10 @@ import java.util.Map;
 
 import hugo.weaving.DebugLog;
 
-public abstract class Analytics {
+public final class Analytics {
+
+    private Analytics() {
+    }
 
     public static class Event {
 

@@ -38,10 +38,10 @@ class EntryEntireCoordinator extends Coordinator {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api()
             .isRead(entry.getLink()), isRead -> {
-            titleView.setText(entry.getTitle());
-            titleView.setAlpha(isRead ? 0.65f : 1f);
-            authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
-        });
+                titleView.setText(entry.getTitle());
+                titleView.setAlpha(isRead ? 0.65f : 1f);
+                authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
+            });
         bind(Observable.just(entry.getSummary().trim())
             .map(summary -> Jsoup.parse(summary).text())
             .subscribeOn(Schedulers.io()), summary -> summaryView.setText(summary));
