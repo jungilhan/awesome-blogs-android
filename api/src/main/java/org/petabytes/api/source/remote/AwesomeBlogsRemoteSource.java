@@ -31,7 +31,7 @@ public class AwesomeBlogsRemoteSource implements DataSource {
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
-            .baseUrl("http://awesome-blogs.petabytes.org")
+            .baseUrl("https://awesome-blogs.petabytes.org")
             .build();
 
         awesomeBlogs = retrofit.create(AwesomeBlogs.class);

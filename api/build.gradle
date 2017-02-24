@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.support_appcompat_v7
+    compile rootProject.ext.support_annotation
     compile rootProject.ext.rxjava
     compile rootProject.ext.stream
     compile rootProject.ext.gson
@@ -47,6 +47,8 @@ dependencies {
     compile rootProject.ext.retrofit_gsonconverter
     compile rootProject.ext.retrofit_logging
     testCompile rootProject.ext.junit
+    testCompile rootProject.ext.assertj
+    testCompile rootProject.ext.mockito
     testCompile rootProject.ext.roboletric
     androidTestCompile rootProject.ext.testrunner
     androidTestCompile rootProject.ext.espresso_core

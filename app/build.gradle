@@ -112,7 +112,6 @@ dependencies {
 
     debugCompile rootProject.ext.stetho
     debugCompile rootProject.ext.stetho_realm
-    androidTestCompile rootProject.ext.findbug
     androidTestCompile(rootProject.ext.support_espressocore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
