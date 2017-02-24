@@ -161,7 +161,7 @@ class FeedsCoordinator extends Coordinator {
             pair.second.size() == 1
                 ? context.getString(R.string.fresh_entries_title_0, pair.second.get(0).getTitle())
                 : context.getString(R.string.fresh_entries_title_1, pair.second.get(0).getTitle(), (pair.second.size() - 1))
-            , 3500);
+            , TSnackbar.LENGTH_LONG);
 
         TextView messageView = (TextView) snack.getView().findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
         messageView.setTextColor(Color.WHITE);
