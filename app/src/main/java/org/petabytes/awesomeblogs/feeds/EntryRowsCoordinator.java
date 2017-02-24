@@ -3,7 +3,6 @@ package org.petabytes.awesomeblogs.feeds;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
-import android.view.Surface;
 import android.view.View;
 import android.widget.TextView;
 
