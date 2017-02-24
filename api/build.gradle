@@ -49,6 +49,7 @@ dependencies {
     testCompile rootProject.ext.junit
     testCompile rootProject.ext.assertj
     testCompile rootProject.ext.mockito
+    testCompile rootProject.ext.roboletric
     androidTestCompile rootProject.ext.testrunner
     androidTestCompile rootProject.ext.espresso_core
     androidTestCompile rootProject.ext.assertj

@@ -48,6 +48,7 @@ ext {
 
     assertj = 'org.assertj:assertj-core:1.7.1'
     junit = 'junit:junit:4.12'
+    roboletric = 'org.robolectric:robolectric:3.2.2'
 
     testrunner = 'com.android.support.test:runner:0.5'
     testrule = 'com.android.support.test:rules:0.5'
