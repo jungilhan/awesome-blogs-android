@@ -20,11 +20,17 @@
             android:layout_gravity="center"
             app:SpinKit_Color="@color/colorAccent" />
 
-        <fr.castorflex.android.verticalviewpager.VerticalViewPager
-            android:id="@+id/feeds"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:layout_height="match_parent">
+
+            <fr.castorflex.android.verticalviewpager.VerticalViewPager
+                android:id="@+id/feeds"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <ImageView
             android:id="@+id/menu"

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -45,6 +46,7 @@ import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
 
 class FeedsCoordinator extends Coordinator {
 
+    @BindView(R.id.refresh) SwipeRefreshLayout refreshView;
     @BindView(R.id.loading) View loadingView;
     @BindView(R.id.feeds) VerticalViewPager pagerView;
 
@@ -65,41 +67,55 @@ class FeedsCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        pagerView.setOffscreenPageLimit(1);
+        refreshView.setOnRefreshListener(() -> load(category, true));
+        refreshView.setColorSchemeResources(R.color.colorAccent,
+            R.color.background_1, R.color.background_22, R.color.background_6);
         pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 onPagerSelectedAction.call(position, pagerView.getAdapter().getCount(), getForegroundColor(position));
+                refreshView.setEnabled(refreshView.isRefreshing() || position == 0);
             }
         });
 
         bind(AwesomeBlogsApp.get().api()
             .getFreshEntries()
-            .filter(pair -> TextUtils.equals(category, pair.first) && !pair.second.isEmpty())
-            , this::notifyFreshEntries);
+            .filter(pair -> TextUtils.equals(category, pair.first) && !pair.second.isEmpty()), this::notifyFreshEntries);
     }
 
     void onCategorySelect(@DrawerCoordinator.Category String category) {
-        this.category = category;
-        Views.setVisible(loadingView);
-        Views.setGone(pagerView);
-
-        bind(AwesomeBlogsApp.get().api()
-            .getFeed(category)
-            .map(Feed::getEntries)
-            .map(this::categorize)
-            .subscribeOn(Schedulers.io()), entries -> {
-                Views.setGone(loadingView);
-                Views.setVisible(pagerView);
-                pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
-                onPagerSelectedAction.call(0, entries.size(), getForegroundColor(0));
-        }, throwable -> {
-            Alerts.show((Activity) context, R.string.error_title, R.string.error_unknown_feed);
-            Views.setGone(loadingView);
-        });
+        load(this.category = category, false);
     }
 
-    @NonNull
+    private void load(@DrawerCoordinator.Category String category, boolean refresh) {
+        if (!refresh) {
+            Views.setVisible(loadingView);
+            Views.setGone(pagerView);
+        }
+
+        bind(AwesomeBlogsApp.get().api()
+            .getFeed(category, refresh)
+            .filter($ -> TextUtils.equals(this.category, category))
+            .map(Feed::getEntries)
+            .map(this::categorize)
+            .subscribeOn(Schedulers.io()), this::onLoad, $ -> onLoadError());
+    }
+
+    private void onLoad(@NonNull List<Map<Type, List<Entry>>> entries) {
+        Views.setGone(loadingView);
+        Views.setVisible(pagerView);
+        refreshView.setRefreshing(false);
+        refreshView.setEnabled(true);
+        pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
+        onPagerSelectedAction.call(0, entries.size(), getForegroundColor(0));
+    }
+
+    private void onLoadError() {
+        Views.setGone(loadingView);
+        refreshView.setRefreshing(false);
+        Alerts.show((Activity) context, R.string.error_title, R.string.error_unknown_feed);
+    }
+
     private PagerFactory<Map<Type, List<Entry>>> createPagerFactory() {
         return entry -> {
             View view1;
@@ -160,8 +176,8 @@ class FeedsCoordinator extends Coordinator {
         TSnackbar snack = TSnackbar.make(getView(),
             pair.second.size() == 1
                 ? context.getString(R.string.fresh_entries_title_0, pair.second.get(0).getTitle())
-                : context.getString(R.string.fresh_entries_title_1, pair.second.get(0).getTitle(), (pair.second.size() - 1))
-            , TSnackbar.LENGTH_LONG);
+                : context.getString(R.string.fresh_entries_title_1, pair.second.get(0).getTitle(), (pair.second.size() - 1)),
+            TSnackbar.LENGTH_LONG);
 
         TextView messageView = (TextView) snack.getView().findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
         messageView.setTextColor(Color.WHITE);
@@ -170,7 +186,7 @@ class FeedsCoordinator extends Coordinator {
         snack.setActionTextColor(context.getResources().getColor(R.color.colorAccent));
         snack.setMaxWidth(3000);
         snack.getView().setOnClickListener($ -> {
-            onCategorySelect(pair.first);
+            load(category, false);
             snack.dismiss();
         });
         snack.show();

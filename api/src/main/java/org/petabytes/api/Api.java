@@ -15,6 +15,7 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class Api implements DataSource {
@@ -35,7 +36,17 @@ public class Api implements DataSource {
 
     @Override
     public Observable<Feed> getFeed(@NonNull final String category) {
+        return getFeed(category, false);
+    }
+
+    public Observable<Feed> getFeed(@NonNull final String category, final boolean forceRefresh) {
         return localSource.getFeed(category)
+            .filter(new Func1<Feed, Boolean>() {
+                @Override
+                public Boolean call(Feed feed) {
+                    return !forceRefresh;
+                }
+            })
             .doOnNext(new Action1<Feed>() {
                 @Override
                 public void call(Feed feed) {
