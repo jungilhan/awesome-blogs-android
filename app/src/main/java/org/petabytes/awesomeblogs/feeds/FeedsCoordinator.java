@@ -21,6 +21,7 @@ import org.petabytes.api.source.local.Feed;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Alerts;
+import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Activity;
 import org.petabytes.coordinator.Coordinator;
@@ -43,6 +44,7 @@ import rx.schedulers.Schedulers;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
+import static org.petabytes.awesomeblogs.util.Analytics.Event.REFRESH;
 
 class FeedsCoordinator extends Coordinator {
 
@@ -67,7 +69,10 @@ class FeedsCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        refreshView.setOnRefreshListener(() -> load(category, true));
+        refreshView.setOnRefreshListener(() -> {
+            load(category, true);
+            Analytics.event(Analytics.Event.REFRESH, Collections.emptyMap());
+        });
         refreshView.setColorSchemeResources(R.color.colorAccent,
             R.color.background_1, R.color.background_22, R.color.background_6);
         pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {

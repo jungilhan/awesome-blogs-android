@@ -25,6 +25,7 @@ public final class Analytics {
         public static final String VIEW_TECH_COMPANY = "view_tech_company";
         public static final String VIEW_INSIGHTFUL = "view_insightful";
         public static final String VIEW_SUMMARY = "view_summary";
+        public static final String REFRESH = "refresh";
     }
 
     public static class Param {
