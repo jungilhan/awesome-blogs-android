@@ -89,16 +89,16 @@ class DrawerCoordinator extends Coordinator {
     private String getCategory(@NonNull View view) {
         switch (view.getId()) {
             case R.id.all:
-                Analytics.event(Analytics.Event.VIEW_ALL, Collections.emptyMap());
+                Analytics.event(Analytics.Event.VIEW_ALL);
                 return ALL;
             case R.id.developer:
-                Analytics.event(Analytics.Event.VIEW_DEVELOPER, Collections.emptyMap());
+                Analytics.event(Analytics.Event.VIEW_DEVELOPER);
                 return DEVELOPER;
             case R.id.tech:
-                Analytics.event(Analytics.Event.VIEW_TECH_COMPANY, Collections.emptyMap());
+                Analytics.event(Analytics.Event.VIEW_TECH_COMPANY);
                 return TECH_COMPANY;
             case R.id.insightful:
-                Analytics.event(Analytics.Event.VIEW_INSIGHTFUL, Collections.emptyMap());
+                Analytics.event(Analytics.Event.VIEW_INSIGHTFUL);
                 return INSIGHTFUL;
         }
         throw new IllegalArgumentException("Invalid view");

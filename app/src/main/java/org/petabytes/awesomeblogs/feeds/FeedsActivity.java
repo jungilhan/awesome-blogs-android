@@ -31,7 +31,7 @@ public class FeedsActivity extends AwesomeActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         slidingMenu.setOnOpenedListener(() ->
-            Analytics.event(Analytics.Event.OPEN_DRAWER, Collections.emptyMap()));
+            Analytics.event(Analytics.Event.OPEN_DRAWER));
     }
 
     @Override

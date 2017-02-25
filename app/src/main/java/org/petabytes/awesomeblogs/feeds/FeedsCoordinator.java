@@ -71,7 +71,7 @@ class FeedsCoordinator extends Coordinator {
         super.attach(view);
         refreshView.setOnRefreshListener(() -> {
             load(category, true);
-            Analytics.event(Analytics.Event.REFRESH, Collections.emptyMap());
+            Analytics.event(Analytics.Event.REFRESH);
         });
         refreshView.setColorSchemeResources(R.color.colorAccent,
             R.color.background_1, R.color.background_22, R.color.background_6);
@@ -180,7 +180,7 @@ class FeedsCoordinator extends Coordinator {
     }
 
     private void notifyFreshEntries(@NonNull Pair<String, List<Entry>> pair) {
-        Analytics.event(Analytics.Event.NOTIFY_FRESH_ENTRIES, Collections.emptyMap());
+        Analytics.event(Analytics.Event.NOTIFY_FRESH_ENTRIES);
         TSnackbar snack = TSnackbar.make(getView(),
             pair.second.size() == 1
                 ? context.getString(R.string.fresh_entries_title_0, pair.second.get(0).getTitle())
@@ -196,7 +196,7 @@ class FeedsCoordinator extends Coordinator {
         snack.getView().setOnClickListener($ -> {
             load(category, false);
             snack.dismiss();
-            Analytics.event(Analytics.Event.VIEW_FRESH_ENTRIES, Collections.emptyMap());
+            Analytics.event(Analytics.Event.VIEW_FRESH_ENTRIES);
         });
         snack.show();
     }

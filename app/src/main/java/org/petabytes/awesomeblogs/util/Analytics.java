@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 
+import java.util.Collections;
 import java.util.Map;
 
 import hugo.weaving.DebugLog;
@@ -34,6 +35,10 @@ public final class Analytics {
 
         public static final String TITLE = "title";
         public static final String LINK = "link";
+    }
+
+    public static void event(@NonNull String name) {
+        event(name, Collections.emptyMap());
     }
 
     @DebugLog

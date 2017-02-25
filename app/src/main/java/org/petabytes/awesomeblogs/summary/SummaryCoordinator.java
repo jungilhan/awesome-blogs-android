@@ -108,6 +108,6 @@ class SummaryCoordinator extends Coordinator {
             }});
         });
         bottomSheetView.showWithSheetView(menuView);
-        Analytics.event(Analytics.Event.MORE_MENU, Collections.emptyMap());
+        Analytics.event(Analytics.Event.MORE_MENU);
     }
 }
