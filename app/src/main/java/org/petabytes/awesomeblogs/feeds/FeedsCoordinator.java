@@ -180,6 +180,7 @@ class FeedsCoordinator extends Coordinator {
     }
 
     private void notifyFreshEntries(@NonNull Pair<String, List<Entry>> pair) {
+        Analytics.event(Analytics.Event.NOTIFY_FRESH_ENTRIES, Collections.emptyMap());
         TSnackbar snack = TSnackbar.make(getView(),
             pair.second.size() == 1
                 ? context.getString(R.string.fresh_entries_title_0, pair.second.get(0).getTitle())
@@ -195,6 +196,7 @@ class FeedsCoordinator extends Coordinator {
         snack.getView().setOnClickListener($ -> {
             load(category, false);
             snack.dismiss();
+            Analytics.event(Analytics.Event.VIEW_FRESH_ENTRIES, Collections.emptyMap());
         });
         snack.show();
     }
