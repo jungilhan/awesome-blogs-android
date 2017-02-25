@@ -91,6 +91,7 @@ class FeedsCoordinator extends Coordinator {
         if (!refresh) {
             Views.setVisible(loadingView);
             Views.setGone(pagerView);
+            refreshView.setEnabled(false);
         }
 
         bind(AwesomeBlogsApp.get().api()
@@ -113,6 +114,7 @@ class FeedsCoordinator extends Coordinator {
     private void onLoadError() {
         Views.setGone(loadingView);
         refreshView.setRefreshing(false);
+        refreshView.setEnabled(true);
         Alerts.show((Activity) context, R.string.error_title, R.string.error_unknown_feed);
     }
 
