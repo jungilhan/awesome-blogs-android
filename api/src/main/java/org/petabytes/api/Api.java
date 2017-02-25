@@ -38,7 +38,10 @@ public class Api implements DataSource {
         return localSource.getFeed(category)
             .doOnNext(new Action1<Feed>() {
                 @Override
-                public void call(Feed data) {
+                public void call(Feed feed) {
+                    if (!feed.isExpires()) {
+                        return;
+                    }
                     remoteSource.getFeed(category)
                         .doOnNext(new Action1<Feed>() {
                             @Override

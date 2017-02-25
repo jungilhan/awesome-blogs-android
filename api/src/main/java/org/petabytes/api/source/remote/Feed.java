@@ -1,6 +1,7 @@
 package org.petabytes.api.source.remote;
 
 import android.support.annotation.NonNull;
+import android.text.format.DateUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -46,6 +47,7 @@ class Feed {
         feed.setCategory(category);
         feed.setTitle(title);
         feed.setUpdatedAt(updatedAt);
+        feed.setExpires(System.currentTimeMillis() + (5 * DateUtils.MINUTE_IN_MILLIS));
         RealmList<org.petabytes.api.source.local.Entry> entries = new RealmList<>();
         for (Entry e : this.entries) {
             entries.add(e.toPersist());

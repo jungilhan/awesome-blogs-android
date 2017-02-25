@@ -10,6 +10,7 @@ public class Feed extends RealmObject {
     private String category;
     private String title;
     private String updatedAt;
+    private long expires;
     private RealmList<Entry> entries;
 
     public String getCategory() {
@@ -34,6 +35,18 @@ public class Feed extends RealmObject {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public long getExpires() {
+        return expires;
+    }
+
+    public void setExpires(long expires) {
+        this.expires = expires;
+    }
+
+    public boolean isExpires() {
+        return expires < System.currentTimeMillis();
     }
 
     public RealmList<Entry> getEntries() {

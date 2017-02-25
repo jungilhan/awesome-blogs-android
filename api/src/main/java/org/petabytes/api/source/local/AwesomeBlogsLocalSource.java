@@ -17,10 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmMigration;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
@@ -35,10 +33,9 @@ public class AwesomeBlogsLocalSource implements DataSource {
     final RealmConfiguration config;
     private final BehaviorSubject<Pair<String, List<Entry>>> freshEntriesSubject;
 
-
     public AwesomeBlogsLocalSource(@NonNull Context context) {
         Realm.init(context);
-        config = createRealmConfiguration(context);
+        config = createRealmConfiguration();
         freshEntriesSubject = BehaviorSubject.create();
     }
 
@@ -151,19 +148,11 @@ public class AwesomeBlogsLocalSource implements DataSource {
         realm.close();
     }
 
-    private RealmConfiguration createRealmConfiguration(@NonNull Context context) {
+    private RealmConfiguration createRealmConfiguration() {
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
             .name("awesome_blogs.realm")
-            .schemaVersion(0)
-            .migration(new RealmMigration() {
-                @Override
-                public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-
-                }
-            });
-        if (context.getPackageName().contains(".staging")) {
-            builder.deleteRealmIfMigrationNeeded();
-        }
+            .schemaVersion(1)
+            .migration(new Migration());
         return builder.build();
     }
 
