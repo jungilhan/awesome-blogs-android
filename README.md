@@ -19,14 +19,14 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
-### v1.1 개발의 완성은 얼굴 👱, 2017-02-25
+### v1.1 개발의 완성은 얼굴 👱 2017-02-25
  * 스와이프 새로고침 추가 (@BenjaminKim)
  * 서버 API 요청 좀 더 고급지게 처리 (@ZeroBrain, @probepark)
  * 새로운 피드가 생성 됐을 때, 앱 내 알림 기능 추가
  * 상세 뷰 하단 '페이지 이동하기' 버튼으로 블로그 이동을 좀 더 쉽게 (@KimKyung-man, @BenjaminKim)
  * 'ㅎ' 폰트가 제대로 그려지지 않는 버그 수정 (@soulkeykim, @ZeroBrain)
  * 상세 뷰에서 링크 클릭 시 어쩌다 죽는 버그 수정 (@BenjaminKim)
- * 풀 리퀘스트와 버그 제보해 주신 @ZeroBrain, @probepark, @BenjaminKim, @KimKyung-man 감사합니다. 👏
+ * 풀 리퀘스트와 버그 제보해 주신 @ZeroBrain, @soulkeykim, @probepark, @BenjaminKim, @KimKyung-man 감사합니다. 👏
 
-### v1.0 시작이 반이라 카더라 🤗, 2017-02-21
+### v1.0 시작이 반이라 카더라 🤗 2017-02-21
  * 어쩌다 만든 어썸블로그 마켓 배포 (@BenjaminKim)
