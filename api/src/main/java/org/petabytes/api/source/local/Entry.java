@@ -5,6 +5,8 @@ import android.text.TextUtils;
 
 import org.petabytes.api.util.Dates;
 
+import java.text.ParsePosition;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -69,11 +71,11 @@ public class Entry extends RealmObject {
 
     public static String getFormattedAuthorUpdatedAt(@NonNull Entry entry) {
         return "by " + entry.getAuthor() + "  ·  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parseDateTime(entry.getUpdatedAt()).getMillis());
+            Dates.getDefaultDateFormats().parse(entry.getUpdatedAt(), new ParsePosition(0)).getTime());
     }
 
     public static String getFormattedAuthorUpdatedAt(@NonNull String author, @NonNull String updatedAt) {
         return "by " + author + "  ·  " + Dates.getRelativeTimeString(
-            Dates.getDefaultDateFormats().parseDateTime(updatedAt).getMillis());
+            Dates.getDefaultDateFormats().parse(updatedAt, new ParsePosition(0)).getTime());
     }
 }

@@ -41,7 +41,6 @@ dependencies {
     compile rootProject.ext.rxjava
     compile rootProject.ext.stream
     compile rootProject.ext.gson
-    compile rootProject.ext.jodatime
     compile rootProject.ext.retrofit
     compile rootProject.ext.retrofit_rxadapter
     compile rootProject.ext.retrofit_gsonconverter
