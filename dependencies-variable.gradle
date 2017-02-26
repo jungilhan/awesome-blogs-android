@@ -1,7 +1,6 @@
 ext {
 
     ver_retrofit = '2.1.0'
-    ver_rxlifecycle = '1.0'
     ver_android_compat = '25.1.1'
 
     support_appcompat_v7 = "com.android.support:appcompat-v7:$ver_android_compat"
@@ -12,9 +11,6 @@ ext {
 
     rxjava = 'io.reactivex:rxjava:1.2.6'
     rxandroid = 'io.reactivex:rxandroid:1.2.1'
-    rxlifecycle = "com.trello:rxlifecycle:$ver_rxlifecycle"
-    rxlifecycle_android = "com.trello:rxlifecycle-android:$ver_rxlifecycle"
-    rxlifecycle_component = "com.trello:rxlifecycle-components:$ver_rxlifecycle"
     rxpreferences = 'com.f2prateek.rx.preferences:rx-preferences:1.0.2'
 
     retrofit = "com.squareup.retrofit2:retrofit:$ver_retrofit"
