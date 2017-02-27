@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 class DebugCoordinator extends Coordinator {
 
@@ -40,9 +41,17 @@ class DebugCoordinator extends Coordinator {
     @BindView(R.id.insightful) TextView insightfulView;
 
     private final Context context;
+    private final BehaviorSubject<Boolean> drawerOpenedSubject;
 
-    DebugCoordinator(@NonNull Context context) {
+    DebugCoordinator(@NonNull Context context, @NonNull DrawerLayout drawerLayout) {
         this.context = context;
+        this.drawerOpenedSubject = BehaviorSubject.create();
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                drawerOpenedSubject.onNext(true);
+            }
+        });
     }
 
     @Override
@@ -83,10 +92,9 @@ class DebugCoordinator extends Coordinator {
     }
 
     private Observable<String> getExpiryDate(@NonNull String category) {
-        return AwesomeBlogsApp.get().api()
-            .getExpiryDate(category)
-            .map(date -> date.getTime() > System.currentTimeMillis()
-                ? new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(date) : "Expired");
+        return Observable.combineLatest(drawerOpenedSubject, AwesomeBlogsApp.get().api().getExpiryDate(category),
+                ($, date) -> date.getTime() > System.currentTimeMillis()
+                    ? new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(date) : "Expired");
     }
 
     private static String getDensityString(@NonNull DisplayMetrics displayMetrics) {

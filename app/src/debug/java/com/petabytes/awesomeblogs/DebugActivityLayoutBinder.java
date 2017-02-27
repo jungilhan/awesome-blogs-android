@@ -18,7 +18,8 @@ class DebugActivityLayoutBinder implements ActivityLayoutBinder {
     @Override
     public ViewGroup bind(@NonNull Activity activity) {
         activity.setContentView(R.layout.activity);
-        Coordinators.bind(activity.findViewById(R.id.debug), $ -> new DebugCoordinator(activity));
+        Coordinators.bind(activity.findViewById(R.id.debug), $ ->
+            new DebugCoordinator(activity, (DrawerLayout) activity.findViewById(R.id.debug_drawer)));
         return (ViewGroup) activity.findViewById(R.id.activity);
     }
 }
