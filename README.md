@@ -13,6 +13,10 @@
   * Continuation Indent - 4
   * Field Annontations -  Do not wrap
 
+## 서버
+어썸블로그 안드로이드 앱은 아래의 서버 코드에 의해 동작하고 있습니다. 서버 코드가 궁금하신 분은 아래 링크를 방문해주세요.
+ * https://github.com/BenjaminKim/awesome-blogs
+
 ## 구글 플레이 스토어
 구글 플레이 스토어에서 어썸블로그 마켓 버전을 다운로드 받을 수 있습니다.
 <br/>
