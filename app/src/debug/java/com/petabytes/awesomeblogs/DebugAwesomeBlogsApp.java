@@ -5,6 +5,7 @@ import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import org.petabytes.api.Api;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
+import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import timber.log.Timber;
 
@@ -19,6 +20,11 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
                 .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                 .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                 .build());
+    }
+
+    @Override
+    protected ActivityLayoutBinder createActivityLayoutBinder() {
+        return new DebugActivityLayoutBinder();
     }
 
     @Override

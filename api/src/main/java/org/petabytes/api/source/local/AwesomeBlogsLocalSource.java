@@ -14,6 +14,7 @@ import com.annimon.stream.function.Predicate;
 import org.petabytes.api.DataSource;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -146,6 +147,30 @@ public class AwesomeBlogsLocalSource implements DataSource {
             }
         });
         realm.close();
+    }
+
+    public Observable<Date> getExpiryDate(@NonNull String category) {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Feed.class).equalTo("category", category).findAll().asObservable()
+            .filter(new Func1<RealmResults<Feed>, Boolean>() {
+                @Override
+                public Boolean call(RealmResults<Feed> feeds) {
+                    return !feeds.isEmpty();
+                }
+            })
+            .map(new Func1<RealmResults<Feed>, Date>() {
+                @Override
+                public Date call(RealmResults<Feed> feeds) {
+                    return new Date(feeds.get(0).getExpires());
+                }
+            })
+            .doOnSubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
+
     }
 
     private RealmConfiguration createRealmConfiguration() {

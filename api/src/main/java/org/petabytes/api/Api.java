@@ -10,6 +10,7 @@ import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
 import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
 
+import java.util.Date;
 import java.util.List;
 
 import rx.Observable;
@@ -97,5 +98,9 @@ public class Api implements DataSource {
     public void markAsRead(@NonNull String title, @NonNull String author, @NonNull String updatedAt,
                            @NonNull String summary, @NonNull String link, long readAt) {
         localSource.markAsRead(title, author, updatedAt, summary, link, readAt);
+    }
+
+    public Observable<Date> getExpiryDate(@NonNull String category) {
+        return localSource.getExpiryDate(category);
     }
 }

@@ -15,7 +15,6 @@ import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.coordinator.Coordinator;
 
 import java.lang.annotation.Retention;
-import java.util.Collections;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
@@ -35,7 +34,7 @@ class DrawerCoordinator extends Coordinator {
     static final String TECH_COMPANY = "company";
     static final String INSIGHTFUL = "insightful";
 
-    @BindViews({R.id.all, R.id.developer, R.id.tech, R.id.insightful})
+    @BindViews({R.id.all, R.id.developer, R.id.company, R.id.insightful})
     TextView[] categoryViews;
 
     private final Context context;
@@ -56,7 +55,7 @@ class DrawerCoordinator extends Coordinator {
         bind(categoryPreference.asObservable(), onCategorySelect);
     }
 
-    @OnClick({R.id.all, R.id.developer, R.id.tech, R.id.insightful})
+    @OnClick({R.id.all, R.id.developer, R.id.company, R.id.insightful})
     void onCategoryClick(@NonNull TextView view) {
         selectView(view);
         categoryPreference.set(getCategory(view));
@@ -94,7 +93,7 @@ class DrawerCoordinator extends Coordinator {
             case R.id.developer:
                 Analytics.event(Analytics.Event.VIEW_DEVELOPER);
                 return DEVELOPER;
-            case R.id.tech:
+            case R.id.company:
                 Analytics.event(Analytics.Event.VIEW_TECH_COMPANY);
                 return TECH_COMPANY;
             case R.id.insightful:

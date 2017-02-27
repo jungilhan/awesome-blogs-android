@@ -8,6 +8,7 @@ import com.f2prateek.rx.preferences.RxSharedPreferences;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.petabytes.api.Api;
+import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -15,6 +16,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class AwesomeBlogsApp extends Application {
 
     private static AwesomeBlogsApp instance;
+    private ActivityLayoutBinder activityLayoutBinder;
     private Api api;
     private RxSharedPreferences preferences;
     private FirebaseAnalytics analytics;
@@ -35,7 +37,15 @@ public class AwesomeBlogsApp extends Application {
         return instance;
     }
 
-    public Api api() {
+    public final ActivityLayoutBinder activityLayoutBinder() {
+        return activityLayoutBinder == null ? activityLayoutBinder = createActivityLayoutBinder() : activityLayoutBinder;
+    }
+
+    protected ActivityLayoutBinder createActivityLayoutBinder() {
+        return ActivityLayoutBinder.DEFAULT;
+    }
+
+    public final Api api() {
         return api == null ? api = createApi() : api;
     }
 
@@ -43,7 +53,7 @@ public class AwesomeBlogsApp extends Application {
         return new Api(this, false);
     }
 
-    public RxSharedPreferences preferences() {
+    public final RxSharedPreferences preferences() {
         return preferences == null ? preferences = createPreferences() : preferences;
     }
 
@@ -51,7 +61,7 @@ public class AwesomeBlogsApp extends Application {
         return RxSharedPreferences.create(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
-    public FirebaseAnalytics analytics() {
+    public final FirebaseAnalytics analytics() {
         return analytics == null ? analytics = createAnalytics() : analytics;
     }
 

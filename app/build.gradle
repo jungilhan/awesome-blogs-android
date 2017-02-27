@@ -49,7 +49,7 @@ android {
         targetSdkVersion 25
         versionCode 5
         versionName "1.1"
-        buildConfigField 'String', 'GIT_SHA', '\"${gitSha()}\"'
+        buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
