@@ -14,7 +14,5 @@ test:
     - circle-android wait-for-boot
     - ./gradlew connectedAndroidTest
 
-deployment:
-  coverage:
-    commands:
-      - bash <(curl -s https://codecov.io/bash)
+  post:
+    - bash <(curl -s https://codecov.io/bash)
