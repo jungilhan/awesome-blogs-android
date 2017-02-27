@@ -13,7 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 public class AwesomeBlogsRemoteSource implements DataSource {
@@ -23,7 +22,10 @@ public class AwesomeBlogsRemoteSource implements DataSource {
     public AwesomeBlogsRemoteSource(boolean loggable) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .addNetworkInterceptor(new UserAgentInterceptor("awesome-blogs-android"))
+            .build();
 
         Retrofit retrofit = new Retrofit.Builder()
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
