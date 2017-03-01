@@ -24,7 +24,7 @@ ext {
     timber = 'com.jakewharton.timber:timber:4.0.1'
 
     stream = 'com.annimon:stream:1.1.5'
-    gson = 'com.google.code.gson:gson:2.4'
+    gson = 'com.google.code.gson:gson:2.7'
 
     jsoup = 'org.jsoup:jsoup:1.10.1'
     commonlang = 'org.apache.commons:commons-lang3:3.5'
