@@ -44,7 +44,6 @@ import rx.schedulers.Schedulers;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
-import static org.petabytes.awesomeblogs.util.Analytics.Event.REFRESH;
 
 class FeedsCoordinator extends Coordinator {
 
@@ -102,7 +101,8 @@ class FeedsCoordinator extends Coordinator {
         bind(AwesomeBlogsApp.get().api()
             .getFeed(category, refresh)
             .filter($ -> TextUtils.equals(this.category, category))
-            .map(Feed::getEntries)
+            .flatMapIterable(Feed::getEntries)
+            .toSortedList((entry, entry2) -> Long.valueOf(entry2.getCreatedAt()).compareTo(entry.getCreatedAt()))
             .map(this::categorize)
             .subscribeOn(Schedulers.io()), this::onLoad, $ -> onLoadError());
     }

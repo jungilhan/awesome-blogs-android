@@ -16,10 +16,12 @@ import org.petabytes.api.DataSource;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
@@ -54,6 +56,20 @@ public class AwesomeBlogsLocalSource implements DataSource {
                 }
             }
         });
+    }
+
+    // 로컬에 없는 새로운 entry 는 createdAt 을 현재 시간으로 마킹해준다.
+    public void saveFeedWithCreatedAt(Feed remoteFeed, Map<String, Long> createdAtByLink) {
+        RealmList<Entry> entries = remoteFeed.getEntries();
+        for (Entry entry : entries) {
+            Long createdAt = createdAtByLink.get(entry.getLink());
+            if (createdAt == null) {
+                entry.setCreatedAt(System.currentTimeMillis());
+            } else {
+                entry.setCreatedAt(createdAt);
+            }
+        }
+        saveFeed(remoteFeed);
     }
 
     public void saveFeed(@NonNull final Feed feed) {

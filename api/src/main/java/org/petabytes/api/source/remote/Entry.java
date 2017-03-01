@@ -68,6 +68,7 @@ class Entry {
         entry.setUpdatedAt(updatedAt);
         entry.setSummary(summary);
         entry.setLink(link);
+        entry.setCreatedAt(System.currentTimeMillis());
         return entry;
     }
 }

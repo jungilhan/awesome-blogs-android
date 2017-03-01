@@ -16,6 +16,7 @@ public class Entry extends RealmObject {
     private String author;
     private String updatedAt;
     private String summary;
+    private long createdAt;
     private @PrimaryKey String link;
 
     public String getTitle() {
@@ -56,6 +57,14 @@ public class Entry extends RealmObject {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

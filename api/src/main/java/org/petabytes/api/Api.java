@@ -5,6 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.annimon.stream.function.Function;
+
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
 import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
@@ -12,6 +16,7 @@ import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -50,8 +55,8 @@ public class Api implements DataSource {
             })
             .doOnNext(new Action1<Feed>() {
                 @Override
-                public void call(Feed feed) {
-                    if (!feed.isExpires()) {
+                public void call(final Feed localFeed) {
+                    if (!localFeed.isExpires()) {
                         return;
                     }
                     remoteSource.getFeed(category)
@@ -64,8 +69,20 @@ public class Api implements DataSource {
                         })
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed feed) {
-                                localSource.saveFeed(feed);
+                            public void call(Feed remoteFeed) {
+                                Map<String, Long> links = Stream.of(localFeed.getEntries())
+                                    .collect(Collectors.toMap(new Function<Entry, String>() {
+                                        @Override
+                                        public String apply(Entry entry) {
+                                            return entry.getLink();
+                                        }
+                                    }, new Function<Entry, Long>() {
+                                        @Override
+                                        public Long apply(Entry entry) {
+                                            return entry.getCreatedAt();
+                                        }
+                                    }));
+                                localSource.saveFeedWithCreatedAt(remoteFeed, links);
                             }
                         })
                         .onErrorResumeNext(Observable.<Feed>empty())
