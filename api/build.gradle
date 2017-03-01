@@ -1,14 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'realm-android'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "io.realm:realm-gradle-plugin:2.3.1"
-    }
-}
+apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 25
@@ -22,6 +14,7 @@ android {
         debug {
             minifyEnabled false
             debuggable true
+            testCoverageEnabled true
         }
         release {
             minifyEnabled false

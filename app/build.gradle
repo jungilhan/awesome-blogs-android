@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'io.fabric'
+apply plugin: 'jacoco-android'
 
 repositories {
     maven { url 'https://jitpack.io' }
@@ -66,6 +67,7 @@ android {
             debuggable true
             minifyEnabled false
             applicationIdSuffix '.debug'
+            testCoverageEnabled true
         }
         release {
             debuggable false
