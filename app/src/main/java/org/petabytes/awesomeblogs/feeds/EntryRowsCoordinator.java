@@ -2,6 +2,7 @@ package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ class EntryRowsCoordinator extends Coordinator {
 
         IntStream.range(0, entries.size())
             .forEach(i -> {
+                titleViews[i].setTypeface(titleViews[i].getTypeface(), Typeface.BOLD);
                 bind(AwesomeBlogsApp.get().api()
                     .isRead(entries.get(i).getLink()), isRead -> {
                         titleViews[i].setText(entries.get(i).getTitle());
