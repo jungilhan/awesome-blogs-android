@@ -52,6 +52,7 @@ android {
         versionName "1.1"
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     signingConfigs {
@@ -100,25 +101,30 @@ dependencies {
     compile project(':slidingMenu')
     compile rootProject.ext.support_design
     compile rootProject.ext.firebase_core
+    compile rootProject.ext.firebase_auth
+    compile rootProject.ext.play_services_auth
     compile rootProject.ext.alerter
     compile rootProject.ext.flipboard_bottomsheet
     compile rootProject.ext.rxpreferences
+    compile rootProject.ext.rxrelay
     compile rootProject.ext.calligraphy
     compile rootProject.ext.spinkit
     compile rootProject.ext.verticalviewpager
     compile rootProject.ext.topsnackbar
     compile rootProject.ext.crashlytics
-    annotationProcessor rootProject.ext.butterknife_compiler
     compile(rootProject.ext.crashlytics) {
         transitive = true;
     }
 
+    annotationProcessor rootProject.ext.butterknife_compiler
+
     debugCompile rootProject.ext.stetho
     debugCompile rootProject.ext.stetho_realm
+
+    testCompile rootProject.ext.junit
+    testCompile rootProject.ext.assertj
     androidTestCompile(rootProject.ext.support_espressocore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile rootProject.ext.junit
-    testCompile rootProject.ext.assertj
 }
 apply plugin: 'com.google.gms.google-services'

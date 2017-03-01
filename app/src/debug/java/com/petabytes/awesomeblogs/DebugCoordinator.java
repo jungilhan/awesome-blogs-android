@@ -8,9 +8,12 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
+
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.BuildConfig;
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.auth.User;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.SimpleDateFormat;
@@ -19,11 +22,16 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observable;
+import rx.functions.Action1;
 import rx.subjects.BehaviorSubject;
 
 class DebugCoordinator extends Coordinator {
 
+    @BindView(R.id.name) TextView nameView;
+    @BindView(R.id.email) TextView emailView;
+    @BindView(R.id.uid) TextView uidView;
     @BindView(R.id.git_sha) TextView gitShaView;
     @BindView(R.id.build_date) TextView buildDateView;
     @BindView(R.id.build_type) TextView buildTypeView;
@@ -57,9 +65,24 @@ class DebugCoordinator extends Coordinator {
     @Override
     public void attach(View view) {
         super.attach(view);
+        initAccountSection();
         initAppSection();
         initDeviceSection();
         initExpiryDates();
+    }
+
+    private void initAccountSection() {
+        AwesomeBlogsApp.get().authenticator()
+            .isSignIn()
+            .filter(isSignIn -> isSignIn)
+            .flatMap($ -> AwesomeBlogsApp.get().authenticator().user())
+            .subscribe(optional -> {
+                optional.ifPresent(user -> {
+                    nameView.setText(user.getName());
+                    emailView.setText(user.getEmail());
+                    uidView.setText(user.getId());
+                });
+            });
     }
 
     private void initAppSection() {
@@ -89,6 +112,11 @@ class DebugCoordinator extends Coordinator {
             bind(getExpiryDate("company"), companyView::setText);
             bind(getExpiryDate("insightful"), insightfulView::setText);
         }, 500);
+    }
+
+    @OnClick(R.id.uid)
+    void onUidClick() {
+        AwesomeBlogsApp.get().authenticator().signOut();
     }
 
     private Observable<String> getExpiryDate(@NonNull String category) {

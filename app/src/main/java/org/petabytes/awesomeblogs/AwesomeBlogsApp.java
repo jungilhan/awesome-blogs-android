@@ -1,16 +1,26 @@
 package org.petabytes.awesomeblogs;
 
+import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.crashlytics.android.Crashlytics;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.petabytes.api.Api;
+import org.petabytes.awesomeblogs.auth.Authenticator;
+import org.petabytes.awesomeblogs.base.Verifiable;
+import org.petabytes.awesomeblogs.feeds.FeedsActivity;
+import org.petabytes.awesomeblogs.util.LifeCycles;
 import org.petabytes.coordinator.ActivityLayoutBinder;
 
+import hugo.weaving.DebugLog;
 import io.fabric.sdk.android.Fabric;
+import rx.Observable;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class AwesomeBlogsApp extends Application {
@@ -18,6 +28,7 @@ public class AwesomeBlogsApp extends Application {
     private static AwesomeBlogsApp instance;
     private ActivityLayoutBinder activityLayoutBinder;
     private Api api;
+    private Authenticator authenticator;
     private RxSharedPreferences preferences;
     private FirebaseAnalytics analytics;
 
@@ -31,6 +42,25 @@ public class AwesomeBlogsApp extends Application {
             .setDefaultFontPath("fonts/NanumBarunGothicLight.otf")
             .setFontAttrId(R.attr.fontPath)
             .build());
+
+        registerActivityLifecycleCallbacks(new LifeCycles.Activity() {
+            @DebugLog
+            @Override
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+                if (!(activity instanceof Verifiable)) {
+                    return;
+                }
+                authenticator().isSignIn()
+                    .filter(isSignIn -> !isSignIn)
+                    .doOnNext($ -> activity.finish())
+                    .flatMap($ -> authenticator().signIn(instance))
+                    .take(1)
+                    .onErrorResumeNext(Observable.empty())
+                    .subscribe($ -> {
+                        startActivity(FeedsActivity.intent(instance));
+                    });
+            }
+        });
     }
 
     public static AwesomeBlogsApp get() {
@@ -51,6 +81,14 @@ public class AwesomeBlogsApp extends Application {
 
     protected Api createApi() {
         return new Api(this, false);
+    }
+
+    public final Authenticator authenticator() {
+        return authenticator == null ? authenticator = createAuthenticator() : authenticator;
+    }
+
+    protected Authenticator createAuthenticator() {
+        return new Authenticator();
     }
 
     public final RxSharedPreferences preferences() {

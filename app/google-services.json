@@ -103,6 +103,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "86413647041-n9qvq7rdl7gp8gi2hon9thquk2tnc7sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.petabytes.awesomeblogs.debug",
+            "certificate_hash": "59d446e2f09a53481ebabd3b2c152d98e7359cc7"
+          }
+        },
+        {
           "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -117,8 +125,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
@@ -134,6 +147,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "86413647041-4ltnq7av4394d4049oitbs7fsn9i32kl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.petabytes.awesomeblogs.staging",
+            "certificate_hash": "ca1483ae4c830aa89138684fd10d558df29b88e9"
+          }
+        },
+        {
           "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -148,8 +169,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86413647041-bldc4j0a7lkk68hva87qttgci8mj20pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
