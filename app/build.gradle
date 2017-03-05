@@ -68,7 +68,7 @@ android {
             debuggable true
             minifyEnabled false
             applicationIdSuffix '.debug'
-            testCoverageEnabled true
+            testCoverageEnabled false
         }
         release {
             debuggable false
