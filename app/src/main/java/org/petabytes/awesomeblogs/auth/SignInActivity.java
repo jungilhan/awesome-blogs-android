@@ -47,6 +47,7 @@ public class SignInActivity extends AwesomeActivity implements GoogleApiClient.O
             .build();
     }
 
+    @DebugLog
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -60,7 +61,6 @@ public class SignInActivity extends AwesomeActivity implements GoogleApiClient.O
             }
         }
     }
-
 
     @DebugLog
     @Override

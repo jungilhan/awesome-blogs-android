@@ -4,16 +4,16 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
-import com.annimon.stream.Optional;
+import com.f2prateek.rx.preferences.RxSharedPreferences;
 
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.BuildConfig;
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.awesomeblogs.auth.User;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.subjects.BehaviorSubject;
 
 class DebugCoordinator extends Coordinator {
@@ -32,6 +31,9 @@ class DebugCoordinator extends Coordinator {
     @BindView(R.id.name) TextView nameView;
     @BindView(R.id.email) TextView emailView;
     @BindView(R.id.uid) TextView uidView;
+    @BindView(R.id.fcm_token) TextView fcmTokenView;
+    @BindView(R.id.access_token) TextView accessTokenView;
+    @BindView(R.id.device_id) TextView deviceIdView;
     @BindView(R.id.git_sha) TextView gitShaView;
     @BindView(R.id.build_date) TextView buildDateView;
     @BindView(R.id.build_type) TextView buildTypeView;
@@ -66,6 +68,7 @@ class DebugCoordinator extends Coordinator {
     public void attach(View view) {
         super.attach(view);
         initAccountSection();
+        initFcmSection();
         initAppSection();
         initDeviceSection();
         initExpiryDates();
@@ -83,6 +86,16 @@ class DebugCoordinator extends Coordinator {
                     uidView.setText(user.getId());
                 });
             });
+    }
+
+    private void initFcmSection() {
+        RxSharedPreferences preferences = AwesomeBlogsApp.get().preferences();
+        bind(preferences.getString("fcm_token").asObservable()
+            .filter(token -> !TextUtils.isEmpty(token)), fcmTokenView::setText);
+        bind(preferences.getString("access_token").asObservable()
+            .filter(token -> !TextUtils.isEmpty(token)), accessTokenView::setText);
+        bind(preferences.getString("device_id").asObservable()
+            .filter(token -> !TextUtils.isEmpty(token)), deviceIdView::setText);
     }
 
     private void initAppSection() {

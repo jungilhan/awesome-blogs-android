@@ -10,6 +10,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.jakewharton.rxrelay.BehaviorRelay;
 
+import org.petabytes.awesomeblogs.AwesomeBlogsApp;
+
+import hugo.weaving.DebugLog;
 import rx.Observable;
 
 public class Authenticator {
@@ -22,7 +25,8 @@ public class Authenticator {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(auth ->
             userRelay.call((auth != null && auth.getCurrentUser() != null)
-                    ? Optional.of(User.of(auth.getCurrentUser())) : Optional.empty()));
+                ? Optional.of(User.of(auth.getCurrentUser())) : Optional.empty()));
+
     }
 
     public Observable<Optional<User>> user() {
@@ -42,9 +46,12 @@ public class Authenticator {
         firebaseAuth.signOut();
     }
 
+    @DebugLog
     void signInWithGoogle(@Nullable GoogleSignInAccount account) {
         if (account != null) {
             firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null));
+            AwesomeBlogsApp.get().preferences()
+                .getString("access_token").set(account.getIdToken());
         } else {
             userRelay.call(Optional.empty());
         }

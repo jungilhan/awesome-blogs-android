@@ -34,6 +34,7 @@ ext {
 
     firebase_core = "com.google.firebase:firebase-core:$ver_firebase"
     firebase_auth = "com.google.firebase:firebase-auth:$ver_firebase"
+    firebase_messaging = "com.google.firebase:firebase-messaging:$ver_firebase"
     play_services_auth = "com.google.android.gms:play-services-auth:$ver_firebase"
     alerter = 'com.tapadoo.android:alerter:1.0.1'
     flipboard_bottomsheet = 'com.flipboard:bottomsheet-core:1.5.0'

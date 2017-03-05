@@ -36,13 +36,13 @@ public class RxBinder {
         subscribe(observable, new Subscriber<T>() {
             @Override
             public void onNext(T value) {
-                Timber.i("onNext: " + value.toString());
+                Timber.i("onNext: " + (value != null ? value.toString() : "null"));
                 onNext.call(value);
             }
 
             @Override
             public void onError(Throwable e) {
-                Timber.e(e.getMessage(), e);
+                Timber.e(e, e.getMessage());
                 if (onError != null) {
                     onError.call(e);
                 }

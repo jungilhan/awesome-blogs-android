@@ -30,6 +30,28 @@
             android:name=".auth.SignInActivity"
             android:launchMode="singleTask"/>
 
+        <service
+            android:name=".fcm.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".fcm.InstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notification" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimaryDark" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d681fa3447fdb8f13e18ee327c6ce8a00bcfb3dc"/>

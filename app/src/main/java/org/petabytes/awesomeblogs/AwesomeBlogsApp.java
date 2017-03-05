@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.crashlytics.android.Crashlytics;
+import com.f2prateek.rx.preferences.Preference;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -15,7 +17,9 @@ import org.petabytes.api.Api;
 import org.petabytes.awesomeblogs.auth.Authenticator;
 import org.petabytes.awesomeblogs.base.Verifiable;
 import org.petabytes.awesomeblogs.feeds.FeedsActivity;
+import org.petabytes.awesomeblogs.util.Devices;
 import org.petabytes.awesomeblogs.util.LifeCycles;
+import org.petabytes.awesomeblogs.util.Strings;
 import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import hugo.weaving.DebugLog;
@@ -53,12 +57,11 @@ public class AwesomeBlogsApp extends Application {
                 authenticator().isSignIn()
                     .filter(isSignIn -> !isSignIn)
                     .doOnNext($ -> activity.finish())
+                    .doOnNext($ -> preferences().getString("access_token").set(null))
                     .flatMap($ -> authenticator().signIn(instance))
                     .take(1)
                     .onErrorResumeNext(Observable.empty())
-                    .subscribe($ -> {
-                        startActivity(FeedsActivity.intent(instance));
-                    });
+                    .subscribe($ -> startActivity(FeedsActivity.intent(instance)));
             }
         });
     }
@@ -80,7 +83,20 @@ public class AwesomeBlogsApp extends Application {
     }
 
     protected Api createApi() {
-        return new Api(this, false);
+        return new Api(this,
+            () -> "awesome-blogs-android/" + BuildConfig.VERSION_NAME,
+            () -> {
+                Preference<String> preference = preferences().getString("device_id");
+                String deviceId = preference.get();
+                if (TextUtils.isEmpty(deviceId)) {
+                    deviceId = Devices.getId(this);
+                    preference.set(deviceId);
+                }
+                return deviceId;
+            },
+            () -> preferences().getString("fcm_token", Strings.EMPTY).get(),
+            () -> preferences().getString("access_token", Strings.EMPTY).get(),
+            false);
     }
 
     public final Authenticator authenticator() {
