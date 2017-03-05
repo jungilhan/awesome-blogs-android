@@ -164,7 +164,7 @@ public class AwesomeBlogsLocalSource implements DataSource {
                     return new Date(feeds.get(0).getExpires());
                 }
             })
-            .doOnSubscribe(new Action0() {
+            .doOnUnsubscribe(new Action0() {
                 @Override
                 public void call() {
                     realm.close();
