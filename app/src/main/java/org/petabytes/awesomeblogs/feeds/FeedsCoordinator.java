@@ -101,8 +101,7 @@ class FeedsCoordinator extends Coordinator {
         bind(AwesomeBlogsApp.get().api()
             .getFeed(category, refresh)
             .filter($ -> TextUtils.equals(this.category, category))
-            .flatMapIterable(Feed::getEntries)
-            .toSortedList((entry, entry2) -> Long.valueOf(entry2.getCreatedAt()).compareTo(entry.getCreatedAt()))
+            .map(Feed::getEntries)
             .map(this::categorize)
             .subscribeOn(Schedulers.io()), this::onLoad, $ -> onLoadError());
     }

@@ -6,14 +6,17 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Function;
 import com.annimon.stream.function.IntFunction;
 import com.annimon.stream.function.Predicate;
+import com.annimon.stream.function.Supplier;
 
 import org.petabytes.api.DataSource;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,6 @@ import java.util.concurrent.Callable;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
@@ -58,18 +60,30 @@ public class AwesomeBlogsLocalSource implements DataSource {
         });
     }
 
-    // 로컬에 없는 새로운 entry 는 createdAt 을 현재 시간으로 마킹해준다.
-    public void saveFeedWithCreatedAt(Feed remoteFeed, Map<String, Long> createdAtByLink) {
-        RealmList<Entry> entries = remoteFeed.getEntries();
-        for (Entry entry : entries) {
-            Long createdAt = createdAtByLink.get(entry.getLink());
-            if (createdAt == null) {
-                entry.setCreatedAt(System.currentTimeMillis());
-            } else {
-                entry.setCreatedAt(createdAt);
+    public Feed fillInCreatedAt(@NonNull Feed freshFeed, @NonNull Optional<Feed> cachedFeed) {
+        if (cachedFeed.isPresent()) {
+            Map<String, Long> createdAtMap = toCreatedAtMap(cachedFeed.get());
+            for (int i = freshFeed.getEntries().size() - 1; i >= 0; i--) {
+                Entry entry = freshFeed.getEntries().get(i);
+                Long createdAt = createdAtMap.get(entry.getLink());
+                entry.setCreatedAt(createdAt == null ? System.currentTimeMillis() : createdAt);
+            }
+        } else {
+            for (int i = freshFeed.getEntries().size() - 1; i >= 0; i--) {
+                freshFeed.getEntries().get(i).setCreatedAt(System.currentTimeMillis());
             }
         }
-        saveFeed(remoteFeed);
+        return freshFeed;
+    }
+
+    public Feed sortByCreatedAt(@NonNull Feed feed) {
+        Collections.sort(feed.getEntries(), new Comparator<Entry>() {
+            @Override
+            public int compare(Entry entry1, Entry entry2) {
+                return Long.valueOf(entry2.getCreatedAt()).compareTo(entry1.getCreatedAt());
+            }
+        });
+        return feed;
     }
 
     public void saveFeed(@NonNull final Feed feed) {
@@ -87,9 +101,46 @@ public class AwesomeBlogsLocalSource implements DataSource {
         return freshEntriesSubject;
     }
 
-    public Observable<Pair<String, List<Entry>>> filterFreshEntries(@NonNull final Feed feed) {
-        return Observable.fromCallable(new Callable<Pair<String, List<Entry>>>() {
-            public Pair<String, List<Entry>> call() throws Exception {
+    public Observable<Pair<String, List<Entry>>> notifyFreshEntries(@NonNull final Feed feed) {
+        return getFreshEntries(feed, new Supplier<List<Entry>>() {
+            @Override
+            public List<Entry> get() {
+                return Collections.emptyList();
+            }
+        }).map(new Func1<List<Entry>, Pair<String, List<Entry>>>() {
+            @Override
+            public Pair<String, List<Entry>> call(@NonNull List<Entry> entries) {
+                return new Pair<>(feed.getCategory(), entries);
+            }
+        }).doOnNext(new Action1<Pair<String, List<Entry>>>() {
+            @Override
+            public void call(Pair<String, List<Entry>> pair) {
+                freshEntriesSubject.onNext(pair);
+            }
+        });
+    }
+
+    private Observable<List<Entry>> getFreshEntries(@NonNull final Feed feed, @NonNull final Supplier<List<Entry>> ifEmptyExistEntriesSupplier) {
+        return getExistEntries(feed).map(new Func1<List<Entry>, List<Entry>>() {
+            @Override
+            public List<Entry> call(final List<Entry> existEntries) {
+                return existEntries.isEmpty()
+                    ? ifEmptyExistEntriesSupplier.get()
+                    : Stream.of(feed.getEntries())
+                    .filter(new Predicate<Entry>() {
+                        @Override
+                        public boolean test(Entry value) {
+                            return !existEntries.contains(value);
+                        }
+                    })
+                    .collect(Collectors.<Entry>toList());
+            }
+        });
+    }
+
+    private Observable<List<Entry>> getExistEntries(@NonNull final Feed feed) {
+        return Observable.fromCallable(new Callable<List<Entry>>() {
+            public List<Entry> call() throws Exception {
                 Realm realm = Realm.getInstance(config);
                 try {
                     final RealmResults<Entry> existEntries = realm.where(Entry.class)
@@ -106,27 +157,27 @@ public class AwesomeBlogsLocalSource implements DataSource {
                                 }
                             }))
                         .findAll();
-
-                    return existEntries.isEmpty()
-                        ? new Pair<>(feed.getCategory(), Collections.<Entry>emptyList())
-                        : new Pair<>(feed.getCategory(), Stream.of(feed.getEntries())
-                        .filter(new Predicate<Entry>() {
-                            @Override
-                            public boolean test(Entry value) {
-                                return !existEntries.contains(value);
-                            }
-                        })
-                        .collect(Collectors.<Entry>toList()));
+                    return realm.copyFromRealm(existEntries);
                 } finally {
                     realm.close();
                 }
             }
-        }).doOnNext(new Action1<Pair<String, List<Entry>>>() {
-            @Override
-            public void call(Pair<String, List<Entry>> pair) {
-                freshEntriesSubject.onNext(pair);
-            }
         });
+    }
+
+    private Map<String, Long> toCreatedAtMap(@NonNull Feed feed) {
+        return Stream.of(feed.getEntries())
+            .collect(Collectors.toMap(new Function<Entry, String>() {
+                @Override
+                public String apply(Entry entry) {
+                    return entry.getLink();
+                }
+            }, new Function<Entry, Long>() {
+                @Override
+                public Long apply(Entry entry) {
+                    return entry.getCreatedAt();
+                }
+            }));
     }
 
     public Observable<Boolean> isRead(@NonNull final String link) {
@@ -180,7 +231,7 @@ public class AwesomeBlogsLocalSource implements DataSource {
                     return new Date(feeds.get(0).getExpires());
                 }
             })
-            .doOnSubscribe(new Action0() {
+            .doOnUnsubscribe(new Action0() {
                 @Override
                 public void call() {
                     realm.close();

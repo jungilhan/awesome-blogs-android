@@ -5,9 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
-import com.annimon.stream.function.Function;
+import com.annimon.stream.Optional;
 
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
 import org.petabytes.api.source.local.Entry;
@@ -16,7 +14,6 @@ import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -55,34 +52,28 @@ public class Api implements DataSource {
             })
             .doOnNext(new Action1<Feed>() {
                 @Override
-                public void call(final Feed localFeed) {
-                    if (!localFeed.isExpires()) {
+                public void call(final Feed cachedFeed) {
+                    if (!cachedFeed.isExpires()) {
                         return;
                     }
                     remoteSource.getFeed(category)
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed feed) {
-                                localSource.filterFreshEntries(feed)
+                            public void call(Feed freshFeed) {
+                                localSource.notifyFreshEntries(freshFeed)
                                     .subscribe();
+                            }
+                        })
+                        .map(new Func1<Feed, Feed>() {
+                            @Override
+                            public Feed call(Feed freshFeed) {
+                                return localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.of(cachedFeed)));
                             }
                         })
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed remoteFeed) {
-                                Map<String, Long> links = Stream.of(localFeed.getEntries())
-                                    .collect(Collectors.toMap(new Function<Entry, String>() {
-                                        @Override
-                                        public String apply(Entry entry) {
-                                            return entry.getLink();
-                                        }
-                                    }, new Function<Entry, Long>() {
-                                        @Override
-                                        public Long apply(Entry entry) {
-                                            return entry.getCreatedAt();
-                                        }
-                                    }));
-                                localSource.saveFeedWithCreatedAt(remoteFeed, links);
+                            public void call(Feed freshFeed) {
+                                localSource.saveFeed(freshFeed);
                             }
                         })
                         .onErrorResumeNext(Observable.<Feed>empty())
@@ -94,10 +85,16 @@ public class Api implements DataSource {
                 @Override
                 public Observable<Feed> call() {
                     return remoteSource.getFeed(category)
+                        .map(new Func1<Feed, Feed>() {
+                            @Override
+                            public Feed call(Feed freshFeed) {
+                                return localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.<Feed>empty()));
+                            }
+                        })
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed feed) {
-                                localSource.saveFeed(feed);
+                            public void call(Feed freshFeed) {
+                                localSource.saveFeed(freshFeed);
                             }
                         });
                 }

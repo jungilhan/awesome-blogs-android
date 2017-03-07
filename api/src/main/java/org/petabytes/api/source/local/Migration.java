@@ -21,7 +21,6 @@ class Migration implements RealmMigration {
             case 0:
                 schema.get("Feed")
                     .addField("expires", long.class);
-                ++oldVersion;
             case 1:
                 schema.get("Entry")
                     .addField("createdAt", long.class)
@@ -33,7 +32,6 @@ class Migration implements RealmMigration {
                             obj.setLong("createdAt", time);
                         }
                     });
-                ++oldVersion;
         }
     }
 }
