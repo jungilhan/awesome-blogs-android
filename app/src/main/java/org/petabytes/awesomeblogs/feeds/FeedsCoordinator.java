@@ -52,16 +52,16 @@ class FeedsCoordinator extends Coordinator {
     @BindView(R.id.feeds) VerticalViewPager pagerView;
 
     private final Context context;
-    private final Action3<Integer, Integer, Integer> onPagerSelectedAction;
+    private final Action3<Integer, Integer, Integer> onPageSelectedAction;
     private @DrawerCoordinator.Category String category;
 
     enum Type {
         ENTIRE, DIAGONAL, ROWS
     }
 
-    FeedsCoordinator(@NonNull Context context, @NonNull Action3<Integer, Integer, Integer> onPagerSelectedAction) {
+    FeedsCoordinator(@NonNull Context context, @NonNull Action3<Integer, Integer, Integer> onPageSelectedAction) {
         this.context = context;
-        this.onPagerSelectedAction = onPagerSelectedAction;
+        this.onPageSelectedAction = onPageSelectedAction;
     }
 
     @DebugLog
@@ -77,7 +77,7 @@ class FeedsCoordinator extends Coordinator {
         pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                onPagerSelectedAction.call(position, pagerView.getAdapter().getCount(), getForegroundColor(position));
+                onPageSelectedAction.call(position, pagerView.getAdapter().getCount(), getForegroundColor(position));
                 refreshView.setEnabled(refreshView.isRefreshing() || position == 0);
             }
         });
@@ -112,7 +112,7 @@ class FeedsCoordinator extends Coordinator {
         refreshView.setRefreshing(false);
         refreshView.setEnabled(true);
         pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
-        onPagerSelectedAction.call(0, entries.size(), getForegroundColor(0));
+        onPageSelectedAction.call(0, entries.size(), getForegroundColor(0));
     }
 
     private void onLoadError() {
