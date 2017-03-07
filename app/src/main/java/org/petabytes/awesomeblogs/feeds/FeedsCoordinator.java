@@ -44,7 +44,6 @@ import rx.schedulers.Schedulers;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
-import static org.petabytes.awesomeblogs.util.Analytics.Event.REFRESH;
 
 class FeedsCoordinator extends Coordinator {
 

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.function.Supplier;
 
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
@@ -54,22 +55,28 @@ public class Api implements DataSource {
             })
             .doOnNext(new Action1<Feed>() {
                 @Override
-                public void call(Feed feed) {
-                    if (!feed.isExpires()) {
+                public void call(final Feed cachedFeed) {
+                    if (!cachedFeed.isExpires()) {
                         return;
                     }
                     remoteSource.getFeed(category)
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed feed) {
-                                localSource.filterFreshEntries(feed)
+                            public void call(Feed freshFeed) {
+                                localSource.notifyFreshEntries(freshFeed)
                                     .subscribe();
+                            }
+                        })
+                        .map(new Func1<Feed, Feed>() {
+                            @Override
+                            public Feed call(Feed freshFeed) {
+                                return localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.of(cachedFeed)));
                             }
                         })
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed feed) {
-                                localSource.saveFeed(feed);
+                            public void call(Feed freshFeed) {
+                                localSource.saveFeed(freshFeed);
                             }
                         })
                         .onErrorResumeNext(Observable.<Feed>empty())
@@ -81,10 +88,16 @@ public class Api implements DataSource {
                 @Override
                 public Observable<Feed> call() {
                     return remoteSource.getFeed(category)
+                        .map(new Func1<Feed, Feed>() {
+                            @Override
+                            public Feed call(Feed freshFeed) {
+                                return localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.<Feed>empty()));
+                            }
+                        })
                         .doOnNext(new Action1<Feed>() {
                             @Override
-                            public void call(Feed feed) {
-                                localSource.saveFeed(feed);
+                            public void call(Feed freshFeed) {
+                                localSource.saveFeed(freshFeed);
                             }
                         });
                 }
