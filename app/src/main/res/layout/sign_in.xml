@@ -4,65 +4,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="40dp"
+    android:paddingTop="60dp"
+    android:paddingRight="40dp"
+    android:paddingBottom="60dp"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark">
 
-    <android.support.v4.widget.Space
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
-
-    <android.support.v7.widget.LinearLayoutCompat
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/logo"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="36sp"/>
-    </android.support.v7.widget.LinearLayoutCompat>
+        android:layout_centerInParent="true"
+        android:contentDescription="@null"
+        android:src="@drawable/sign_in_logo"/>
 
     <android.support.v4.widget.Space
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="3"/>
+        android:layout_weight="1"/>
 
     <FrameLayout
         android:id="@+id/sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="60dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
         android:background="@drawable/background_sign_in"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="start|center_vertical"
             android:text="@string/sign_in_with_google"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
+            android:textSize="24sp"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="12dp"
+            android:layout_gravity="end|center_vertical"
+            android:contentDescription="@null"
             app:srcCompat="@drawable/google"/>
     </FrameLayout>
 </android.support.v7.widget.LinearLayoutCompat>

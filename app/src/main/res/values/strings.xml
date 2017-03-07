@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">어썸블로그</string>
-    <string name="sign_in_with_google">구글로 계속하기</string>
+    <string name="sign_in_with_google">구글로 로그인</string>
     <string name="ok">확인</string>
     <string name="menu">더보기</string>
     <string name="open_in_browser">페이지 방문하기</string>
