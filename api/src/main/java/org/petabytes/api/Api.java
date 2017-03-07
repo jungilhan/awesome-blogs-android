@@ -6,6 +6,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
 import com.annimon.stream.Optional;
+import com.annimon.stream.function.Supplier;
 
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
 import org.petabytes.api.source.local.Entry;
@@ -27,14 +28,16 @@ public class Api implements DataSource {
     private final AwesomeBlogsRemoteSource remoteSource;
 
     @VisibleForTesting
-    Api(AwesomeBlogsLocalSource localSource, AwesomeBlogsRemoteSource remoteSource) {
+    Api(@NonNull AwesomeBlogsLocalSource localSource, @NonNull AwesomeBlogsRemoteSource remoteSource) {
         this.localSource = localSource;
         this.remoteSource = remoteSource;
     }
 
-    public Api(@NonNull Context context, boolean loggable) {
+    public Api(@NonNull Context context,
+               @NonNull Supplier<String> userAgentSupplier, @NonNull Supplier<String> deviceIdSupplier,
+               @NonNull Supplier<String> fcmTokenSupplier, @NonNull Supplier<String> accessTokenSupplier, boolean loggable) {
         localSource = new AwesomeBlogsLocalSource(context);
-        remoteSource = new AwesomeBlogsRemoteSource(loggable);
+        remoteSource = new AwesomeBlogsRemoteSource(userAgentSupplier, deviceIdSupplier, fcmTokenSupplier, accessTokenSupplier, loggable);
     }
 
     @Override

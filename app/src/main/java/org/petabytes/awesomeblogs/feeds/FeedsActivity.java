@@ -1,7 +1,10 @@
 package org.petabytes.awesomeblogs.feeds;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.style.StyleSpan;
 import android.widget.ImageView;
@@ -11,17 +14,16 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.base.AwesomeActivity;
+import org.petabytes.awesomeblogs.base.Verifiable;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Truss;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.ActivityGraph;
 
-import java.util.Collections;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FeedsActivity extends AwesomeActivity {
+public class FeedsActivity extends AwesomeActivity implements Verifiable {
 
     @BindView(R.id.menu) ImageView menuButton;
     @BindView(R.id.sliding_menu) SlidingMenu slidingMenu;
@@ -76,5 +78,11 @@ public class FeedsActivity extends AwesomeActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public static Intent intent(@NonNull Context context) {
+        Intent intent = new Intent(context, FeedsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
     }
 }
