@@ -86,7 +86,6 @@ class EntryRowsCoordinator extends Coordinator {
             default:
                 throw new RuntimeException("Invalid id");
         }
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
     }
 }

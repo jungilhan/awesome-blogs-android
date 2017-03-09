@@ -50,8 +50,7 @@ class EntryEntireCoordinator extends Coordinator {
 
     @OnClick(R.id.container)
     void onContainerClick() {
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
     }
 
     private void setBackground(@NonNull View view) {

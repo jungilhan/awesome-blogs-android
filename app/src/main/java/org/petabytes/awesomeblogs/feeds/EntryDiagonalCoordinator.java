@@ -53,15 +53,13 @@ class EntryDiagonalCoordinator extends Coordinator {
     @OnClick(R.id.top_container)
     void onTopContainerClick() {
         Entry entry = entries.get(0);
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
     }
 
     @OnClick(R.id.bottom_container)
     void onBottomContainerClick() {
         Entry entry = entries.get(1);
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
     }
 
     private void setBackground(@NonNull View view) {

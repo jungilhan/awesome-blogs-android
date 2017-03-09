@@ -60,6 +60,21 @@ public class AwesomeBlogsLocalSource implements DataSource {
         });
     }
 
+    public Observable<Entry> getEntry(@NonNull final String link) {
+        return Observable.defer(new Func0<Observable<Entry>>() {
+            @Override
+            public Observable<Entry> call() {
+                Realm realm = Realm.getInstance(config);
+                try {
+                    Entry entry = realm.where(Entry.class).equalTo("link", link).findFirst();
+                    return entry != null ? Observable.just(realm.copyFromRealm(entry)) : Observable.<Entry>empty();
+                } finally {
+                    realm.close();
+                }
+            }
+        });
+    }
+
     public Feed fillInCreatedAt(@NonNull Feed freshFeed, @NonNull Optional<Feed> cachedFeed) {
         if (cachedFeed.isPresent()) {
             Map<String, Long> createdAtMap = toCreatedAtMap(cachedFeed.get());
@@ -197,18 +212,17 @@ public class AwesomeBlogsLocalSource implements DataSource {
             });
     }
 
-    public void markAsRead(@NonNull final String title, @NonNull final String author, @NonNull final String updatedAt,
-                           @NonNull final String summary, @NonNull final String link, final long readAt) {
+    public void markAsRead(@NonNull final Entry entry, final long readAt) {
         Realm realm = Realm.getInstance(config);
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(final Realm realm) {
                 Read read = new Read();
-                read.setTitle(title);
-                read.setAuthor(author);
-                read.setUpdatedAt(updatedAt);
-                read.setSummary(summary);
-                read.setLink(link);
+                read.setTitle(entry.getTitle());
+                read.setAuthor(entry.getAuthor());
+                read.setUpdatedAt(entry.getUpdatedAt());
+                read.setSummary(entry.getSummary());
+                read.setLink(entry.getLink());
                 read.setReadAt(readAt);
                 realm.insertOrUpdate(read);
             }
@@ -247,5 +261,4 @@ public class AwesomeBlogsLocalSource implements DataSource {
             .migration(new Migration());
         return builder.build();
     }
-
 }
