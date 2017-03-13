@@ -12,44 +12,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.github.ybq.android.spinkit.SpinKitView
-            android:id="@+id/loading"
-            style="@style/SpinKitView.FoldingCube"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:SpinKit_Color="@color/colorAccent" />
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/refresh"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <fr.castorflex.android.verticalviewpager.VerticalViewPager
-                android:id="@+id/feeds"
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/loading"
+                style="@style/SpinKitView.FoldingCube"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/colorAccent" />
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/refresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/circle_black"
-            style="@style/AppWidget.SelectableBorderless"/>
+                <fr.castorflex.android.verticalviewpager.VerticalViewPager
+                    android:id="@+id/feeds"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+            </android.support.v4.widget.SwipeRefreshLayout>
 
-        <TextView
-            android:id="@+id/page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="11sp"
-            android:layout_margin="16dp"
-            android:layout_gravity="right"
-            tools:text="01 / 12"/>
+            <ImageView
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/circle_black"
+                style="@style/AppWidget.SelectableBorderless"/>
+
+            <TextView
+                android:id="@+id/page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="11sp"
+                android:layout_margin="16dp"
+                android:layout_gravity="right"
+                tools:text="01 / 12"/>
+        </FrameLayout>
+
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:spb_sections_count="4"
+            app:spb_progressiveStart_activated="false"
+            app:spb_generate_background_with_colors="false"
+            app:spb_interpolator="spb_interpolator_acceleratedecelerate"/>
     </FrameLayout>
 </com.flipboard.bottomsheet.BottomSheetLayout>

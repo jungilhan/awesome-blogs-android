@@ -40,6 +40,7 @@ ext {
     flipboard_bottomsheet = 'com.flipboard:bottomsheet-core:1.5.0'
     calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
     spinkit = 'com.github.ybq:Android-SpinKit:1.1.0'
+    smoothprogressbar = 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     verticalviewpager = 'com.github.castorflex.verticalviewpager:library:19.0.1'
     crashlytics = 'com.crashlytics.sdk.android:crashlytics:2.6.6@aar'
     stetho = 'com.facebook.stetho:stetho:1.4.2'

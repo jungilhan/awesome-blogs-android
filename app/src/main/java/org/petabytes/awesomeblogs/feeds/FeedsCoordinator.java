@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Random;
 
 import butterknife.BindView;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
 import rx.functions.Action3;
@@ -50,10 +51,12 @@ class FeedsCoordinator extends Coordinator {
     @BindView(R.id.refresh) SwipeRefreshLayout refreshView;
     @BindView(R.id.loading) View loadingView;
     @BindView(R.id.feeds) VerticalViewPager pagerView;
+    @BindView(R.id.progress_bar) SmoothProgressBar progressBar;
 
     private final Context context;
     private final Action3<Integer, Integer, Integer> onPageSelectedAction;
     private @DrawerCoordinator.Category String category;
+    private ViewPager.SimpleOnPageChangeListener onPageChangeListener;
 
     enum Type {
         ENTIRE, DIAGONAL, ROWS
@@ -74,10 +77,12 @@ class FeedsCoordinator extends Coordinator {
         });
         refreshView.setColorSchemeResources(R.color.colorAccent,
             R.color.background_1, R.color.background_22, R.color.background_6);
-        pagerView.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+        pagerView.setOnPageChangeListener(onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 onPageSelectedAction.call(position, pagerView.getAdapter().getCount(), getForegroundColor(position));
+                progressBar.setSmoothProgressDrawableColors(getProgressBarColors(position));
                 refreshView.setEnabled(refreshView.isRefreshing() || position == 0);
             }
         });
@@ -85,8 +90,17 @@ class FeedsCoordinator extends Coordinator {
         bind(AwesomeBlogsApp.get().api()
             .getFreshEntries()
             .filter(pair -> TextUtils.equals(category, pair.first) && !pair.second.isEmpty()), this::notifyFreshEntries);
+
+        bind(AwesomeBlogsApp.get().api()
+            .getSilentRefresh()
+            .filter(pair -> TextUtils.equals(category, pair.first))
+            .map(pair -> pair.second), isRefreshing -> {
+                Views.setVisibleOrGone(progressBar, isRefreshing);
+                progressBar.setSmoothProgressDrawableColors(getProgressBarColors(0));
+            });
     }
 
+    @DebugLog
     void onCategorySelect(@DrawerCoordinator.Category String category) {
         load(this.category = category, false);
     }
@@ -97,6 +111,7 @@ class FeedsCoordinator extends Coordinator {
             Views.setGone(pagerView);
             refreshView.setEnabled(false);
         }
+        Views.setGone(progressBar);
 
         bind(AwesomeBlogsApp.get().api()
             .getFeed(category, refresh)
@@ -112,7 +127,7 @@ class FeedsCoordinator extends Coordinator {
         refreshView.setRefreshing(false);
         refreshView.setEnabled(true);
         pagerView.setAdapter(new PagerAdapter<>(entries, createPagerFactory()));
-        onPageSelectedAction.call(0, entries.size(), getForegroundColor(0));
+        pagerView.post(() -> onPageChangeListener.onPageSelected(pagerView.getCurrentItem()));
     }
 
     private void onLoadError() {
@@ -175,6 +190,16 @@ class FeedsCoordinator extends Coordinator {
             return context.getResources().getColor(R.color.white);
         } else {
             return context.getResources().getColor(R.color.colorPrimaryDark);
+        }
+    }
+
+    @ColorInt
+    private int[] getProgressBarColors(int position) {
+        Map<Type, List<Entry>> map = (Map<Type, List<Entry>>) ((PagerAdapter) pagerView.getAdapter()).getItem(position);
+        if (map.keySet().contains(ENTIRE)) {
+            return new int[] {context.getResources().getColor(R.color.white)};
+        } else {
+            return context.getResources().getIntArray(R.array.progress_bar);
         }
     }
 

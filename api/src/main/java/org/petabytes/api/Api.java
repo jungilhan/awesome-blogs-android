@@ -17,20 +17,24 @@ import java.util.Date;
 import java.util.List;
 
 import rx.Observable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 public class Api implements DataSource {
 
     private final AwesomeBlogsLocalSource localSource;
     private final AwesomeBlogsRemoteSource remoteSource;
+    private final PublishSubject<Pair<String, Boolean>> silentRefreshSubject;
 
     @VisibleForTesting
     Api(@NonNull AwesomeBlogsLocalSource localSource, @NonNull AwesomeBlogsRemoteSource remoteSource) {
         this.localSource = localSource;
         this.remoteSource = remoteSource;
+        this.silentRefreshSubject = PublishSubject.create();
     }
 
     public Api(@NonNull Context context,
@@ -38,6 +42,7 @@ public class Api implements DataSource {
                @NonNull Supplier<String> fcmTokenSupplier, @NonNull Supplier<String> accessTokenSupplier, boolean loggable) {
         localSource = new AwesomeBlogsLocalSource(context);
         remoteSource = new AwesomeBlogsRemoteSource(userAgentSupplier, deviceIdSupplier, fcmTokenSupplier, accessTokenSupplier, loggable);
+        silentRefreshSubject = PublishSubject.create();
     }
 
     @Override
@@ -60,6 +65,18 @@ public class Api implements DataSource {
                         return;
                     }
                     remoteSource.getFeed(category)
+                        .doOnSubscribe(new Action0() {
+                            @Override
+                            public void call() {
+                                silentRefreshSubject.onNext(new Pair<>(category, true));
+                            }
+                        })
+                        .doOnTerminate(new Action0() {
+                            @Override
+                            public void call() {
+                                silentRefreshSubject.onNext(new Pair<>(category, false));
+                            }
+                        })
                         .doOnNext(new Action1<Feed>() {
                             @Override
                             public void call(Feed freshFeed) {
@@ -106,6 +123,10 @@ public class Api implements DataSource {
 
     public Observable<Pair<String, List<Entry>>> getFreshEntries() {
         return localSource.getFreshEntries();
+    }
+
+    public Observable<Pair<String, Boolean>> getSilentRefresh() {
+        return silentRefreshSubject;
     }
 
     public Observable<Entry> getEntry(@NonNull String link) {

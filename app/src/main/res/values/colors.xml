@@ -38,4 +38,11 @@
     <color name="background_21">#8E8474</color>
     <color name="background_22">#84898E</color>
     <color name="drawer">#444A5A</color>
+
+    <string-array name="progress_bar">
+        <item>@color/colorAccent</item>
+        <item>@color/background_1</item>
+        <item>@color/background_22</item>
+        <item>@color/background_6</item>
+    </string-array>
 </resources>
