@@ -119,12 +119,15 @@ class DebugCoordinator extends Coordinator {
     }
 
     private void initExpiryDates() {
-        getView().postDelayed(() -> {
-            bind(getExpiryDate("all"), allView::setText);
-            bind(getExpiryDate("dev"), developerView::setText);
-            bind(getExpiryDate("company"), companyView::setText);
-            bind(getExpiryDate("insightful"), insightfulView::setText);
-        }, 500);
+        bind(getExpiryDate("all"), allView::setText);
+        bind(getExpiryDate("dev"), developerView::setText);
+        bind(getExpiryDate("company"), companyView::setText);
+        bind(getExpiryDate("insightful"), insightfulView::setText);
+
+        allView.setOnClickListener($ -> AwesomeBlogsApp.get().api().clearExpiryDate("all"));
+        developerView.setOnClickListener($ -> AwesomeBlogsApp.get().api().clearExpiryDate("dev"));
+        companyView.setOnClickListener($ -> AwesomeBlogsApp.get().api().clearExpiryDate("company"));
+        insightfulView.setOnClickListener($ -> AwesomeBlogsApp.get().api().clearExpiryDate("insightful"));
     }
 
     @OnClick(R.id.uid)

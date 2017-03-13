@@ -254,6 +254,20 @@ public class AwesomeBlogsLocalSource implements DataSource {
 
     }
 
+    public void clearExpiryDate(@NonNull final String category) {
+        Realm realm = Realm.getInstance(config);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Feed feed = realm.where(Feed.class).equalTo("category", category).findFirst();
+                if (feed != null) {
+                    feed.setExpires(0L);
+                }
+            }
+        });
+        realm.close();
+    }
+
     private RealmConfiguration createRealmConfiguration() {
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
             .name("awesome_blogs.realm")
