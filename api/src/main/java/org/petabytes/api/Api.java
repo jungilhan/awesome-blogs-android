@@ -123,4 +123,8 @@ public class Api implements DataSource {
     public Observable<Date> getExpiryDate(@NonNull String category) {
         return localSource.getExpiryDate(category);
     }
+
+    public void clearExpiryDate(@NonNull String category) {
+        localSource.clearExpiryDate(category);
+    }
 }
