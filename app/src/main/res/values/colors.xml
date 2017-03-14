@@ -39,7 +39,13 @@
     <color name="background_22">#84898E</color>
     <color name="drawer">#444A5A</color>
 
-    <string-array name="progress_bar">
+    <string-array name="progress_bar_1">
+        <item>@color/white</item>
+        <item>@color/white_65</item>
+        <item>@color/white_55</item>
+    </string-array>
+
+    <string-array name="progress_bar_2">
         <item>@color/colorAccent</item>
         <item>@color/background_1</item>
         <item>@color/background_22</item>

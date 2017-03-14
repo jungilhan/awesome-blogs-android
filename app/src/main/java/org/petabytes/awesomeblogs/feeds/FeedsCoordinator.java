@@ -197,9 +197,9 @@ class FeedsCoordinator extends Coordinator {
     private int[] getProgressBarColors(int position) {
         Map<Type, List<Entry>> map = (Map<Type, List<Entry>>) ((PagerAdapter) pagerView.getAdapter()).getItem(position);
         if (map.keySet().contains(ENTIRE)) {
-            return new int[] {context.getResources().getColor(R.color.white)};
+            return context.getResources().getIntArray(R.array.progress_bar_1);
         } else {
-            return context.getResources().getIntArray(R.array.progress_bar);
+            return context.getResources().getIntArray(R.array.progress_bar_2);
         }
     }
 
