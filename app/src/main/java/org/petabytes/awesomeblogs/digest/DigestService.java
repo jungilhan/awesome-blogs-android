@@ -37,12 +37,13 @@ public class DigestService extends IntentService {
         AwesomeBlogsApp.get().api().getFreshEntries()
             .map(pair -> pair.second)
             .filter(pair -> !pair.isEmpty())
+            .first()
             .timeout(1, TimeUnit.MINUTES)
             .onErrorResumeNext(Observable.empty())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext($ -> Analytics.event(Analytics.Event.SEND_DIGEST))
             .subscribe(entries ->
-                Notifications.send(this, entries.size() == 1
+                Notifications.send(this, getString(R.string.digest_title, entries.size()), entries.size() == 1
                     ? getString(R.string.fresh_entries_title_0, entries.get(0).getTitle())
                     : getString(R.string.fresh_entries_title_1, entries.get(0).getTitle(), (entries.size() - 1))));
 
