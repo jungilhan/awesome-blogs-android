@@ -1,4 +1,4 @@
-package com.petabytes.awesomeblogs;
+package org.petabytes.awesomeblogs;
 
 import android.content.Context;
 import android.os.Build;

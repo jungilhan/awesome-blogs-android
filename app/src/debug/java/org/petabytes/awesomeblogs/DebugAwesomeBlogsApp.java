@@ -1,4 +1,4 @@
-package com.petabytes.awesomeblogs;
+package org.petabytes.awesomeblogs;
 
 import android.text.TextUtils;
 
