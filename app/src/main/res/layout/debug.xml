@@ -306,6 +306,27 @@
         android:layout_width="0dp"
         android:layout_columnSpan="2"
         android:layout_gravity="start|fill_horizontal"
+        android:text="Digest"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Schedule"/>
+
+    <TextView
+        android:id="@+id/schedule"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Around 10 AM"/>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
         android:text="CACHE EXPIRY DATE"/>
 
     <TextView

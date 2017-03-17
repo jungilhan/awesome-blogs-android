@@ -14,6 +14,7 @@ import com.f2prateek.rx.preferences.RxSharedPreferences;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.BuildConfig;
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.digest.DigestService;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.SimpleDateFormat;
@@ -45,6 +46,7 @@ class DebugCoordinator extends Coordinator {
     @BindView(R.id.density) TextView densityView;
     @BindView(R.id.release) TextView releaseView;
     @BindView(R.id.api) TextView apiView;
+    @BindView(R.id.schedule) TextView scheduleView;
     @BindView(R.id.all) TextView allView;
     @BindView(R.id.developer) TextView developerView;
     @BindView(R.id.company) TextView companyView;
@@ -71,7 +73,8 @@ class DebugCoordinator extends Coordinator {
         initFcmSection();
         initAppSection();
         initDeviceSection();
-        initExpiryDates();
+        initDigestSection();
+        initExpiryDatesSection();
     }
 
     private void initAccountSection() {
@@ -118,7 +121,15 @@ class DebugCoordinator extends Coordinator {
         apiView.setText(String.valueOf(Build.VERSION.SDK_INT));
     }
 
-    private void initExpiryDates() {
+    private void initDigestSection() {
+        scheduleView.setOnClickListener($ -> {
+            long triggerAt = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
+            DigestService.scheduleAlarm(context, triggerAt);
+            scheduleView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(triggerAt)));
+        });
+    }
+
+    private void initExpiryDatesSection() {
         bind(getExpiryDate("all"), allView::setText);
         bind(getExpiryDate("dev"), developerView::setText);
         bind(getExpiryDate("company"), companyView::setText);
@@ -137,8 +148,8 @@ class DebugCoordinator extends Coordinator {
 
     private Observable<String> getExpiryDate(@NonNull String category) {
         return Observable.combineLatest(drawerOpenedSubject, AwesomeBlogsApp.get().api().getExpiryDate(category),
-                ($, date) -> date.getTime() > System.currentTimeMillis()
-                    ? new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(date) : "Expired");
+            ($, date) -> date.getTime() > System.currentTimeMillis()
+                ? new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(date) : "Expired");
     }
 
     private static String getDensityString(@NonNull DisplayMetrics displayMetrics) {

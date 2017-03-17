@@ -1,12 +1,13 @@
 package org.petabytes.awesomeblogs.feeds;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
@@ -37,14 +38,16 @@ class DrawerCoordinator extends Coordinator {
     @BindViews({R.id.all, R.id.developer, R.id.company, R.id.insightful})
     TextView[] categoryViews;
 
-    private final Context context;
     private final Action1<String> onCategorySelect;
     private final Preference<String> categoryPreference;
 
-    DrawerCoordinator(@NonNull Context context, @NonNull Action1<String> onCategorySelect) {
-        this.context = context;
+    DrawerCoordinator(@NonNull Optional<String> category, @NonNull Action1<String> onCategorySelect) {
         this.onCategorySelect = onCategorySelect;
         this.categoryPreference = AwesomeBlogsApp.get().preferences().getString("category", ALL);
+        category.ifPresent(c -> {
+            categoryPreference.set(c);
+            Analytics.event(Analytics.Event.VIEW_DIGEST);
+        });
     }
 
     @Override

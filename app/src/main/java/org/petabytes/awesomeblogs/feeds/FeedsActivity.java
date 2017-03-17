@@ -10,6 +10,7 @@ import android.text.style.StyleSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.petabytes.awesomeblogs.R;
@@ -24,6 +25,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class FeedsActivity extends AwesomeActivity implements Verifiable {
+
+    private static String CATEGORY = "category";
 
     @BindView(R.id.menu) ImageView menuButton;
     @BindView(R.id.sliding_menu) SlidingMenu slidingMenu;
@@ -53,7 +56,7 @@ public class FeedsActivity extends AwesomeActivity implements Verifiable {
                     .build());
                 Views.setVisible(pageView);
             }))
-            .coordinator(R.id.drawer, new DrawerCoordinator(this, category -> {
+            .coordinator(R.id.drawer, new DrawerCoordinator(getCategory(), category -> {
                 Views.setInvisible(pageView);
                 feedsCoordinator.onCategorySelect(category);
                 slidingMenu.showContent();
@@ -80,9 +83,19 @@ public class FeedsActivity extends AwesomeActivity implements Verifiable {
         }
     }
 
+    private Optional<String> getCategory() {
+        return Optional.ofNullable(getIntent().getStringExtra(CATEGORY));
+    }
+
     public static Intent intent(@NonNull Context context) {
         Intent intent = new Intent(context, FeedsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
+    }
+
+    public static Intent intent(@NonNull Context context, @NonNull String category) {
+        Intent intent = intent(context);
+        intent.putExtra(CATEGORY, category);
         return intent;
     }
 }

@@ -29,6 +29,8 @@ public final class Analytics {
         public static final String REFRESH = "refresh";
         public static final String NOTIFY_FRESH_ENTRIES = "notify_fresh_entries";
         public static final String VIEW_FRESH_ENTRIES = "view_fresh_entries";
+        public static final String SEND_DIGEST = "send_digest";
+        public static final String VIEW_DIGEST = "view_digest";
     }
 
     public static class Param {
