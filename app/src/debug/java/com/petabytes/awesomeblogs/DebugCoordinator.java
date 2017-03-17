@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import com.f2prateek.rx.preferences.Preference;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
@@ -122,10 +123,14 @@ class DebugCoordinator extends Coordinator {
     }
 
     private void initDigestSection() {
+        Preference<Long> digestPreference = AwesomeBlogsApp.get().preferences().getLong("digest_at", 0L);
+        bind(digestPreference.asObservable(),
+            digestAt -> scheduleView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(digestAt))));
+
         scheduleView.setOnClickListener($ -> {
-            long triggerAt = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
-            DigestService.scheduleAlarm(context, triggerAt);
-            scheduleView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(triggerAt)));
+            long digestAt = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
+            digestPreference.set(digestAt);
+            DigestService.scheduleAlarm(context, digestAt);
         });
     }
 
