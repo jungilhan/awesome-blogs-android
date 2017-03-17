@@ -12,10 +12,10 @@ import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 
 public class Notifications {
 
-    public static void send(@NonNull Context context, @NonNull String message) {
+    public static void send(@NonNull Context context, @NonNull String title, @NonNull String message) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
             .setSmallIcon(R.drawable.notification)
-            .setContentTitle(context.getString(R.string.app_name))
+            .setContentTitle(title)
             .setContentText(message)
             .setTicker(message)
             .setAutoCancel(true)

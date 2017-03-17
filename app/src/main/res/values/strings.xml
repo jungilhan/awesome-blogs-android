@@ -13,6 +13,7 @@
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>
     <string name="error_sign_in">로그인 도중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="digest_title">새로운 소식 %1$d개</string>
     <string name="fresh_entries_title_0">새로운 \'%1$s\' 소식이 있습니다.</string>
     <string name="fresh_entries_title_1">\'%1$s\' 외 %2$d 개의 새로운 소식이 있습니다.</string>
 </resources>

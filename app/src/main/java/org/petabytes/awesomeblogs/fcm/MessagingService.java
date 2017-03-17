@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.petabytes.awesomeblogs.R;
+
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
@@ -19,7 +21,7 @@ public class MessagingService extends FirebaseMessagingService {
 
         if (remoteMessage.getNotification() != null) {
             Timber.d("Message Notification Body: " + remoteMessage.getNotification().getBody());
-            Notifications.send(this, remoteMessage.getNotification().getBody());
+            Notifications.send(this, getString(R.string.app_name), remoteMessage.getNotification().getBody());
         }
     }
 }
