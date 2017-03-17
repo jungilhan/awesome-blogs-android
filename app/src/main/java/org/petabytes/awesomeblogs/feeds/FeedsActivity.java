@@ -15,7 +15,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.base.AwesomeActivity;
-import org.petabytes.awesomeblogs.base.Verifiable;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Truss;
 import org.petabytes.awesomeblogs.util.Views;
@@ -24,7 +23,7 @@ import org.petabytes.coordinator.ActivityGraph;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FeedsActivity extends AwesomeActivity implements Verifiable {
+public class FeedsActivity extends AwesomeActivity {
 
     private static String CATEGORY = "category";
 
