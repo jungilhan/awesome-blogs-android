@@ -2,6 +2,8 @@ package org.petabytes.api.util;
 
 import junit.framework.Assert;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -28,10 +30,8 @@ public class DatesTest {
 
     @Test
     public void getDefaultDateFormats() throws ParseException {
-        long now = System.currentTimeMillis();
-        Assert.assertEquals(now, Dates.getDefaultDateFormats()
-            .parse(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ", Locale.getDefault())
-                .format(new Date(now)))
-            .getTime());
+        Assert.assertEquals("30 seconds ago", Dates.getRelativeTimeString(DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
+            .parseDateTime(new DateTime(System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(30)).toString("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"))
+            .getMillis()));
     }
 }

@@ -28,7 +28,7 @@ class Migration implements RealmMigration {
                         @Override
                         public void apply(DynamicRealmObject obj) {
                             String date = obj.getString("updatedAt");
-                            long time = Dates.getDefaultDateFormats().parse(date, new ParsePosition(0)).getTime();
+                            long time = Dates.getDefaultDateFormats().parseDateTime(date).getMillis();
                             obj.setLong("createdAt", time);
                         }
                     });
