@@ -23,6 +23,14 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.2 주스 쏟은 내 맥북   💻2017-03-18
+ * 새로운 블로그 글을 모아서 하루 한번 알림 기능 추가
+ * 백그라운드 피드 요청 시각화
+ * 서버에 새롭게 추가된 블로그 글은 업데이트 시간과 상관없이 정렬되도록 처리 (@probepark)
+ * 본문이 긴 블로그 글 진입 시 TransactionTooLargeException 현상 수정
+ * Circle CI 연동 (@probepark)
+ * 디버그 드로어 추가
+
 ### v1.1 개발의 완성은 얼굴 👱 2017-02-25
  * 스와이프 새로고침 추가 (@BenjaminKim)
  * 서버 API 요청 좀 더 고급지게 처리 (@ZeroBrain, @probepark)
