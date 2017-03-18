@@ -96,7 +96,9 @@ class FeedsCoordinator extends Coordinator {
             .filter(pair -> TextUtils.equals(category, pair.first))
             .map(pair -> pair.second), isRefreshing -> {
                 Views.setVisibleOrGone(progressBar, isRefreshing);
-                progressBar.setSmoothProgressDrawableColors(getProgressBarColors(0));
+                if (pagerView.getAdapter() != null && pagerView.getAdapter().getCount() > 0) {
+                    progressBar.setSmoothProgressDrawableColors(getProgressBarColors(0));
+                }
             });
     }
 
