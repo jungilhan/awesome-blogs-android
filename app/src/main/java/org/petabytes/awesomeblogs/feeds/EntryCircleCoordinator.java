@@ -53,7 +53,7 @@ class EntryCircleCoordinator extends Coordinator {
     }
 
     private void setFillColor() {
-        switch (new Random().nextInt(12)) {
+        switch (new Random(entry.getCreatedAt()).nextInt(12)) {
             case 0: circleView.setFillColor(R.color.background_2); break;
             case 1: circleView.setFillColor(R.color.background_3); break;
             case 2: circleView.setFillColor(R.color.background_4); break;
