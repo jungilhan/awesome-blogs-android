@@ -63,7 +63,7 @@ class EntryDiagonalCoordinator extends Coordinator {
     }
 
     private void setBackground(@NonNull View view) {
-        switch (new Random(entries.get(0).getCreatedAt()).nextInt(12)) {
+        switch (new Random(System.identityHashCode(entries.get(0).getTitle())).nextInt(12)) {
             case 0: view.setBackgroundResource(R.drawable.background_diagonal_0); break;
             case 1: view.setBackgroundResource(R.drawable.background_diagonal_1); break;
             case 2: view.setBackgroundResource(R.drawable.background_diagonal_2); break;

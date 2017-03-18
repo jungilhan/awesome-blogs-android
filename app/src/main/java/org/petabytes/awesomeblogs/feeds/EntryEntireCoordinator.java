@@ -54,7 +54,7 @@ class EntryEntireCoordinator extends Coordinator {
     }
 
     private void setBackground(@NonNull View view) {
-        switch (new Random(entry.getCreatedAt()).nextInt(11)) {
+        switch (new Random(System.identityHashCode(entry.getTitle())).nextInt(11)) {
             case 0: view.setBackgroundResource(R.color.background_12); break;
             case 1: view.setBackgroundResource(R.color.background_13); break;
             case 2: view.setBackgroundResource(R.color.background_14); break;
