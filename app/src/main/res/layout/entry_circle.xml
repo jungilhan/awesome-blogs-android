@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <org.petabytes.awesomeblogs.widget.CircleView
+            android:id="@+id/circle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:fillColor="@color/background_3"
+            style="@style/AppWidget.SelectableBorderless"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:paddingTop="32dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:maxLines="3"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                tools:text="Title"/>
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:background="@color/white"/>
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/white_65"
+                android:textSize="16sp"
+                tools:text="Author"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </FrameLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        tools:text="3 hours ago"/>
+</android.support.v7.widget.LinearLayoutCompat>

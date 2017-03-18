@@ -42,6 +42,7 @@ import hugo.weaving.DebugLog;
 import rx.functions.Action3;
 import rx.schedulers.Schedulers;
 
+import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.CIRCLE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ROWS;
@@ -59,7 +60,7 @@ class FeedsCoordinator extends Coordinator {
     private ViewPager.SimpleOnPageChangeListener onPageChangeListener;
 
     enum Type {
-        ENTIRE, DIAGONAL, ROWS
+        ENTIRE, CIRCLE, DIAGONAL, ROWS
     }
 
     FeedsCoordinator(@NonNull Context context, @NonNull Action3<Integer, Integer, Integer> onPageSelectedAction) {
@@ -141,45 +142,52 @@ class FeedsCoordinator extends Coordinator {
 
     private PagerFactory<Map<Type, List<Entry>>> createPagerFactory() {
         return entry -> {
-            View view1;
+            View view;
             if (entry.containsKey(ENTIRE)) {
-                view1 = LayoutInflater.from(context).inflate(R.layout.entry_entire, null, false);
-                Coordinators.bind(view1, $ -> new EntryEntireCoordinator(context, entry.get(ENTIRE).get(0)));
+                view = LayoutInflater.from(context).inflate(R.layout.entry_entire, null, false);
+                Coordinators.bind(view, $ -> new EntryEntireCoordinator(context, entry.get(ENTIRE).get(0)));
+            } else if (entry.containsKey(CIRCLE)) {
+                view = LayoutInflater.from(context).inflate(R.layout.entry_circle, null, false);
+                Coordinators.bind(view, $ -> new EntryCircleCoordinator(context, entry.get(CIRCLE).get(0)));
             } else if (entry.containsKey(DIAGONAL)) {
-                view1 = LayoutInflater.from(context).inflate(R.layout.entry_diagonal, null, false);
-                Coordinators.bind(view1, $ -> new EntryDiagonalCoordinator(context, entry.get(DIAGONAL)));
+                view = LayoutInflater.from(context).inflate(R.layout.entry_diagonal, null, false);
+                Coordinators.bind(view, $ -> new EntryDiagonalCoordinator(context, entry.get(DIAGONAL)));
             } else if (entry.containsKey(ROWS)) {
-                view1 = LayoutInflater.from(context).inflate(R.layout.entry_rows, null, false);
-                Coordinators.bind(view1, $ -> new EntryRowsCoordinator(context, entry.get(ROWS)));
+                view = LayoutInflater.from(context).inflate(R.layout.entry_rows, null, false);
+                Coordinators.bind(view, $ -> new EntryRowsCoordinator(context, entry.get(ROWS)));
             } else {
                 throw new IllegalArgumentException("Invalid entry.");
             }
-            return view1;
+            return view;
         };
     }
 
     private List<Map<Type, List<Entry>>> categorize(@NonNull List<Entry> entries) {
         List<Map<Type, List<Entry>>> categorized = new ArrayList<>();
         List<Entry> clone = new ArrayList<>(entries);
-        int type = new Random().nextInt(2);
+        int type = new Random().nextInt(3);
         if (type == 0 && clone.size() >= 2) {
             categorized.add(Collections.singletonMap(DIAGONAL, Arrays.asList(clone.remove(0), clone.remove(0))));
+        } else if (type == 1) {
+            categorized.add(Collections.singletonMap(ENTIRE, Collections.singletonList(clone.remove(0))));
         } else {
-            categorized.add(Collections.singletonMap(ENTIRE, Arrays.asList(clone.remove(0))));
+            categorized.add(Collections.singletonMap(CIRCLE, Collections.singletonList(clone.remove(0))));
         }
 
         boolean isPortrait = context.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE;
         while (clone.size() > 0) {
-            type = new Random().nextInt(3);
-            if (type == 1 && clone.size() >= 2) {
+            type = new Random().nextInt(4);
+            if (type == 0 && clone.size() >= 2) {
                 categorized.add(Collections.singletonMap(DIAGONAL, Arrays.asList(clone.remove(0), clone.remove(0))));
-            } else if (type == 2 && clone.size() >= (isPortrait ? 4 : 3)) {
+            } else if (type == 1 && clone.size() >= (isPortrait ? 4 : 3)) {
                 List<Entry> rows = isPortrait
                     ? Arrays.asList(clone.remove(0), clone.remove(0), clone.remove(0), clone.remove(0))
                     : Arrays.asList(clone.remove(0), clone.remove(0), clone.remove(0));
                 categorized.add(Collections.singletonMap(ROWS, rows));
+            } else if (type == 2) {
+                categorized.add(Collections.singletonMap(ENTIRE, Collections.singletonList(clone.remove(0))));
             } else {
-                categorized.add(Collections.singletonMap(ENTIRE, Arrays.asList(clone.remove(0))));
+                categorized.add(Collections.singletonMap(CIRCLE, Collections.singletonList(clone.remove(0))));
             }
         }
         return categorized;
