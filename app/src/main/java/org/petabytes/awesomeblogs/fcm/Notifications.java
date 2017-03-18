@@ -19,6 +19,8 @@ public class Notifications {
             .setContentText(message)
             .setTicker(message)
             .setAutoCancel(true)
+            .setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(message))
             .setWhen(System.currentTimeMillis())
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(PendingIntent.getActivity(context, 0, FeedsActivity.intent(context, "all"), PendingIntent.FLAG_ONE_SHOT));
