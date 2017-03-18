@@ -20,7 +20,7 @@ import org.petabytes.awesomeblogs.digest.DigestService;
 import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 import org.petabytes.awesomeblogs.util.Devices;
 import org.petabytes.awesomeblogs.util.LifeCycles;
-import org.petabytes.awesomeblogs.util.Strings;
+import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import hugo.weaving.DebugLog;
@@ -58,7 +58,7 @@ public class AwesomeBlogsApp extends Application {
                 authenticator().isSignIn()
                     .filter(isSignIn -> !isSignIn)
                     .doOnNext($ -> activity.finish())
-                    .doOnNext($ -> preferences().getString("access_token").set(null))
+                    .doOnNext($ -> Preferences.accessToken().set(null))
                     .flatMap($ -> authenticator().signIn(instance))
                     .take(1)
                     .onErrorResumeNext(Observable.empty())
@@ -89,7 +89,7 @@ public class AwesomeBlogsApp extends Application {
         return new Api(this,
             () -> "awesome-blogs-android/" + BuildConfig.VERSION_NAME,
             () -> {
-                Preference<String> preference = preferences().getString("device_id");
+                Preference<String> preference = Preferences.deviceId();
                 String deviceId = preference.get();
                 if (TextUtils.isEmpty(deviceId)) {
                     deviceId = Devices.getId(this);
@@ -97,8 +97,8 @@ public class AwesomeBlogsApp extends Application {
                 }
                 return deviceId;
             },
-            () -> preferences().getString("fcm_token", Strings.EMPTY).get(),
-            () -> preferences().getString("access_token", Strings.EMPTY).get(),
+            () -> Preferences.fcmToken().get(),
+            () -> Preferences.accessToken().get(),
             false);
     }
 

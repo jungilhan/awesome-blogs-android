@@ -3,16 +3,15 @@ package org.petabytes.awesomeblogs.feeds;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 
-import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Analytics;
+import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
 import java.lang.annotation.Retention;
@@ -43,7 +42,7 @@ class DrawerCoordinator extends Coordinator {
 
     DrawerCoordinator(@NonNull Optional<String> category, @NonNull Action1<String> onCategorySelect) {
         this.onCategorySelect = onCategorySelect;
-        this.categoryPreference = AwesomeBlogsApp.get().preferences().getString("category", ALL);
+        this.categoryPreference = Preferences.category();
         category.ifPresent(c -> {
             categoryPreference.set(c);
             Analytics.event(Analytics.Event.VIEW_DIGEST);

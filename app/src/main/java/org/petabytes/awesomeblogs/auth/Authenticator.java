@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.jakewharton.rxrelay.BehaviorRelay;
 
-import org.petabytes.awesomeblogs.AwesomeBlogsApp;
+import org.petabytes.awesomeblogs.util.Preferences;
 
 import hugo.weaving.DebugLog;
 import rx.Observable;
@@ -50,8 +50,7 @@ public class Authenticator {
     void signInWithGoogle(@Nullable GoogleSignInAccount account) {
         if (account != null) {
             firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null));
-            AwesomeBlogsApp.get().preferences()
-                .getString("access_token").set(account.getIdToken());
+            Preferences.accessToken().set(account.getIdToken());
         } else {
             userRelay.call(Optional.empty());
         }

@@ -15,6 +15,7 @@ import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.fcm.Notifications;
 import org.petabytes.awesomeblogs.util.Analytics;
+import org.petabytes.awesomeblogs.util.Preferences;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -54,7 +55,7 @@ public class DigestService extends IntentService {
 
     public static void scheduleAlarm(@NonNull Context context) {
         Calendar calendar = Calendar.getInstance();
-        Preference<Long> digestPreference = AwesomeBlogsApp.get().preferences().getLong("digest_at", 0L);
+        Preference<Long> digestPreference = Preferences.digestAt();
         long digest = Optional.ofNullable(digestPreference.get()).orElse(0L);
         if (digest > System.currentTimeMillis()) {
             calendar.setTimeInMillis(digest);

@@ -10,12 +10,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.f2prateek.rx.preferences.Preference;
-import com.f2prateek.rx.preferences.RxSharedPreferences;
 
-import org.petabytes.awesomeblogs.AwesomeBlogsApp;
-import org.petabytes.awesomeblogs.BuildConfig;
-import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.digest.DigestService;
+import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
 import java.text.SimpleDateFormat;
@@ -93,12 +90,11 @@ class DebugCoordinator extends Coordinator {
     }
 
     private void initFcmSection() {
-        RxSharedPreferences preferences = AwesomeBlogsApp.get().preferences();
-        bind(preferences.getString("fcm_token").asObservable()
+        bind(Preferences.fcmToken().asObservable()
             .filter(token -> !TextUtils.isEmpty(token)), fcmTokenView::setText);
-        bind(preferences.getString("access_token").asObservable()
+        bind(Preferences.accessToken().asObservable()
             .filter(token -> !TextUtils.isEmpty(token)), accessTokenView::setText);
-        bind(preferences.getString("device_id").asObservable()
+        bind(Preferences.deviceId().asObservable()
             .filter(token -> !TextUtils.isEmpty(token)), deviceIdView::setText);
     }
 
@@ -123,7 +119,7 @@ class DebugCoordinator extends Coordinator {
     }
 
     private void initDigestSection() {
-        Preference<Long> digestPreference = AwesomeBlogsApp.get().preferences().getLong("digest_at", 0L);
+        Preference<Long> digestPreference = Preferences.digestAt();
         bind(digestPreference.asObservable(),
             digestAt -> scheduleView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(digestAt))));
 

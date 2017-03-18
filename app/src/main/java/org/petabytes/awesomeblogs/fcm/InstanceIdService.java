@@ -3,7 +3,7 @@ package org.petabytes.awesomeblogs.fcm;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import org.petabytes.awesomeblogs.AwesomeBlogsApp;
+import org.petabytes.awesomeblogs.util.Preferences;
 
 import hugo.weaving.DebugLog;
 
@@ -12,7 +12,6 @@ public class InstanceIdService extends FirebaseInstanceIdService {
     @DebugLog
     @Override
     public void onTokenRefresh() {
-        AwesomeBlogsApp.get().preferences()
-            .getString("fcm_token").set(FirebaseInstanceId.getInstance().getToken());
+        Preferences.fcmToken().set(FirebaseInstanceId.getInstance().getToken());
     }
 }

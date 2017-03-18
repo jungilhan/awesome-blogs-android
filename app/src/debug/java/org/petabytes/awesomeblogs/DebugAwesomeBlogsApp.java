@@ -7,10 +7,8 @@ import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import org.petabytes.api.Api;
-import org.petabytes.awesomeblogs.AwesomeBlogsApp;
-import org.petabytes.awesomeblogs.BuildConfig;
 import org.petabytes.awesomeblogs.util.Devices;
-import org.petabytes.awesomeblogs.util.Strings;
+import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import timber.log.Timber;
@@ -38,7 +36,7 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
         return new Api(this,
             () -> "awesome-blogs-android/" + BuildConfig.VERSION_NAME,
             () -> {
-                Preference<String> preference = preferences().getString("device_id");
+                Preference<String> preference = Preferences.deviceId();
                 String deviceId = preference.get();
                 if (TextUtils.isEmpty(deviceId)) {
                     deviceId = Devices.getId(this);
@@ -46,8 +44,8 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
                 }
                 return deviceId;
             },
-            () -> preferences().getString("fcm_token", Strings.EMPTY).get(),
-            () -> preferences().getString("access_token", Strings.EMPTY).get(),
+            () -> Preferences.fcmToken().get(),
+            () -> Preferences.accessToken().get(),
             true);
     }
 }
