@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 
+import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Preferences;
 
 import java.util.Calendar;
@@ -47,5 +48,6 @@ public class StartUpReceiver extends BroadcastReceiver {
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP, digestAtMillis, AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             PendingIntent.getService(context, 0, new Intent(context, DigestService.class), PendingIntent.FLAG_UPDATE_CURRENT));
+        Analytics.event(Analytics.Event.SCHEDULE_DIGEST);
     }
 }
