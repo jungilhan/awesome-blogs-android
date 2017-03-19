@@ -46,7 +46,7 @@ public class StartUpReceiver extends BroadcastReceiver {
     public static void scheduleAlarm(@NonNull Context context, long digestAtMillis) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP, digestAtMillis, AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+            AlarmManager.RTC_WAKEUP, digestAtMillis, AlarmManager.INTERVAL_DAY,
             PendingIntent.getService(context, 0, new Intent(context, DigestService.class), PendingIntent.FLAG_UPDATE_CURRENT));
         Analytics.event(Analytics.Event.SCHEDULE_DIGEST);
     }
