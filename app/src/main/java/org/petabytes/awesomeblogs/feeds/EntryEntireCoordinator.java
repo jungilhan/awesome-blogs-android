@@ -50,13 +50,11 @@ class EntryEntireCoordinator extends Coordinator {
 
     @OnClick(R.id.container)
     void onContainerClick() {
-        context.startActivity(SummaryActivity.intent(context,
-            entry.getTitle(), entry.getAuthor(), entry.getUpdatedAt(), entry.getSummary(), entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
     }
 
     private void setBackground(@NonNull View view) {
-        switch (new Random().nextInt(11)) {
-            // @formatter:off
+        switch (new Random(System.identityHashCode(entry.getTitle())).nextInt(11)) {
             case 0: view.setBackgroundResource(R.color.background_12); break;
             case 1: view.setBackgroundResource(R.color.background_13); break;
             case 2: view.setBackgroundResource(R.color.background_14); break;
@@ -68,7 +66,6 @@ class EntryEntireCoordinator extends Coordinator {
             case 8: view.setBackgroundResource(R.color.background_20); break;
             case 9: view.setBackgroundResource(R.color.background_21); break;
             case 10: view.setBackgroundResource(R.color.background_22); break;
-            // @formatter:off
         }
     }
 }

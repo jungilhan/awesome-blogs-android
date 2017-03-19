@@ -11,19 +11,13 @@ import org.petabytes.coordinator.ActivityGraph;
 
 public class SummaryActivity extends AwesomeActivity {
 
-    private static final String TITLE = "title";
-    private static final String AUTHOR = "author";
-    private static final String UPDATED_AT = "updated_at";
-    private static final String SUMMARY = "summary";
     private static final String LINK = "link";
 
     @Override
     protected ActivityGraph createActivityGraph() {
         return new ActivityGraph.Builder()
             .layoutResId(R.layout.summary)
-            .coordinator(R.id.bottom_sheet, new SummaryCoordinator(this,
-                getStringExtra(TITLE), getStringExtra(AUTHOR), getStringExtra(UPDATED_AT), getStringExtra(SUMMARY), getStringExtra(LINK),
-                this::finish))
+            .coordinator(R.id.bottom_sheet, new SummaryCoordinator(this, getStringExtra(LINK), this::finish))
             .build();
     }
 
@@ -32,13 +26,8 @@ public class SummaryActivity extends AwesomeActivity {
         return extra != null ? extra : Strings.EMPTY;
     }
 
-    public static Intent intent(@NonNull Context context, @NonNull String title, @NonNull String author,
-                                @NonNull String updatedAt, @NonNull String summary, @NonNull String link) {
+    public static Intent intent(@NonNull Context context, @NonNull String link) {
         Intent intent = new Intent(context, SummaryActivity.class);
-        intent.putExtra(TITLE, title);
-        intent.putExtra(AUTHOR, author);
-        intent.putExtra(UPDATED_AT, updatedAt);
-        intent.putExtra(SUMMARY, summary);
         intent.putExtra(LINK, link);
         return intent;
     }

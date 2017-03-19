@@ -2,19 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.petabytes.awesomeblogs">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
+        android:name=".AwesomeBlogsApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
-        android:theme="@style/AppTheme.Feeds"
-        android:name=".AwesomeBlogsApp">
-        <activity android:name="org.petabytes.awesomeblogs.feeds.FeedsActivity"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.Feeds">
+
+        <activity
+            android:name="org.petabytes.awesomeblogs.feeds.FeedsActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,11 +26,46 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".summary.SummaryActivity" />
-        
+        <activity android:name=".summary.SummaryActivity"/>
+
+        <activity
+            android:name=".auth.SignInActivity"
+            android:launchMode="singleTask"/>
+
+        <service
+            android:name=".fcm.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".fcm.InstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".digest.DigestService"/>
+
+        <receiver android:name=".digest.StartUpReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notification" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimaryDark" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="d681fa3447fdb8f13e18ee327c6ce8a00bcfb3dc" />
+            android:value="d681fa3447fdb8f13e18ee327c6ce8a00bcfb3dc"/>
     </application>
 
 </manifest>

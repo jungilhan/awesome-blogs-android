@@ -40,8 +40,7 @@ public class AwesomeBlogsLocalSourceTest {
                 .getOnNextEvents();
 
             assertThat(values)
-                .hasSize(1)
-                .containsNull();
+                .hasSize(0);
         }
 
         {

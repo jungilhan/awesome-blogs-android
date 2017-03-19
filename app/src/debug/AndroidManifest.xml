@@ -4,7 +4,7 @@
     package="org.petabytes.awesomeblogs">
 
     <application
-        android:name="com.petabytes.awesomeblogs.DebugAwesomeBlogsApp"
+        android:name=".DebugAwesomeBlogsApp"
         tools:replace="android:name">
     </application>
 </manifest>

@@ -2,6 +2,7 @@ package org.petabytes.coordinator;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 
 import com.squareup.coordinators.Coordinator;
 
@@ -13,7 +14,7 @@ public class ActivityGraph {
     private final int layoutResId;
     private final Map<Integer, Coordinator> coordinatorMap;
 
-    private ActivityGraph(int layoutResId, Map<Integer, Coordinator> coordinatorMap) {
+    private ActivityGraph(int layoutResId, @NonNull Map<Integer, Coordinator> coordinatorMap) {
         this.layoutResId = layoutResId;
         this.coordinatorMap = coordinatorMap;
     }
@@ -41,7 +42,7 @@ public class ActivityGraph {
             return this;
         }
 
-        public ActivityGraph.Builder coordinator(@IdRes int id, Coordinator coordinator) {
+        public ActivityGraph.Builder coordinator(@IdRes int id, @NonNull Coordinator coordinator) {
             coordinatorMap.put(id, coordinator);
             return this;
         }

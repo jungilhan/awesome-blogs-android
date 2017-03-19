@@ -1,21 +1,20 @@
 package org.petabytes.awesomeblogs.feeds;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.view.View;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 
-import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Analytics;
+import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
 import java.lang.annotation.Retention;
-import java.util.Collections;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
@@ -35,17 +34,19 @@ class DrawerCoordinator extends Coordinator {
     static final String TECH_COMPANY = "company";
     static final String INSIGHTFUL = "insightful";
 
-    @BindViews({R.id.all, R.id.developer, R.id.tech, R.id.insightful})
+    @BindViews({R.id.all, R.id.developer, R.id.company, R.id.insightful})
     TextView[] categoryViews;
 
-    private final Context context;
     private final Action1<String> onCategorySelect;
     private final Preference<String> categoryPreference;
 
-    DrawerCoordinator(@NonNull Context context, @NonNull Action1<String> onCategorySelect) {
-        this.context = context;
+    DrawerCoordinator(@NonNull Optional<String> category, @NonNull Action1<String> onCategorySelect) {
         this.onCategorySelect = onCategorySelect;
-        this.categoryPreference = AwesomeBlogsApp.get().preferences().getString("category", ALL);
+        this.categoryPreference = Preferences.category();
+        category.ifPresent(c -> {
+            categoryPreference.set(c);
+            Analytics.event(Analytics.Event.VIEW_DIGEST);
+        });
     }
 
     @Override
@@ -56,7 +57,7 @@ class DrawerCoordinator extends Coordinator {
         bind(categoryPreference.asObservable(), onCategorySelect);
     }
 
-    @OnClick({R.id.all, R.id.developer, R.id.tech, R.id.insightful})
+    @OnClick({R.id.all, R.id.developer, R.id.company, R.id.insightful})
     void onCategoryClick(@NonNull TextView view) {
         selectView(view);
         categoryPreference.set(getCategory(view));
@@ -94,7 +95,7 @@ class DrawerCoordinator extends Coordinator {
             case R.id.developer:
                 Analytics.event(Analytics.Event.VIEW_DEVELOPER);
                 return DEVELOPER;
-            case R.id.tech:
+            case R.id.company:
                 Analytics.event(Analytics.Event.VIEW_TECH_COMPANY);
                 return TECH_COMPANY;
             case R.id.insightful:

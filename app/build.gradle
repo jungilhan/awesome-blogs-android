@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'io.fabric'
+apply plugin: 'jacoco-android'
 
 repositories {
     maven { url 'https://jitpack.io' }
@@ -47,10 +48,11 @@ android {
         applicationId 'org.petabytes.awesomeblogs'
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.1"
-        buildConfigField 'String', 'GIT_SHA', '\"${gitSha()}\"'
+        versionCode 7
+        versionName "1.2"
+        buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     signingConfigs {
@@ -66,6 +68,7 @@ android {
             debuggable true
             minifyEnabled false
             applicationIdSuffix '.debug'
+            testCoverageEnabled false
         }
         release {
             debuggable false
@@ -98,25 +101,32 @@ dependencies {
     compile project(':slidingMenu')
     compile rootProject.ext.support_design
     compile rootProject.ext.firebase_core
+    compile rootProject.ext.firebase_auth
+    compile rootProject.ext.firebase_messaging
+    compile rootProject.ext.play_services_auth
     compile rootProject.ext.alerter
     compile rootProject.ext.flipboard_bottomsheet
     compile rootProject.ext.rxpreferences
+    compile rootProject.ext.rxrelay
     compile rootProject.ext.calligraphy
     compile rootProject.ext.spinkit
+    compile rootProject.ext.smoothprogressbar
     compile rootProject.ext.verticalviewpager
     compile rootProject.ext.topsnackbar
     compile rootProject.ext.crashlytics
-    annotationProcessor rootProject.ext.butterknife_compiler
     compile(rootProject.ext.crashlytics) {
         transitive = true;
     }
 
+    annotationProcessor rootProject.ext.butterknife_compiler
+
     debugCompile rootProject.ext.stetho
     debugCompile rootProject.ext.stetho_realm
+
+    testCompile rootProject.ext.junit
+    testCompile rootProject.ext.assertj
     androidTestCompile(rootProject.ext.support_espressocore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile rootProject.ext.junit
-    testCompile rootProject.ext.assertj
 }
 apply plugin: 'com.google.gms.google-services'

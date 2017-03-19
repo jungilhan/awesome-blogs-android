@@ -2,6 +2,9 @@ package org.petabytes.api.source.remote;
 
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.function.Supplier;
+
+import org.petabytes.api.BuildConfig;
 import org.petabytes.api.DataSource;
 
 import okhttp3.OkHttpClient;
@@ -13,17 +16,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 public class AwesomeBlogsRemoteSource implements DataSource {
 
     private final AwesomeBlogs awesomeBlogs;
 
-    public AwesomeBlogsRemoteSource(boolean loggable) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+    public AwesomeBlogsRemoteSource(@NonNull Supplier<String> userAgentSupplier, @NonNull Supplier<String> deviceIdSupplier,
+                                    @NonNull Supplier<String> fcmTokenSupplier, @NonNull Supplier<String> accessTokenSupplier, boolean loggable) {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.NONE);
+        OkHttpClient client = new OkHttpClient.Builder()
+            .addNetworkInterceptor(new NetworkInterceptor(userAgentSupplier, deviceIdSupplier, fcmTokenSupplier, accessTokenSupplier))
+            .addNetworkInterceptor(loggingInterceptor)
+            .build();
 
         Retrofit retrofit = new Retrofit.Builder()
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

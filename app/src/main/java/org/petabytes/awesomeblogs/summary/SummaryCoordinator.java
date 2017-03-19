@@ -19,7 +19,6 @@ import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.coordinator.Activity;
 import org.petabytes.coordinator.Coordinator;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -29,48 +28,49 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
+import static org.petabytes.awesomeblogs.R.id.summary;
+
 class SummaryCoordinator extends Coordinator {
 
     @BindView(R.id.bottom_sheet) BottomSheetLayout bottomSheetView;
-    @BindView(R.id.summary) MarkdownView summaryView;
+    @BindView(summary) MarkdownView summaryView;
 
     private final Context context;
-    private final String author;
-    private final String updatedAt;
-    private final String title;
-    private final String summary;
     private final String link;
     private final Action0 onCloseAction;
+    private Entry entry;
 
-    SummaryCoordinator(@NonNull Context context, @NonNull String title, @NonNull String author,
-                       @NonNull String updatedAt, @NonNull String summary, @NonNull String link, @NonNull Action0 onCloseAction) {
+    SummaryCoordinator(@NonNull Context context, @NonNull String link, @NonNull Action0 onCloseAction) {
         this.context = context;
-        this.title = title;
-        this.author = author;
-        this.updatedAt = updatedAt;
-        this.summary = summary;
         this.link = link;
         this.onCloseAction = onCloseAction;
-
-        AwesomeBlogsApp.get().api().markAsRead(title, author, updatedAt, summary, link, System.currentTimeMillis());
-        Analytics.event(Analytics.Event.VIEW_SUMMARY, new HashMap<String, String>(2) {{
-            put(Analytics.Param.TITLE, title);
-            put(Analytics.Param.LINK, link);
-        }});
     }
 
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        bind(Observable.just(summary)
-            .map(summary -> new Remark().convert(summary))
-            .map(summary -> "## [" + title + "](" + link + ")\n ###### " + Entry.getFormattedAuthorUpdatedAt(author, updatedAt) + "\n" + summary)
-            .map(summary -> summary.replace("'", "\\'"))
-            .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(link, summary));
+        bind(AwesomeBlogsApp.get().api().getEntry(link)
+            .doOnNext(entry -> this.entry = entry), this::onEntryChanged);
 
         summaryView.setOnOverrideUrlAction(
             url -> context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))),
             () -> Alerts.show((Activity) context, R.string.error_title, R.string.error_invalid_link));
+    }
+
+    private void onEntryChanged(@NonNull Entry entry) {
+        bind(Observable.just(entry.getSummary())
+            .map(summary -> new Remark().convert(summary))
+            .map(summary -> "## [" + entry.getTitle() + "](" + entry.getLink() + ")\n ###### "
+                + Entry.getFormattedAuthorUpdatedAt(entry.getAuthor(), entry.getUpdatedAt()) + "\n" + summary)
+            .map(summary -> summary.replace("'", "\\'"))
+            .subscribeOn(Schedulers.io()), summary -> summaryView.showMarkdown(entry.getLink(), summary));
+
+        AwesomeBlogsApp.get().api().markAsRead(entry, System.currentTimeMillis());
+
+        Analytics.event(Analytics.Event.VIEW_SUMMARY, new HashMap<String, String>(2) {{
+            put(Analytics.Param.TITLE, entry.getTitle());
+            put(Analytics.Param.LINK, entry.getLink());
+        }});
     }
 
     @OnClick(R.id.close)
@@ -85,12 +85,12 @@ class SummaryCoordinator extends Coordinator {
             bottomSheetView.dismissSheet();
             Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, title);
+            intent.putExtra(Intent.EXTRA_SUBJECT, entry.getTitle());
             intent.putExtra(Intent.EXTRA_TEXT, link);
             context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
 
             Analytics.event(Analytics.Event.SHARE, new HashMap<String, String>(2) {{
-                put(Analytics.Param.TITLE, title);
+                put(Analytics.Param.TITLE, entry.getTitle());
                 put(Analytics.Param.LINK, link);
             }});
         });
@@ -103,7 +103,7 @@ class SummaryCoordinator extends Coordinator {
             }
 
             Analytics.event(Analytics.Event.OPEN_IN_BROWSER, new HashMap<String, String>(2) {{
-                put(Analytics.Param.TITLE, title);
+                put(Analytics.Param.TITLE, entry.getTitle());
                 put(Analytics.Param.LINK, link);
             }});
         });

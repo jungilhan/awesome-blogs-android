@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    tools:background="#aa000000"
+    tools:layout_gravity="right">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_columnSpan="2"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/white"/>
+
+            <TextView
+                style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Development Settings"
+                android:textColor="@color/grey"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/ic_launcher"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="ACCOUNT"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Name"/>
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Email"/>
+
+    <TextView
+        android:id="@+id/email"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Id"/>
+
+    <TextView
+        android:id="@+id/uid"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="FCM"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Fcm Token"/>
+
+    <TextView
+        android:id="@+id/fcm_token"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Access Token"/>
+
+    <TextView
+        android:id="@+id/access_token"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Device Id"/>
+
+    <TextView
+        android:id="@+id/device_id"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="APP"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Git Sha"/>
+
+    <TextView
+        android:id="@+id/git_sha"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Build Date"/>
+
+    <TextView
+        android:id="@+id/build_date"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Build Type"/>
+
+    <TextView
+        android:id="@+id/build_type"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Flavor"/>
+
+    <TextView
+        android:id="@+id/build_flavor"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Version"/>
+
+    <TextView
+        android:id="@+id/version"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="DEVICE"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Make"/>
+
+    <TextView
+        android:id="@+id/make"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Make"/>
+
+    <TextView
+        android:id="@+id/model"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="2"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Resolution"/>
+
+    <TextView
+        android:id="@+id/resolution"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Density"/>
+
+    <TextView
+        android:id="@+id/density"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Release"/>
+
+    <TextView
+        android:id="@+id/release"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Api"/>
+
+    <TextView
+        android:id="@+id/api"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Digest"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Schedule"/>
+
+    <TextView
+        android:id="@+id/schedule"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Around 10 AM"/>
+
+    <TextView
+        style="@style/Debug.Category"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="CACHE EXPIRY DATE"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="All"/>
+
+    <TextView
+        android:id="@+id/all"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Developer"/>
+
+    <TextView
+        android:id="@+id/developer"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Company"/>
+
+    <TextView
+        android:id="@+id/company"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Insightful"/>
+
+    <TextView
+        android:id="@+id/insightful"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="None"/>
+</GridLayout>
+

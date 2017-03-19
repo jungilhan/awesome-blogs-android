@@ -3,12 +3,14 @@ package org.petabytes.coordinator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
-import com.squareup.coordinators.*;
 import com.squareup.coordinators.Coordinator;
+import com.squareup.coordinators.CoordinatorProvider;
+import com.squareup.coordinators.Coordinators;
 
 import java.util.Map;
 
@@ -22,7 +24,8 @@ public abstract class Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityGraph = createActivityGraph();
-        setContentView(activityGraph.getLayoutResId());
+        createActivityLayoutBinder().bind(this)
+            .addView(LayoutInflater.from(this).inflate(activityGraph.getLayoutResId(), null, false));
         ButterKnife.bind(this);
 
         Stream.of(activityGraph.getCoordinatorMap().entrySet())
@@ -42,7 +45,5 @@ public abstract class Activity extends AppCompatActivity {
 
     protected abstract ActivityGraph createActivityGraph();
 
-    protected ActivityGraph getActivityGraph() {
-        return activityGraph;
-    }
+    protected abstract ActivityLayoutBinder createActivityLayoutBinder();
 }

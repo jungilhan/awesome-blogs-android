@@ -1,0 +1,18 @@
+machine:
+  java:
+    version: oraclejdk8
+
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter "android-25","build-tools-25.0.2","extra-android-m2repository"
+
+test:
+  override:
+    - emulator -avd circleci-android24 -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew connectedAndroidTest
+
+  post:
+    - bash <(curl -s https://codecov.io/bash)

@@ -37,5 +37,18 @@
     <color name="background_20">#738080</color>
     <color name="background_21">#8E8474</color>
     <color name="background_22">#84898E</color>
-    <color name="drawer">#444A5A</color>
+    <color name="drawer">@color/colorPrimaryDark</color>
+
+    <string-array name="progress_bar_1">
+        <item>@color/white</item>
+        <item>@color/white_65</item>
+        <item>@color/white_55</item>
+    </string-array>
+
+    <string-array name="progress_bar_2">
+        <item>@color/colorAccent</item>
+        <item>@color/background_1</item>
+        <item>@color/background_22</item>
+        <item>@color/background_6</item>
+    </string-array>
 </resources>
