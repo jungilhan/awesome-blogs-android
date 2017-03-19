@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:paddingTop="32dp"
+            android:paddingTop="38dp"
             android:layout_gravity="center"
             android:orientation="vertical">
 
