@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.f2prateek.rx.preferences.Preference;
 
-import org.petabytes.awesomeblogs.digest.DigestService;
+import org.petabytes.awesomeblogs.digest.StartUpReceiver;
 import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
@@ -126,7 +126,7 @@ class DebugCoordinator extends Coordinator {
         scheduleView.setOnClickListener($ -> {
             long digestAt = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
             digestPreference.set(digestAt);
-            DigestService.scheduleAlarm(context, digestAt);
+            StartUpReceiver.scheduleAlarm(context, digestAt);
         });
     }
 

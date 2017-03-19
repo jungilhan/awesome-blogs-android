@@ -16,7 +16,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import org.petabytes.api.Api;
 import org.petabytes.awesomeblogs.auth.Authenticator;
 import org.petabytes.awesomeblogs.base.Verifiable;
-import org.petabytes.awesomeblogs.digest.DigestService;
 import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 import org.petabytes.awesomeblogs.util.Devices;
 import org.petabytes.awesomeblogs.util.LifeCycles;
@@ -37,6 +36,7 @@ public class AwesomeBlogsApp extends Application {
     private RxSharedPreferences preferences;
     private FirebaseAnalytics analytics;
 
+    @DebugLog
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,8 +65,6 @@ public class AwesomeBlogsApp extends Application {
                     .subscribe($ -> startActivity(FeedsActivity.intent(instance)));
             }
         });
-
-        DigestService.scheduleAlarm(this);
     }
 
     public static AwesomeBlogsApp get() {
