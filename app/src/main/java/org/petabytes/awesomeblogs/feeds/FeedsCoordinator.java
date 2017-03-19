@@ -219,13 +219,12 @@ class FeedsCoordinator extends Coordinator {
             pair.second.size() == 1
                 ? context.getString(R.string.fresh_entries_title_0, pair.second.get(0).getTitle())
                 : context.getString(R.string.fresh_entries_title_1, pair.second.get(0).getTitle(), (pair.second.size() - 1)),
-            TSnackbar.LENGTH_LONG);
+            3500);
 
         TextView messageView = (TextView) snack.getView().findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
         messageView.setTextColor(Color.WHITE);
         messageView.setMaxLines(2);
         snack.getView().setBackgroundResource(R.color.colorPrimaryDark);
-        snack.setActionTextColor(context.getResources().getColor(R.color.colorAccent));
         snack.setMaxWidth(3000);
         snack.getView().setOnClickListener($ -> {
             load(category, false);
