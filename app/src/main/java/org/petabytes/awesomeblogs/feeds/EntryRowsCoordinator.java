@@ -59,6 +59,7 @@ class EntryRowsCoordinator extends Coordinator {
                     });
                 bind(Observable.just(entries.get(i).getSummary())
                     .map(summary -> Jsoup.parse(summary).text())
+                    .map(summary -> summary.substring(0, Math.min(200, summary.length())))
                     .delay(200, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io()), summary -> {
                         summaryViews[i].setText(summary.trim());

@@ -44,6 +44,7 @@ class EntryEntireCoordinator extends Coordinator {
             });
         bind(Observable.just(entry.getSummary().trim())
             .map(summary -> Jsoup.parse(summary).text())
+            .map(summary -> summary.substring(0, Math.min(200, summary.length())))
             .subscribeOn(Schedulers.io()), summary -> summaryView.setText(summary));
         setBackground(view);
     }
