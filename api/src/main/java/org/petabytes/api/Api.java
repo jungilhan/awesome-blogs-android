@@ -139,6 +139,7 @@ public class Api implements DataSource {
 
     public void markAsRead(@NonNull Entry entry, long readAt) {
         localSource.markAsRead(entry, readAt);
+        remoteSource.markAsRead(entry);
     }
 
     public Observable<Date> getExpiryDate(@NonNull String category) {
