@@ -7,7 +7,8 @@ import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 public final class Preferences {
 
     private static final String CATEGORY = "category";
-    private static final String DIGEST_AT = "digest_at";
+    private static final String MORNING_DIGEST_AT = "digest_at";
+    private static final String EVENING_DIGEST_AT = "evening_digest_at";
     private static final String DEVICE_ID = "device_id";
     private static final String FCM_TOKEN = "fcm_token";
     private static final String ACCESS_TOKEN = "access_token";
@@ -19,8 +20,12 @@ public final class Preferences {
         return AwesomeBlogsApp.get().preferences().getString(CATEGORY, "all");
     }
 
-    public static Preference<Long> digestAt() {
-        return AwesomeBlogsApp.get().preferences().getLong(DIGEST_AT, 0L);
+    public static Preference<Long> morningDigestAt() {
+        return AwesomeBlogsApp.get().preferences().getLong(MORNING_DIGEST_AT, 0L);
+    }
+
+    public static Preference<Long> eveningDigestAt() {
+        return AwesomeBlogsApp.get().preferences().getLong(EVENING_DIGEST_AT, 0L);
     }
 
     public static Preference<String> deviceId() {

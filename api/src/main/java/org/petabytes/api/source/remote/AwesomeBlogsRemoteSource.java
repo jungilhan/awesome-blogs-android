@@ -28,7 +28,7 @@ public class AwesomeBlogsRemoteSource implements DataSource {
     public AwesomeBlogsRemoteSource(@NonNull Supplier<String> userAgentSupplier, @NonNull Supplier<String> deviceIdSupplier,
                                     @NonNull Supplier<String> fcmTokenSupplier, @NonNull Supplier<String> accessTokenSupplier, boolean loggable) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        loggingInterceptor.setLevel(loggable ? HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient.Builder()
             .addNetworkInterceptor(new NetworkInterceptor(userAgentSupplier, deviceIdSupplier, fcmTokenSupplier, accessTokenSupplier))
             .addNetworkInterceptor(loggingInterceptor)

@@ -311,16 +311,30 @@
     <TextView
         style="@style/Debug.Label"
         android:layout_gravity="start|center_vertical"
-        android:text="Schedule"/>
+        android:text="Morning"/>
 
     <TextView
-        android:id="@+id/schedule"
+        android:id="@+id/morning"
         style="@style/Debug.Value"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Around 10 AM"/>
+        android:text="Around 9 AM"/>
+
+    <TextView
+        style="@style/Debug.Label"
+        android:layout_gravity="start|center_vertical"
+        android:text="Evening"/>
+
+    <TextView
+        android:id="@+id/evening"
+        style="@style/Debug.Value"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Around 7 PM"/>
 
     <TextView
         style="@style/Debug.Category"
