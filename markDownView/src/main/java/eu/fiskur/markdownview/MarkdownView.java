@@ -90,7 +90,6 @@ public class MarkdownView extends RelativeLayout {
   private void setup(){
     LayoutInflater.from(getContext()).inflate(R.layout.markdown_view, this);
     webView = (WebView) findViewById(R.id.markdown_web_view);
-    webView.loadUrl("about:blank");//clear all
 
     webSettings = webView.getSettings();
     webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -100,6 +99,10 @@ public class MarkdownView extends RelativeLayout {
     webViewClient = new MarkdownWebViewClient(getContext());
     webView.setWebViewClient(webViewClient);
     allowGestures(false);
+  }
+
+  public void setOnLoadingCompleteAction(Runnable completeAction) {
+    webViewClient.setOnLoadingCompleteAction(completeAction);
   }
 
   public void setOnOverrideUrlAction(MarkdownWebViewClient.OnOverrideUrlListener onOverrideUrlListener, Runnable fallbackAction) {
@@ -163,6 +166,7 @@ public class MarkdownView extends RelativeLayout {
   private static class MarkdownWebViewClient extends WebViewClient {
 
     private final Context context;
+    private Runnable completeAction;
     private OnOverrideUrlListener onOverrideUrlListener;
     private Runnable fallbackAction;
 
@@ -175,9 +179,18 @@ public class MarkdownView extends RelativeLayout {
       this.context = context;
     }
 
+    void setOnLoadingCompleteAction(Runnable completeAction) {
+      this.completeAction = completeAction;
+    }
+
     void setOnOverrideUrlAction(OnOverrideUrlListener onOverrideUrlListener, Runnable fallbackAction) {
       this.onOverrideUrlListener = onOverrideUrlListener;
       this.fallbackAction = fallbackAction;
+    }
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+      completeAction.run();
     }
 
     @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {

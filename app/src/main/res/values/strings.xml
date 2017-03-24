@@ -20,4 +20,6 @@
     <string name="digest_message_4">\'%1$s\', \'%2$s\', \'%3$s\' 외 %4$d개의 소식이 있습니다.</string>
     <string name="fresh_entries_title_0">새로운 \'%1$s\' 소식이 있습니다.</string>
     <string name="fresh_entries_title_1">\'%1$s\' 외 %2$d개의 새로운 소식이 있습니다.</string>
+    <string name="previous_entry">이전 글</string>
+    <string name="next_entry">다음 글</string>
 </resources>

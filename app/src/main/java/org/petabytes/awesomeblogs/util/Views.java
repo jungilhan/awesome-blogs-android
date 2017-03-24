@@ -5,6 +5,10 @@ import android.view.View;
 
 public class Views {
 
+    public static boolean isVisible(@NonNull View view) {
+        return view.getVisibility() == View.VISIBLE;
+    }
+
     public static void setVisibleOrGone(@NonNull View view, boolean visible) {
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
