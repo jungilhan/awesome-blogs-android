@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import eu.fiskur.markdownview.MarkdownView;
 import rx.Observable;
 import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static org.petabytes.awesomeblogs.R.id.summary;
@@ -37,15 +38,15 @@ class SummaryCoordinator extends Coordinator {
 
     private final Context context;
     private final String link;
-    private final Action0 onLoadingCompleteAction;
+    private final Action1<Integer> onLoading;
     private final Action0 onCloseAction;
     private Entry entry;
 
     SummaryCoordinator(@NonNull Context context, @NonNull String link,
-                       @NonNull Action0 onLoadingCompleteAction, @NonNull Action0 onCloseAction) {
+                       @NonNull Action1<Integer> onLoadingAction, @NonNull Action0 onCloseAction) {
         this.context = context;
         this.link = link;
-        this.onLoadingCompleteAction = onLoadingCompleteAction;
+        this.onLoading = onLoadingAction;
         this.onCloseAction = onCloseAction;
     }
 
@@ -55,10 +56,7 @@ class SummaryCoordinator extends Coordinator {
         bind(AwesomeBlogsApp.get().api().getEntry(link)
             .doOnNext(entry -> this.entry = entry), this::onEntryChanged);
 
-        summaryView.setOnLoadingCompleteAction(() -> {
-            summaryView.animate().setStartDelay(200).alpha(1f);
-            onLoadingCompleteAction.call();
-        });
+        summaryView.setOnProgressChangedListener(onLoading::call);
         summaryView.setOnOverrideUrlAction(
             url -> context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))),
             () -> Alerts.show((Activity) context, R.string.error_title, R.string.error_invalid_link));

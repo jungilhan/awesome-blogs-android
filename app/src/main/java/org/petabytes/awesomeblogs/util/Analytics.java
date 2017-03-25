@@ -33,7 +33,7 @@ public final class Analytics {
         public static final String VIEW_DIGEST = "view_digest";
         public static final String SCHEDULE_DIGEST = "schedule_digest";
         public static final String INSTALL_REFERRER = "install_referrer";
-        public static final String VIEW_AROUND = "view_around";
+        public static final String VIEW_SIBLING = "view_sibling";
     }
 
     public static class Param {

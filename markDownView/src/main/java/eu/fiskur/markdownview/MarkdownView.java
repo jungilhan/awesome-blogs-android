@@ -9,6 +9,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,6 +24,12 @@ public class MarkdownView extends RelativeLayout {
   private WebView webView;
   private WebSettings webSettings;
   private MarkdownWebViewClient webViewClient;
+  private OnProgressChangedListener onProgressChangedListener;
+
+  public interface OnProgressChangedListener {
+
+    void onChanged(int progress);
+  }
 
   private static final String MARKDOWN_MARKUP_TEMPLATE = "<!doctype html>\n"
       + "<html>\n"
@@ -98,7 +105,19 @@ public class MarkdownView extends RelativeLayout {
     //To handle web links:
     webViewClient = new MarkdownWebViewClient(getContext());
     webView.setWebViewClient(webViewClient);
+    webView.setWebChromeClient(new WebChromeClient() {
+      @Override
+      public void onProgressChanged(WebView view, int newProgress) {
+        if (onProgressChangedListener != null) {
+          onProgressChangedListener.onChanged(newProgress);
+        }
+      }
+    });
     allowGestures(false);
+  }
+
+  public void setOnProgressChangedListener(OnProgressChangedListener onProgressChangedListener) {
+    this.onProgressChangedListener = onProgressChangedListener;
   }
 
   public void setOnLoadingCompleteAction(Runnable completeAction) {
@@ -190,7 +209,9 @@ public class MarkdownView extends RelativeLayout {
 
     @Override
     public void onPageFinished(WebView view, String url) {
-      completeAction.run();
+      if (completeAction != null) {
+        completeAction.run();
+      }
     }
 
     @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {

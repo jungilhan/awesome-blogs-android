@@ -42,7 +42,6 @@ class FooterCoordinator extends Coordinator {
     public void attach(@NonNull View view) {
         super.attach(view);
         bind(Preferences.category().asObservable()
-            .first()
             .flatMap(new Func1<String, Observable<Pair<Feed, Entry>>>() {
                 @Override
                 public Observable<Pair<Feed, Entry>> call(String category) {
@@ -50,7 +49,8 @@ class FooterCoordinator extends Coordinator {
                         AwesomeBlogsApp.get().api().getFeed(category),
                         AwesomeBlogsApp.get().api().getEntry(link), Pair::new);
                 }
-            }), pair -> {
+            })
+            .first(), pair -> {
                 List<Entry> entries = pair.first.getEntries();
                 int index = entries.indexOf(pair.second);
                 if (index >= 1) {
@@ -68,15 +68,15 @@ class FooterCoordinator extends Coordinator {
             });
     }
 
-    void show() {
-        Views.setVisibleOrGone(getView(), Views.isVisible(previousView) || Views.isVisible(nextView));
+    void show(int progress) {
+        Views.setVisibleOrGone(getView(), progress > 70 && (Views.isVisible(previousView) || Views.isVisible(nextView)));
     }
 
     @OnClick({R.id.previous, R.id.next})
     void onEntryClick(@NonNull View view) {
         Entry entry = (Entry) view.getTag();
         context.startActivity(SummaryActivity.intent(context, entry.getLink()));
-        Analytics.event(Analytics.Event.VIEW_AROUND, new HashMap<String, String>(2) {{
+        Analytics.event(Analytics.Event.VIEW_SIBLING, new HashMap<String, String>(2) {{
             put(Analytics.Param.TITLE, entry.getTitle());
             put(Analytics.Param.LINK, entry.getLink());
         }});
