@@ -25,6 +25,7 @@ import java.util.concurrent.Callable;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -68,6 +69,22 @@ public class AwesomeBlogsLocalSource implements DataSource {
                 try {
                     Entry entry = realm.where(Entry.class).equalTo("link", link).findFirst();
                     return entry != null ? Observable.just(realm.copyFromRealm(entry)) : Observable.<Entry>empty();
+                } finally {
+                    realm.close();
+                }
+            }
+        });
+    }
+
+    public Observable<List<Entry>> getEntries(@NonNull final String author) {
+        return Observable.defer(new Func0<Observable<List<Entry>>>() {
+            @Override
+            public Observable<List<Entry>> call() {
+                Realm realm = Realm.getInstance(config);
+                try {
+                    List<Entry> entries = realm.where(Entry.class)
+                        .equalTo("author", author).findAllSorted("createdAt", Sort.DESCENDING);
+                    return Observable.just(realm.copyFromRealm(entries));
                 } finally {
                     realm.close();
                 }

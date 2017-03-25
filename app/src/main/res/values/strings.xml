@@ -22,4 +22,5 @@
     <string name="fresh_entries_title_1">\'%1$s\' 외 %2$d개의 새로운 소식이 있습니다.</string>
     <string name="previous_entry">이전 글</string>
     <string name="next_entry">다음 글</string>
+    <string name="author_entries">블로거의 다른 글</string>
 </resources>

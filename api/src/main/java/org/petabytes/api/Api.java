@@ -133,6 +133,10 @@ public class Api implements DataSource {
         return localSource.getEntry(link);
     }
 
+    public Observable<List<Entry>> getEntries(@NonNull String author) {
+        return localSource.getEntries(author);
+    }
+
     public Observable<Boolean> isRead(@NonNull String link) {
         return localSource.isRead(link);
     }

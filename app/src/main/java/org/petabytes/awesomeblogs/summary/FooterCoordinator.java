@@ -3,8 +3,13 @@ package org.petabytes.awesomeblogs.summary;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.annimon.stream.Stream;
 
 import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
@@ -25,6 +30,8 @@ import rx.functions.Func1;
 
 class FooterCoordinator extends Coordinator {
 
+    @BindView(R.id.author_entries) LinearLayoutCompat authorEntries;
+    @BindView(R.id.divider) View dividerView;
     @BindView(R.id.previous) View previousView;
     @BindView(R.id.previous_title) TextView previousTitleView;
     @BindView(R.id.next) View nextView;
@@ -41,6 +48,28 @@ class FooterCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
+        bind(AwesomeBlogsApp.get().api().getEntry(link)
+            .flatMap(entry -> AwesomeBlogsApp.get().api().getEntries(entry.getAuthor())), entries ->
+                Stream.of(entries)
+                    .forEach(entry -> {
+                        if (TextUtils.equals(entry.getLink(), link)) {
+                            return;
+                        }
+                        TextView entryView = (TextView) LayoutInflater
+                            .from(context).inflate(R.layout.footer_auther_entry, null, false);
+                        entryView.setText(entry.getTitle());
+                        entryView.setOnClickListener($ -> {
+                            context.startActivity(SummaryActivity.intent(context, entry.getLink()));
+                            Analytics.event(Analytics.Event.VIEW_AUTHOR, new HashMap<String, String>(2) {{
+                                put(Analytics.Param.TITLE, entry.getTitle());
+                                put(Analytics.Param.LINK, entry.getLink());
+                                put(Analytics.Param.AUTHOR, entry.getAuthor());
+                            }});
+                        });
+                        authorEntries.addView(entryView);
+                        Views.setVisible(authorEntries, dividerView);
+            }));
+
         bind(Preferences.category().asObservable()
             .flatMap(new Func1<String, Observable<Pair<Feed, Entry>>>() {
                 @Override
