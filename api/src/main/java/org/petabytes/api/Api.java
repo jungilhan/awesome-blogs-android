@@ -133,12 +133,19 @@ public class Api implements DataSource {
         return localSource.getEntry(link);
     }
 
+    public Observable<List<Entry>> getEntries(@NonNull String author) {
+        return localSource.getEntries(author);
+    }
+
     public Observable<Boolean> isRead(@NonNull String link) {
         return localSource.isRead(link);
     }
 
     public void markAsRead(@NonNull Entry entry, long readAt) {
         localSource.markAsRead(entry, readAt);
+        if (!BuildConfig.DEBUG) {
+            remoteSource.markAsRead(entry);
+        }
     }
 
     public Observable<Date> getExpiryDate(@NonNull String category) {

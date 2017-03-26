@@ -1,6 +1,7 @@
 package org.petabytes.awesomeblogs.digest;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,8 +10,11 @@ import org.petabytes.api.source.local.Entry;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.fcm.Notifications;
+import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +23,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class DigestService extends IntentService {
+
+    private static final String TYPE = "type";
 
     @DebugLog
     public DigestService() {
@@ -35,9 +41,14 @@ public class DigestService extends IntentService {
             .timeout(1, TimeUnit.MINUTES)
             .onErrorResumeNext(Observable.empty())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext($ -> Analytics.event(Analytics.Event.SEND_DIGEST))
+            .doOnNext(entries ->
+                Analytics.event(Analytics.Event.SEND_DIGEST, new HashMap<String, String>(2) {{
+                    put(Analytics.Param.TYPE, getType(intent) == 0 ? "morning" : "evening");
+                    put(Analytics.Param.SIZE, String.valueOf(entries.size()));
+                }}))
             .subscribe(entries ->
-                Notifications.send(this, getString(R.string.digest_title, entries.size()), createMessage(entries)));
+                Notifications.send(this, getString(R.string.digest_title, entries.size()),
+                    createMessage(entries), FeedsActivity.intent(this, "all", entries.size())));
 
         AwesomeBlogsApp.get().api().getFeed("all", false)
             .onErrorResumeNext(Observable.empty())
@@ -66,5 +77,15 @@ public class DigestService extends IntentService {
                 break;
         }
         return message;
+    }
+
+    private static int getType(@Nullable Intent intent) {
+        return intent == null ? 0 : intent.getIntExtra(TYPE, 0);
+    }
+
+    public static Intent intent(@NonNull Context context, @Schedulers.Type int type) {
+        Intent intent = new Intent(context, DigestService.class);
+        intent.putExtra(TYPE, type);
+        return intent;
     }
 }

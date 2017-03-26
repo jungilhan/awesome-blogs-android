@@ -3,6 +3,7 @@ package org.petabytes.awesomeblogs.feeds;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
+import android.support.v4.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,8 +27,7 @@ class DrawerCoordinator extends Coordinator {
 
     @Retention(SOURCE)
     @StringDef({ALL, DEVELOPER, TECH_COMPANY, INSIGHTFUL})
-    @interface Category {
-    }
+    @interface Category {}
 
     static final String ALL = "all";
     static final String DEVELOPER = "dev";
@@ -40,12 +40,12 @@ class DrawerCoordinator extends Coordinator {
     private final Action1<String> onCategorySelect;
     private final Preference<String> categoryPreference;
 
-    DrawerCoordinator(@NonNull Optional<String> category, @NonNull Action1<String> onCategorySelect) {
+    DrawerCoordinator(@NonNull Pair<Optional<String>, Integer> digestPair, @NonNull Action1<String> onCategorySelect) {
         this.onCategorySelect = onCategorySelect;
         this.categoryPreference = Preferences.category();
-        category.ifPresent(c -> {
-            categoryPreference.set(c);
-            Analytics.event(Analytics.Event.VIEW_DIGEST);
+        digestPair.first.ifPresent(category -> {
+            categoryPreference.set(category);
+            Analytics.event(Analytics.Event.VIEW_DIGEST, Analytics.Param.SIZE, String.valueOf(digestPair.second));
         });
     }
 

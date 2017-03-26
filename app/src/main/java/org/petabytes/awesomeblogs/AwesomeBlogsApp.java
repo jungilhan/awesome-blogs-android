@@ -8,10 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.annimon.stream.Optional;
 import com.crashlytics.android.Crashlytics;
 import com.f2prateek.rx.preferences.Preference;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.petabytes.api.Api;
 import org.petabytes.awesomeblogs.auth.Authenticator;
@@ -20,6 +22,7 @@ import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 import org.petabytes.awesomeblogs.util.Devices;
 import org.petabytes.awesomeblogs.util.LifeCycles;
 import org.petabytes.awesomeblogs.util.Preferences;
+import org.petabytes.awesomeblogs.util.Strings;
 import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import hugo.weaving.DebugLog;
@@ -95,7 +98,15 @@ public class AwesomeBlogsApp extends Application {
                 }
                 return deviceId;
             },
-            () -> Preferences.fcmToken().get(),
+            () -> {
+                Preference<String> preference = Preferences.fcmToken();
+                String fcmToken = preference.get();
+                if (TextUtils.isEmpty(fcmToken)) {
+                    fcmToken = Optional.ofNullable(FirebaseInstanceId.getInstance().getToken()).orElse(Strings.EMPTY);
+                    preference.set(fcmToken);
+                }
+                return fcmToken;
+            },
             () -> Preferences.accessToken().get(),
             false);
     }

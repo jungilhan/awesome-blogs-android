@@ -18,6 +18,7 @@ public final class Analytics {
     public static class Event {
 
         public static final String MORE_MENU = "more_menu";
+        public static final String COPY_LINK = "copy_link";
         public static final String SHARE = "share";
         public static final String OPEN_IN_BROWSER = "open_in_browser";
         public static final String OPEN_DRAWER = "open_drawer";
@@ -32,16 +33,26 @@ public final class Analytics {
         public static final String SEND_DIGEST = "send_digest";
         public static final String VIEW_DIGEST = "view_digest";
         public static final String SCHEDULE_DIGEST = "schedule_digest";
+        public static final String INSTALL_REFERRER = "install_referrer";
+        public static final String VIEW_SIBLING = "view_sibling";
+        public static final String VIEW_AUTHOR = "view_author";
     }
 
     public static class Param {
 
         public static final String TITLE = "title";
         public static final String LINK = "link";
+        public static final String AUTHOR = "author";
+        public static final String TYPE = "type";
+        public static final String SIZE = "size";
     }
 
     public static void event(@NonNull String name) {
         event(name, Collections.emptyMap());
+    }
+
+    public static void event(@NonNull String name, @NonNull String key, @NonNull String value) {
+        event(name, Collections.singletonMap(key, value));
     }
 
     @DebugLog

@@ -1,65 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.flipboard.bottomsheet.BottomSheetLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.flipboard.bottomsheet.BottomSheetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:elevation="0.5dp">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp">
 
-            <android.support.v7.widget.LinearLayoutCompat
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                app:layout_scrollFlags="scroll|snap">
+            <ImageView
+                android:id="@+id/close"
+                style="@style/AppWidget.SelectableBorderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:src="@drawable/back_black" />
 
-                <ImageView
-                    android:id="@+id/close"
-                    style="@style/AppWidget.SelectableBorderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:src="@drawable/back_black"/>
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/more"
+                style="@style/AppWidget.SelectableBorderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:src="@drawable/more_vertical_black" />
+        </android.support.v7.widget.LinearLayoutCompat>
 
-                <ImageView
-                    android:id="@+id/more"
-                    style="@style/AppWidget.SelectableBorderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:src="@drawable/more_vertical_black"/>
-            </android.support.v7.widget.LinearLayoutCompat>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/divider"/>
-        </android.support.design.widget.AppBarLayout>
-
-        <eu.fiskur.markdownview.MarkdownView
-            android:id="@+id/summary"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-    </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="0.5dp"
+            android:background="@color/divider" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <eu.fiskur.markdownview.MarkdownView
+                        android:id="@+id/summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        android:id="@+id/footer"
+                        layout="@layout/footer"
+                        android:visibility="invisible" />
+                </android.support.v7.widget.LinearLayoutCompat>
+            </ScrollView>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                style="?android:attr/progressBarStyleHorizontal"/>
+        </FrameLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 </com.flipboard.bottomsheet.BottomSheetLayout>

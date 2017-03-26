@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.f2prateek.rx.preferences.Preference;
 
-import org.petabytes.awesomeblogs.digest.StartUpReceiver;
+import org.petabytes.awesomeblogs.digest.Schedulers;
 import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
@@ -44,7 +44,8 @@ class DebugCoordinator extends Coordinator {
     @BindView(R.id.density) TextView densityView;
     @BindView(R.id.release) TextView releaseView;
     @BindView(R.id.api) TextView apiView;
-    @BindView(R.id.schedule) TextView scheduleView;
+    @BindView(R.id.morning) TextView morningView;
+    @BindView(R.id.evening) TextView eveningView;
     @BindView(R.id.all) TextView allView;
     @BindView(R.id.developer) TextView developerView;
     @BindView(R.id.company) TextView companyView;
@@ -119,14 +120,23 @@ class DebugCoordinator extends Coordinator {
     }
 
     private void initDigestSection() {
-        Preference<Long> digestPreference = Preferences.digestAt();
-        bind(digestPreference.asObservable(),
-            digestAt -> scheduleView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(digestAt))));
+        Preference<Long> morningDigestPreference = Preferences.morningDigestAt();
+        Preference<Long> eveningDigestPreference = Preferences.eveningDigestAt();
 
-        scheduleView.setOnClickListener($ -> {
+        bind(morningDigestPreference.asObservable(),
+            digestAt -> morningView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(digestAt))));
+        bind(eveningDigestPreference.asObservable(),
+            digestAt -> eveningView.setText(new SimpleDateFormat("dd日 HH:mm:ss", Locale.getDefault()).format(new Date(digestAt))));
+
+        morningView.setOnClickListener($ -> {
             long digestAt = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
-            digestPreference.set(digestAt);
-            StartUpReceiver.scheduleAlarm(context, digestAt);
+            morningDigestPreference.set(digestAt);
+            Schedulers.set(context, digestAt, Schedulers.MORNING);
+        });
+        eveningView.setOnClickListener($ -> {
+            long digestAt = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
+            eveningDigestPreference.set(digestAt);
+            Schedulers.set(context, digestAt, Schedulers.EVENING);
         });
     }
 

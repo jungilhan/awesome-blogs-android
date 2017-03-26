@@ -5,11 +5,14 @@
     <color name="colorAccent">#F08179</color>
     <color name="white">@android:color/white</color>
     <color name="white_65">#a6ffffff</color>
-    <color name="white_25">#40ffffff</color>
     <color name="white_55">#8cffffff</color>
+    <color name="white_25">#40ffffff</color>
+    <color name="white_10">#1affffff</color>
     <color name="black">@android:color/black</color>
     <color name="black_65">#a6000000</color>
     <color name="black_25">#40000000</color>
+    <color name="black_15">#26000000</color>
+    <color name="black_10">#1a000000</color>
     <color name="grey">#8e8e8e</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="divider">#e3e3e3</color>

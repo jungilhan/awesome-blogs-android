@@ -23,6 +23,13 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.3 여친 맥북으로 눈칫밥 개발 중 🤓 2017-03-24
+ * 저녁 새소식 알림 기능 추가
+ * 메인 화면 스크롤이 매끄럽지 않은 현상 수정
+ * 인스톨 레퍼러 기능 추가
+ * 인기글 분석을 위한 API 추가
+ * 앱 최초 설치 시, 새소식 알람 즉시 등록되지 않는 버그 수정
+ 
 ### v1.2 주스 쏟은 내 맥북 😇 2017-03-18
  * 새로운 블로그 글을 모아서 하루 한번 알림 기능 추가 (코드리뷰 @soulkeykim)
  * 새로운 서클 타입 레이아웃 추가

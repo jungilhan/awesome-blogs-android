@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.text.style.StyleSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import butterknife.OnClick;
 public class FeedsActivity extends AwesomeActivity {
 
     private static String CATEGORY = "category";
+    private static String FRESH_ENTRIES = "fresh_entries";
 
     @BindView(R.id.menu) ImageView menuButton;
     @BindView(R.id.sliding_menu) SlidingMenu slidingMenu;
@@ -55,7 +57,7 @@ public class FeedsActivity extends AwesomeActivity {
                     .build());
                 Views.setVisible(pageView);
             }))
-            .coordinator(R.id.drawer, new DrawerCoordinator(getCategory(), category -> {
+            .coordinator(R.id.drawer, new DrawerCoordinator(new Pair<>(getCategory(), getFreshEntries()), category -> {
                 Views.setInvisible(pageView);
                 feedsCoordinator.onCategorySelect(category);
                 slidingMenu.showContent();
@@ -86,6 +88,10 @@ public class FeedsActivity extends AwesomeActivity {
         return Optional.ofNullable(getIntent().getStringExtra(CATEGORY));
     }
 
+    private int getFreshEntries() {
+        return getIntent().getIntExtra(FRESH_ENTRIES, 0);
+    }
+
     public static Intent intent(@NonNull Context context) {
         Intent intent = new Intent(context, FeedsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -95,6 +101,12 @@ public class FeedsActivity extends AwesomeActivity {
     public static Intent intent(@NonNull Context context, @NonNull String category) {
         Intent intent = intent(context);
         intent.putExtra(CATEGORY, category);
+        return intent;
+    }
+
+    public static Intent intent(@NonNull Context context, @NonNull String category, int freshEntries) {
+        Intent intent = intent(context, category);
+        intent.putExtra(FRESH_ENTRIES, freshEntries);
         return intent;
     }
 }
