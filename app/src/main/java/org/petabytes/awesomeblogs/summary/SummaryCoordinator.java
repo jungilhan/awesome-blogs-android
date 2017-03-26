@@ -58,7 +58,13 @@ class SummaryCoordinator extends Coordinator {
 
         summaryView.setOnProgressChangedListener(onLoading::call);
         summaryView.setOnOverrideUrlAction(
-            url -> context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))),
+            url -> {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                Analytics.event(Analytics.Event.OPEN_IN_BROWSER, new HashMap<String, String>(2) {{
+                    put(Analytics.Param.TITLE, entry.getTitle());
+                    put(Analytics.Param.LINK, link);
+                }});
+            },
             () -> Alerts.show((Activity) context, R.string.error_title, R.string.error_invalid_link));
     }
 
