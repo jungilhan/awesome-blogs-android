@@ -16,22 +16,18 @@ import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
 import java.lang.annotation.Retention;
-import java.util.HashMap;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-import static android.R.attr.category;
-import static android.R.attr.entries;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 class DrawerCoordinator extends Coordinator {
 
     @Retention(SOURCE)
     @StringDef({ALL, DEVELOPER, TECH_COMPANY, INSIGHTFUL})
-    @interface Category {
-    }
+    @interface Category {}
 
     static final String ALL = "all";
     static final String DEVELOPER = "dev";
