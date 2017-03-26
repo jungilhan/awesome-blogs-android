@@ -9,11 +9,11 @@
     <string name="dev">DEVELOPER</string>
     <string name="tech_company">TECH COMPANY</string>
     <string name="insightful">INSIGHTFUL</string>
-    <string name="error_title">이런! 😭</string>
+    <string name="error_title">이런!</string>
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>
     <string name="error_sign_in">로그인 도중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
-    <string name="digest_title">새로운 소식 %1$d개 🕵️</string>
+    <string name="digest_title">새로운 소식 %1$d개</string>
     <string name="digest_message_1">\'%1$s\' 소식이 있습니다.</string>
     <string name="digest_message_2">\'%1$s\', \'%2$s\' 소식이 있습니다.</string>
     <string name="digest_message_3">\'%1$s\', \'%2$s\', \'%3$s\' 소식이 있습니다.</string>
