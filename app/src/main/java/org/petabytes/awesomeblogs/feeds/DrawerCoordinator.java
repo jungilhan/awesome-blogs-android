@@ -3,6 +3,7 @@ package org.petabytes.awesomeblogs.feeds;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
+import android.support.v4.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,11 +16,14 @@ import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
 
 import java.lang.annotation.Retention;
+import java.util.HashMap;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
+import static android.R.attr.category;
+import static android.R.attr.entries;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 class DrawerCoordinator extends Coordinator {
@@ -40,12 +44,12 @@ class DrawerCoordinator extends Coordinator {
     private final Action1<String> onCategorySelect;
     private final Preference<String> categoryPreference;
 
-    DrawerCoordinator(@NonNull Optional<String> category, @NonNull Action1<String> onCategorySelect) {
+    DrawerCoordinator(@NonNull Pair<Optional<String>, Integer> digestPair, @NonNull Action1<String> onCategorySelect) {
         this.onCategorySelect = onCategorySelect;
         this.categoryPreference = Preferences.category();
-        category.ifPresent(c -> {
-            categoryPreference.set(c);
-            Analytics.event(Analytics.Event.VIEW_DIGEST);
+        digestPair.first.ifPresent(category -> {
+            categoryPreference.set(category);
+            Analytics.event(Analytics.Event.VIEW_DIGEST, Analytics.Param.SIZE, String.valueOf(digestPair.second));
         });
     }
 

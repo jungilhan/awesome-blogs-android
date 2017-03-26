@@ -10,9 +10,11 @@ import org.petabytes.api.source.local.Entry;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.fcm.Notifications;
+import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,10 +41,14 @@ public class DigestService extends IntentService {
             .timeout(1, TimeUnit.MINUTES)
             .onErrorResumeNext(Observable.empty())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext($ -> Analytics.event(Analytics.Event.SEND_DIGEST,
-                Analytics.Param.TYPE, getType(intent) == 0 ? "morning" : "evening"))
+            .doOnNext(entries ->
+                Analytics.event(Analytics.Event.SEND_DIGEST, new HashMap<String, String>(2) {{
+                    put(Analytics.Param.TYPE, getType(intent) == 0 ? "morning" : "evening");
+                    put(Analytics.Param.SIZE, String.valueOf(entries.size()));
+                }}))
             .subscribe(entries ->
-                Notifications.send(this, getString(R.string.digest_title, entries.size()), createMessage(entries)));
+                Notifications.send(this, getString(R.string.digest_title, entries.size()),
+                    createMessage(entries), FeedsActivity.intent(this, "all", entries.size())));
 
         AwesomeBlogsApp.get().api().getFeed("all", false)
             .onErrorResumeNext(Observable.empty())

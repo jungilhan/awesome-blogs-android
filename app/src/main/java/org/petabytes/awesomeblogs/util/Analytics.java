@@ -43,6 +43,7 @@ public final class Analytics {
         public static final String LINK = "link";
         public static final String AUTHOR = "author";
         public static final String TYPE = "type";
+        public static final String SIZE = "size";
     }
 
     public static void event(@NonNull String name) {
