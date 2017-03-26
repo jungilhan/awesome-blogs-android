@@ -60,7 +60,7 @@ class FooterCoordinator extends Coordinator {
                         entryView.setText(entry.getTitle());
                         entryView.setOnClickListener($ -> {
                             context.startActivity(SummaryActivity.intent(context, entry.getLink()));
-                            Analytics.event(Analytics.Event.VIEW_AUTHOR, new HashMap<String, String>(2) {{
+                            Analytics.event(Analytics.Event.VIEW_AUTHOR, new HashMap<String, String>(3) {{
                                 put(Analytics.Param.TITLE, entry.getTitle());
                                 put(Analytics.Param.LINK, entry.getLink());
                                 put(Analytics.Param.AUTHOR, entry.getAuthor());
