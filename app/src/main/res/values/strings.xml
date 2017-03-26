@@ -3,6 +3,8 @@
     <string name="sign_in_with_google">구글로 로그인</string>
     <string name="ok">확인</string>
     <string name="menu">더보기</string>
+    <string name="copy_link">링크 복사하기</string>
+    <string name="copy_link_completed">링크가 클립보드에 복사됐습니다.</string>
     <string name="open_in_browser">페이지 방문하기</string>
     <string name="share">공유하기</string>
     <string name="all">ALL</string>

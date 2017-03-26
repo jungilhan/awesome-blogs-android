@@ -18,6 +18,7 @@ public final class Analytics {
     public static class Event {
 
         public static final String MORE_MENU = "more_menu";
+        public static final String COPY_LINK = "copy_link";
         public static final String SHARE = "share";
         public static final String OPEN_IN_BROWSER = "open_in_browser";
         public static final String OPEN_DRAWER = "open_drawer";

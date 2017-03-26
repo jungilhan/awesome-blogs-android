@@ -103,6 +103,7 @@ dependencies {
     compile rootProject.ext.firebase_core
     compile rootProject.ext.firebase_auth
     compile rootProject.ext.firebase_messaging
+    compile rootProject.ext.support_customtabs
     compile rootProject.ext.play_services_auth
     compile rootProject.ext.alerter
     compile rootProject.ext.flipboard_bottomsheet
