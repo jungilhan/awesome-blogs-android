@@ -2,13 +2,16 @@ package org.petabytes.awesomeblogs;
 
 import android.text.TextUtils;
 
+import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 import com.facebook.stetho.Stetho;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import org.petabytes.api.Api;
 import org.petabytes.awesomeblogs.util.Devices;
 import org.petabytes.awesomeblogs.util.Preferences;
+import org.petabytes.awesomeblogs.util.Strings;
 import org.petabytes.coordinator.ActivityLayoutBinder;
 
 import timber.log.Timber;
@@ -44,7 +47,15 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
                 }
                 return deviceId;
             },
-            () -> Preferences.fcmToken().get(),
+            () -> {
+                Preference<String> preference = Preferences.fcmToken();
+                String fcmToken = preference.get();
+                if (TextUtils.isEmpty(fcmToken)) {
+                    fcmToken = Optional.ofNullable(FirebaseInstanceId.getInstance().getToken()).orElse(Strings.EMPTY);
+                    preference.set(fcmToken);
+                }
+                return fcmToken;
+            },
             () -> Preferences.accessToken().get(),
             true);
     }
