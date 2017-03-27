@@ -23,7 +23,7 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
-### v1.4 왜 벌써 월요일건죠? 😭 2017-03-27
+### v1.4 왜 벌써 월요일인건죠? 😭 2017-03-27
  * 상세화면 하단에 블로거의 다른글, 이전/다음글 섹션 추가로 탐색을 좀 더 편하게! 
  * Chrome Custom Tabs를 사용해 외부 브라우저 실행에 대한 사용성 개선
  * 브라우저 실행 시, 해당 웹 사이트에서 어썸블로그를 확인할 수 있는 Referrer 추가
