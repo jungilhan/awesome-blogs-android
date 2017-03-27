@@ -23,7 +23,7 @@ public class Chromes {
         builder.addMenuItem(context.getString(R.string.copy_link), createPendingIntent(context, ActionReceiver.COPY_LINK));
         builder.addMenuItem(context.getString(R.string.share), createPendingIntent(context, ActionReceiver.SHARE));
         CustomTabsIntent intent = builder.build();
-        intent.intent.putExtra("android.intent.extra.REFERRER", Uri.parse("android-app://" + context.getPackageName()));
+        intent.intent.putExtra("android.intent.extra.REFERRER", Uri.parse("https://github.com/jungilhan/awesome-blogs-android"));
         intent.launchUrl(context, uri);
     }
 
