@@ -1,16 +1,19 @@
 package org.petabytes.awesomeblogs.feeds;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.support.v4.util.Pair;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.history.HistoryActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
@@ -35,12 +38,14 @@ class DrawerCoordinator extends Coordinator {
     static final String INSIGHTFUL = "insightful";
 
     @BindViews({R.id.all, R.id.developer, R.id.company, R.id.insightful})
-    TextView[] categoryViews;
+    ViewGroup[] categoryViews;
 
+    private final Context context;
     private final Action1<String> onCategorySelect;
     private final Preference<String> categoryPreference;
 
-    DrawerCoordinator(@NonNull Pair<Optional<String>, Integer> digestPair, @NonNull Action1<String> onCategorySelect) {
+    DrawerCoordinator(@NonNull Context context, @NonNull Pair<Optional<String>, Integer> digestPair, @NonNull Action1<String> onCategorySelect) {
+        this.context = context;
         this.onCategorySelect = onCategorySelect;
         this.categoryPreference = Preferences.category();
         digestPair.first.ifPresent(category -> {
@@ -58,21 +63,28 @@ class DrawerCoordinator extends Coordinator {
     }
 
     @OnClick({R.id.all, R.id.developer, R.id.company, R.id.insightful})
-    void onCategoryClick(@NonNull TextView view) {
+    void onCategoryClick(@NonNull ViewGroup view) {
         selectView(view);
         categoryPreference.set(getCategory(view));
     }
 
-    private void selectView(@NonNull TextView view) {
-        for (TextView categoryView : categoryViews) {
-            categoryView.setSelected(false);
-            categoryView.setTypeface(categoryView.getTypeface(), Typeface.NORMAL);
-        }
-        view.setSelected(true);
-        view.setTypeface(view.getTypeface(), Typeface.BOLD);
+    @OnClick(R.id.history)
+    void onHistoryClick() {
+        context.startActivity(HistoryActivity.intent(context));
     }
 
-    private TextView getView(@Category String category) {
+    private void selectView(@NonNull ViewGroup view) {
+        for (ViewGroup categoryView : categoryViews) {
+            categoryView.setSelected(false);
+            TextView textView = (TextView) categoryView.getChildAt(0);
+            textView.setTypeface(textView.getTypeface(), Typeface.NORMAL);
+        }
+        view.setSelected(true);
+        TextView textView = (TextView) view.getChildAt(0);
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+    }
+
+    private ViewGroup getView(@Category String category) {
         switch (category) {
             case ALL:
                 return categoryViews[0];

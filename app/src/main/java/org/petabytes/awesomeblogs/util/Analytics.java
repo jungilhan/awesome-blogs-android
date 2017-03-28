@@ -27,6 +27,8 @@ public final class Analytics {
         public static final String VIEW_TECH_COMPANY = "view_tech_company";
         public static final String VIEW_INSIGHTFUL = "view_insightful";
         public static final String VIEW_SUMMARY = "view_summary";
+        public static final String VIEW_HISTORY = "view_history";
+        public static final String VIEW_HISTORY_ITEM = "view_history_item";
         public static final String REFRESH = "refresh";
         public static final String NOTIFY_FRESH_ENTRIES = "notify_fresh_entries";
         public static final String VIEW_FRESH_ENTRIES = "view_fresh_entries";
@@ -40,11 +42,15 @@ public final class Analytics {
 
     public static class Param {
 
+        public static final String FEEDS = "feeds";
         public static final String TITLE = "title";
         public static final String LINK = "link";
         public static final String AUTHOR = "author";
+        public static final String SIBLING = "sibling";
+        public static final String HISTORY = "history";
         public static final String TYPE = "type";
         public static final String SIZE = "size";
+        public static final String FROM = "from";
     }
 
     public static void event(@NonNull String name) {

@@ -11,6 +11,8 @@
     <string name="dev">DEVELOPER</string>
     <string name="tech_company">TECH COMPANY</string>
     <string name="insightful">INSIGHTFUL</string>
+    <string name="recently_read_1">RECENTLY READ</string>
+    <string name="recently_read_2">최근 읽은 글</string>
     <string name="error_title">이런!</string>
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>

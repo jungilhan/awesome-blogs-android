@@ -57,7 +57,7 @@ public class FeedsActivity extends AwesomeActivity {
                     .build());
                 Views.setVisible(pageView);
             }))
-            .coordinator(R.id.drawer, new DrawerCoordinator(new Pair<>(getCategory(), getFreshEntries()), category -> {
+            .coordinator(R.id.drawer, new DrawerCoordinator(this, new Pair<>(getCategory(), getFreshEntries()), category -> {
                 Views.setInvisible(pageView);
                 feedsCoordinator.onCategorySelect(category);
                 slidingMenu.showContent();

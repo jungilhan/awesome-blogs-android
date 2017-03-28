@@ -59,7 +59,7 @@ class FooterCoordinator extends Coordinator {
                             .from(context).inflate(R.layout.footer_auther_entry, null, false);
                         entryView.setText(entry.getTitle());
                         entryView.setOnClickListener($ -> {
-                            context.startActivity(SummaryActivity.intent(context, entry.getLink()));
+                            context.startActivity(SummaryActivity.intent(context, entry.getLink(), Analytics.Param.AUTHOR));
                             Analytics.event(Analytics.Event.VIEW_AUTHOR, new HashMap<String, String>(3) {{
                                 put(Analytics.Param.TITLE, entry.getTitle());
                                 put(Analytics.Param.LINK, entry.getLink());
@@ -104,7 +104,7 @@ class FooterCoordinator extends Coordinator {
     @OnClick({R.id.previous, R.id.next})
     void onEntryClick(@NonNull View view) {
         Entry entry = (Entry) view.getTag();
-        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink(), Analytics.Param.SIBLING));
         Analytics.event(Analytics.Event.VIEW_SIBLING, new HashMap<String, String>(2) {{
             put(Analytics.Param.TITLE, entry.getTitle());
             put(Analytics.Param.LINK, entry.getLink());

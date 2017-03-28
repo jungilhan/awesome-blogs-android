@@ -40,6 +40,7 @@
     <color name="background_20">#738080</color>
     <color name="background_21">#8E8474</color>
     <color name="background_22">#84898E</color>
+    <color name="background_row">#fcfcfc</color>
     <color name="drawer">@color/colorPrimaryDark</color>
 
     <string-array name="progress_bar_1">

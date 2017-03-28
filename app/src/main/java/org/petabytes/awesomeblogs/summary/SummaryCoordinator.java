@@ -39,14 +39,16 @@ class SummaryCoordinator extends Coordinator {
 
     private final Context context;
     private final String link;
+    private final String from;
     private final Action1<Integer> onLoading;
     private final Action0 onCloseAction;
     private Entry entry;
 
-    SummaryCoordinator(@NonNull Context context, @NonNull String link,
+    SummaryCoordinator(@NonNull Context context, @NonNull String link, @NonNull String from,
                        @NonNull Action1<Integer> onLoadingAction, @NonNull Action0 onCloseAction) {
         this.context = context;
         this.link = link;
+        this.from = from;
         this.onLoading = onLoadingAction;
         this.onCloseAction = onCloseAction;
     }
@@ -79,9 +81,10 @@ class SummaryCoordinator extends Coordinator {
 
         AwesomeBlogsApp.get().api().markAsRead(entry, System.currentTimeMillis());
 
-        Analytics.event(Analytics.Event.VIEW_SUMMARY, new HashMap<String, String>(2) {{
+        Analytics.event(Analytics.Event.VIEW_SUMMARY, new HashMap<String, String>(3) {{
             put(Analytics.Param.TITLE, entry.getTitle());
             put(Analytics.Param.LINK, entry.getLink());
+            put(Analytics.Param.FROM, from);
         }});
     }
 
