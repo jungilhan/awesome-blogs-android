@@ -12,8 +12,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="26dp"
         android:paddingBottom="24dp"
         android:src="@drawable/logo"/>
@@ -27,17 +27,17 @@
         android:id="@+id/all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8.5dp"
         style="@style/AppWidget.Selectable">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
-            android:textColor="@color/drawer_title"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:text="@string/all"
             android:background="@drawable/drawer_title"
@@ -48,17 +48,17 @@
         android:id="@+id/developer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8.5dp"
         style="@style/AppWidget.Selectable">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
-            android:textColor="@color/drawer_title"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:text="@string/dev"
             android:background="@drawable/drawer_title"
@@ -69,17 +69,17 @@
         android:id="@+id/company"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8.5dp"
         style="@style/AppWidget.Selectable">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
-            android:textColor="@color/drawer_title"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:text="@string/tech_company"
             android:background="@drawable/drawer_title"
@@ -90,17 +90,17 @@
         android:id="@+id/insightful"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8.5dp"
         style="@style/AppWidget.Selectable">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
-            android:textColor="@color/drawer_title"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:text="@string/insightful"
             android:background="@drawable/drawer_title"
@@ -110,16 +110,21 @@
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.25"/>
 
     <TextView
         android:id="@+id/history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:text="@string/recently_read_1"
         style="@style/AppWidget.Selectable"
         tools:text="INSIGHTFUL"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
 </LinearLayout>
