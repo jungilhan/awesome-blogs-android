@@ -17,6 +17,7 @@ import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Strings;
+import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Coordinator;
 import org.petabytes.coordinator.RecyclerAdapter;
 
@@ -34,6 +35,7 @@ class HistoryCoordinator extends Coordinator {
 
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.count) TextView countView;
+    @BindView(R.id.empty) TextView emptyView;
     @BindView(R.id.recycler) RecyclerView recyclerView;
 
     private final Context context;
@@ -56,9 +58,15 @@ class HistoryCoordinator extends Coordinator {
             return new RecyclerAdapter.ViewHolder<>(v, coordinator);
         }));
 
-        bind(AwesomeBlogsApp.get().api().getHistory()
-            .doOnNext(entries ->
-                countView.setText(String.valueOf(entries.size()))), adapter::setItems);
+        bind(AwesomeBlogsApp.get().api().getHistory(), entries -> {
+            if (!entries.isEmpty()) {
+                adapter.setItems(entries);
+                countView.setText(String.valueOf(entries.size()));
+            } else {
+                Views.setGone(recyclerView);
+                Views.setVisible(emptyView);
+            }
+        });
         bind(AwesomeBlogsApp.get().api().getHistory()
             .first(), entries ->
                 Analytics.event(Analytics.Event.VIEW_HISTORY, Analytics.Param.SIZE, String.valueOf(entries.size())));
