@@ -16,7 +16,6 @@ import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
-import org.petabytes.awesomeblogs.util.Strings;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Coordinator;
 import org.petabytes.coordinator.RecyclerAdapter;
@@ -29,8 +28,6 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
-import static android.R.attr.entries;
-
 class HistoryCoordinator extends Coordinator {
 
     @BindView(R.id.title) TextView titleView;
@@ -39,12 +36,12 @@ class HistoryCoordinator extends Coordinator {
     @BindView(R.id.recycler) RecyclerView recyclerView;
 
     private final Context context;
-    private final Action0 onCloseAction;
+    private final Action0 closeAction;
     private RecyclerAdapter<Read> adapter;
 
-    HistoryCoordinator(@NonNull Context context, @NonNull Action0 onCloseAction) {
+    HistoryCoordinator(@NonNull Context context, @NonNull Action0 closeAction) {
         this.context = context;
-        this.onCloseAction = onCloseAction;
+        this.closeAction = closeAction;
     }
 
     @Override
@@ -74,7 +71,7 @@ class HistoryCoordinator extends Coordinator {
 
     @OnClick(R.id.close)
     void onCloseClick() {
-        onCloseAction.call();
+        closeAction.call();
     }
 
     static class HistoryItemCoordinator extends Coordinator implements RecyclerAdapter.OnBindViewHolderListener<Read> {

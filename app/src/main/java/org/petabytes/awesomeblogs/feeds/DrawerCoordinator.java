@@ -14,6 +14,7 @@ import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.history.HistoryActivity;
+import org.petabytes.awesomeblogs.settings.SettingsActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.coordinator.Coordinator;
@@ -71,6 +72,11 @@ class DrawerCoordinator extends Coordinator {
     @OnClick(R.id.history)
     void onHistoryClick() {
         context.startActivity(HistoryActivity.intent(context));
+    }
+
+    @OnClick(R.id.settings)
+    void onSettingsClick() {
+        context.startActivity(SettingsActivity.intent(context));
     }
 
     private void selectView(@NonNull ViewGroup view) {

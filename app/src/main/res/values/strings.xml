@@ -14,6 +14,12 @@
     <string name="recently_read_1">RECENTLY READ</string>
     <string name="recently_read_2">최근 읽은 글</string>
     <string name="empty_recently_read">최근 읽은 글이 없습니다.</string>
+    <string name="settings_1">SETTINGS</string>
+    <string name="settings_2">설정</string>
+    <string name="settings_notification">알림</string>
+    <string name="settings_digest">새 소식 알림 받기</string>
+    <string name="settings_digest_description">매일 아침 9시와 저녁 7시 즈음에 새로운 소식에 대한 알림이 전송됩니다.</string>
+    <string name="settings_silent">무음으로 알림 받기</string>
     <string name="error_title">이런!</string>
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>

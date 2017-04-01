@@ -30,6 +30,8 @@
 
         <activity android:name=".history.HistoryActivity"/>
 
+        <activity android:name=".settings.SettingsActivity"/>
+
         <activity
             android:name=".auth.SignInActivity"
             android:launchMode="singleTask"/>
