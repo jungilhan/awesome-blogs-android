@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.flipboard.bottomsheet.BottomSheetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.flipboard.bottomsheet.BottomSheetLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,12 +36,32 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/more"
+                android:id="@+id/share"
                 style="@style/AppWidget.SelectableBorderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:padding="12dp"
-                android:src="@drawable/more_vertical_black" />
+                app:srcCompat="@drawable/share" />
+
+            <ImageView
+                android:id="@+id/copy"
+                style="@style/AppWidget.SelectableBorderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:padding="12dp"
+                app:srcCompat="@drawable/copy" />
+
+            <ImageView
+                android:id="@+id/open"
+                style="@style/AppWidget.SelectableBorderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:padding="12dp"
+                app:srcCompat="@drawable/chrome" />
         </android.support.v7.widget.LinearLayoutCompat>
 
         <View
