@@ -30,7 +30,8 @@
 
         <activity android:name=".history.HistoryActivity"/>
 
-        <activity android:name=".settings.SettingsActivity"/>
+        <activity android:name=".settings.SettingsActivity"
+                  android:theme="@style/AppTheme"/>
 
         <activity android:name=".author.AuthorActivity"/>
 
