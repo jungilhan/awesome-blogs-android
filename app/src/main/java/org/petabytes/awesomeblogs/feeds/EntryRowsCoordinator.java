@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -53,7 +54,7 @@ class EntryRowsCoordinator extends Coordinator {
                 titleViews[i].setTypeface(titleViews[i].getTypeface(), Typeface.BOLD);
                 bind(AwesomeBlogsApp.get().api()
                     .isRead(entries.get(i).getLink()), isRead -> {
-                        titleViews[i].setText(entries.get(i).getTitle());
+                        titleViews[i].setText(Html.fromHtml(entries.get(i).getTitle()));
                         titleViews[i].setTextColor(context.getResources().getColor(isRead ? R.color.grey : R.color.black));
                         authorViews[i].setText(Entry.getFormattedAuthorUpdatedAt(entries.get(i)));
                     });
