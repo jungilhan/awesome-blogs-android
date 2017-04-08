@@ -23,6 +23,12 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.5 봄은 언제나 두근두근 🌱 2017-04-09
+ * 새소식 알림을 무음으로 받거나 비활성화 시킬 수 있는 설정 추가
+ * '최근 읽은 글' 기능 추가
+ * '블로거의 다른 글'이 5개 이상일 때는 '더보기' 버튼이 보이도록 디자인 개선
+ * 그 외 버그 수정
+
 ### v1.4 왜 벌써 월요일인건죠? 😭 2017-03-27
  * 상세화면 하단에 블로거의 다른글, 이전/다음글 섹션 추가로 탐색을 좀 더 편하게! 
  * Chrome Custom Tabs를 사용해 외부 브라우저 실행에 대한 사용성 개선
