@@ -7,6 +7,7 @@ import android.view.View;
 import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Coordinator;
@@ -37,6 +38,7 @@ class SettingsCoordinator extends Coordinator {
             .doOnNext($ -> digestSwitch.animate().setStartDelay(100).alpha(1)), digestSwitch::setChecked);
         bind(silentPreference.asObservable()
             .doOnNext($ -> silentSwitch.animate().setStartDelay(100).alpha(1)), silentSwitch::setChecked);
+        Analytics.event(Analytics.Event.VIEW_SETTINGS);
     }
 
     @OnClick(R.id.close)
@@ -47,10 +49,14 @@ class SettingsCoordinator extends Coordinator {
     @OnClick({R.id.digest, R.id.digest_switch})
     void onDigestClick() {
         digestPreference.set(!digestPreference.get());
+        Analytics.event(Analytics.Event.SETTINGS_DIGEST,
+            Analytics.Param.ENABLED, String.valueOf(digestPreference.get()));
     }
 
     @OnClick({R.id.silent, R.id.silent_switch})
     void onSilentClick() {
         silentPreference.set(!silentPreference.get());
+        Analytics.event(Analytics.Event.SETTINGS_SILENT,
+            Analytics.Param.ENABLED, String.valueOf(silentPreference.get()));
     }
 }

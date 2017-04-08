@@ -38,6 +38,9 @@ public final class Analytics {
         public static final String INSTALL_REFERRER = "install_referrer";
         public static final String VIEW_SIBLING = "view_sibling";
         public static final String VIEW_AUTHOR = "view_author";
+        public static final String VIEW_SETTINGS = "view_settings";
+        public static final String SETTINGS_DIGEST = "settings_digest";
+        public static final String SETTINGS_SILENT = "settings_silent";
     }
 
     public static class Param {
@@ -51,6 +54,7 @@ public final class Analytics {
         public static final String TYPE = "type";
         public static final String SIZE = "size";
         public static final String FROM = "from";
+        public static final String ENABLED = "enabled";
     }
 
     public static void event(@NonNull String name) {
