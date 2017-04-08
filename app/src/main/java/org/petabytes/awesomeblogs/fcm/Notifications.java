@@ -8,8 +8,10 @@ import android.media.RingtoneManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 
+import com.annimon.stream.Optional;
+
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.awesomeblogs.feeds.FeedsActivity;
+import org.petabytes.awesomeblogs.util.Preferences;
 
 public class Notifications {
 
@@ -22,7 +24,7 @@ public class Notifications {
             .setAutoCancel(true)
             .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
             .setWhen(System.currentTimeMillis())
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setSound(Preferences.silent().get() ? null : RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
         ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(System.identityHashCode(message), notificationBuilder.build());
     }

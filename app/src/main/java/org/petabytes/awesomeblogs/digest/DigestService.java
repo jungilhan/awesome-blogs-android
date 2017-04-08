@@ -12,8 +12,8 @@ import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.fcm.Notifications;
 import org.petabytes.awesomeblogs.feeds.FeedsActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
+import org.petabytes.awesomeblogs.util.Preferences;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +34,10 @@ public class DigestService extends IntentService {
     @DebugLog
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        if (!Preferences.digest().get()) {
+            return;
+        }
+
         AwesomeBlogsApp.get().api().getFreshEntries()
             .map(pair -> pair.second)
             .filter(pair -> !pair.isEmpty())

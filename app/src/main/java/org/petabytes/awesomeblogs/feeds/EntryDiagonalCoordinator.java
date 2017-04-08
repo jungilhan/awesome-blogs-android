@@ -2,6 +2,7 @@ package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,13 +38,13 @@ class EntryDiagonalCoordinator extends Coordinator {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api()
             .isRead(entries.get(0).getLink()), isRead -> {
-                titleView1.setText(entries.get(0).getTitle());
+                titleView1.setText(Html.fromHtml(entries.get(0).getTitle()));
                 titleView1.setAlpha(isRead ? 0.35f : 1f);
                 authorView1.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(0)));
             });
         bind(AwesomeBlogsApp.get().api()
             .isRead(entries.get(1).getLink()), isRead -> {
-                titleView2.setText(entries.get(1).getTitle());
+                titleView2.setText(Html.fromHtml(entries.get(1).getTitle()));
                 titleView2.setAlpha(isRead ? 0.65f : 1f);
                 authorView2.setText(Entry.getFormattedAuthorUpdatedAt(entries.get(1)));
             });

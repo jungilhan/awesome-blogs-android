@@ -33,6 +33,8 @@ import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.subjects.BehaviorSubject;
 
+import static android.R.attr.category;
+
 public class AwesomeBlogsLocalSource implements DataSource {
 
     @VisibleForTesting
@@ -90,6 +92,17 @@ public class AwesomeBlogsLocalSource implements DataSource {
                 }
             }
         });
+    }
+
+    public Observable<RealmResults<Read>> getHistory() {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Read.class).findAllSorted("readAt", Sort.DESCENDING).asObservable()
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
     }
 
     public Feed fillInCreatedAt(@NonNull Feed freshFeed, @NonNull Optional<Feed> cachedFeed) {
@@ -268,7 +281,6 @@ public class AwesomeBlogsLocalSource implements DataSource {
                     realm.close();
                 }
             });
-
     }
 
     public void clearExpiryDate(@NonNull final String category) {

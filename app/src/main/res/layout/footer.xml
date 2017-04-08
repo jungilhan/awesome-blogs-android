@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="26dp"
             android:paddingRight="26dp"
-            android:text="@string/author_entries"
+            android:text="@string/author_entries_1"
             android:textColor="@color/grey"
             android:textSize="14sp" />
 

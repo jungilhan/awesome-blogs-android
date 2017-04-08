@@ -11,11 +11,13 @@ import com.annimon.stream.function.Supplier;
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
 import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
+import org.petabytes.api.source.local.Read;
 import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
 
 import java.util.Date;
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -135,6 +137,10 @@ public class Api implements DataSource {
 
     public Observable<List<Entry>> getEntries(@NonNull String author) {
         return localSource.getEntries(author);
+    }
+
+    public Observable<RealmResults<Read>> getHistory() {
+        return localSource.getHistory();
     }
 
     public Observable<Boolean> isRead(@NonNull String link) {

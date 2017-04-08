@@ -12,6 +12,8 @@ public final class Preferences {
     private static final String DEVICE_ID = "device_id";
     private static final String FCM_TOKEN = "fcm_token";
     private static final String ACCESS_TOKEN = "access_token";
+    private static final String SETTINGS_DIGEST = "settings_digest";
+    private static final String SETTINGS_SILENT = "settings_silent";
 
     private Preferences() {
     }
@@ -38,5 +40,13 @@ public final class Preferences {
 
     public static Preference<String> accessToken() {
         return AwesomeBlogsApp.get().preferences().getString(ACCESS_TOKEN, Strings.EMPTY);
+    }
+
+    public static Preference<Boolean> digest() {
+        return AwesomeBlogsApp.get().preferences().getBoolean(SETTINGS_DIGEST, Boolean.TRUE);
+    }
+
+    public static Preference<Boolean> silent() {
+        return AwesomeBlogsApp.get().preferences().getBoolean(SETTINGS_SILENT, Boolean.FALSE);
     }
 }

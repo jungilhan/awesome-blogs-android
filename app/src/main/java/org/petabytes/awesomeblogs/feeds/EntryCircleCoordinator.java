@@ -2,6 +2,7 @@ package org.petabytes.awesomeblogs.feeds;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ class EntryCircleCoordinator extends Coordinator {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api()
             .isRead(entry.getLink()), isRead -> {
-                titleView.setText(entry.getTitle());
+                titleView.setText(Html.fromHtml(entry.getTitle()));
                 titleView.setAlpha(isRead ? 0.65f : 1f);
                 authorView.setText("by " + entry.getAuthor());
                 dateView.setText(Dates.getRelativeTimeString(

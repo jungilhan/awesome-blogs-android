@@ -1,12 +1,14 @@
 package org.petabytes.awesomeblogs.summary;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -15,11 +17,13 @@ import org.petabytes.api.source.local.Entry;
 import org.petabytes.api.source.local.Feed;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.author.AuthorActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.coordinator.Coordinator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +31,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.functions.Func1;
+
+import static android.R.attr.entries;
 
 class FooterCoordinator extends Coordinator {
 
@@ -49,17 +55,17 @@ class FooterCoordinator extends Coordinator {
     public void attach(@NonNull View view) {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api().getEntry(link)
-            .flatMap(entry -> AwesomeBlogsApp.get().api().getEntries(entry.getAuthor())), entries ->
-                Stream.of(entries)
+            .flatMap(entry -> AwesomeBlogsApp.get().api().getEntries(entry.getAuthor())), entries -> {
+                Stream.of(entries.subList(0, Math.min(6, entries.size())))
                     .forEach(entry -> {
                         if (TextUtils.equals(entry.getLink(), link)) {
                             return;
                         }
                         TextView entryView = (TextView) LayoutInflater
-                            .from(context).inflate(R.layout.footer_auther_entry, null, false);
+                            .from(context).inflate(R.layout.footer_author_entry, null, false);
                         entryView.setText(entry.getTitle());
                         entryView.setOnClickListener($ -> {
-                            context.startActivity(SummaryActivity.intent(context, entry.getLink()));
+                            context.startActivity(SummaryActivity.intent(context, entry.getLink(), Analytics.Param.AUTHOR));
                             Analytics.event(Analytics.Event.VIEW_AUTHOR, new HashMap<String, String>(3) {{
                                 put(Analytics.Param.TITLE, entry.getTitle());
                                 put(Analytics.Param.LINK, entry.getLink());
@@ -68,7 +74,16 @@ class FooterCoordinator extends Coordinator {
                         });
                         authorEntries.addView(entryView);
                         Views.setVisible(authorEntries, dividerView);
-            }));
+                    });
+
+                if (entries.size() > 5) {
+                    View moreView = LayoutInflater.from(context).inflate(R.layout.footer_author_more, (ViewGroup) view, false);
+                    moreView.setOnClickListener($ -> context.startActivity(AuthorActivity.intent(context, entries.get(0).getAuthor())));
+                    TextView textView = (TextView) moreView.findViewById(R.id.author_more);
+                    textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+                    authorEntries.addView(moreView);
+                }
+            });
 
         bind(Preferences.category().asObservable()
             .flatMap(new Func1<String, Observable<Pair<Feed, Entry>>>() {
@@ -104,7 +119,7 @@ class FooterCoordinator extends Coordinator {
     @OnClick({R.id.previous, R.id.next})
     void onEntryClick(@NonNull View view) {
         Entry entry = (Entry) view.getTag();
-        context.startActivity(SummaryActivity.intent(context, entry.getLink()));
+        context.startActivity(SummaryActivity.intent(context, entry.getLink(), Analytics.Param.SIBLING));
         Analytics.event(Analytics.Event.VIEW_SIBLING, new HashMap<String, String>(2) {{
             put(Analytics.Param.TITLE, entry.getTitle());
             put(Analytics.Param.LINK, entry.getLink());

@@ -74,7 +74,7 @@
         android:layout_weight="1"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:background="#fcfcfc"
+        android:background="@color/background_row"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -190,7 +190,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingBottom="8dp"
-        android:background="#fcfcfc"
+        android:background="@color/background_row"
         style="@style/AppWidget.ForegroundSelectableBorderless">
 
         <android.support.v7.widget.LinearLayoutCompat

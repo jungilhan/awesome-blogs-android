@@ -27,7 +27,7 @@ def gitSha() {
     def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
     p.waitFor()
     if (p.exitValue() != 0) {
-        throw new RuntimeException(p.errorStream.text)
+        return 'None'
     }
     return p.text.trim()
 }
@@ -36,7 +36,7 @@ def gitTimestamp() {
     def p = 'git log -n 1 --format=%at'.execute([], rootDir)
     p.waitFor()
     if (p.exitValue() != 0) {
-        throw new RuntimeException(p.errorStream.text)
+        return 0
     }
     return p.text.trim()
 }
@@ -48,8 +48,8 @@ android {
         applicationId 'org.petabytes.awesomeblogs'
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 10
-        versionName "1.4"
+        versionCode 11
+        versionName "1.5"
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
         vectorDrawables.useSupportLibrary = true
