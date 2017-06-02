@@ -36,4 +36,6 @@
     <string name="next_entry">다음 글</string>
     <string name="author_entries_1">블로거의 다른 글</string>
     <string name="author_entries_2">블로거의 글</string>
+    <string name="search_1">SEARCH</string>
+    <string name="search_2">Search</string>
 </resources>

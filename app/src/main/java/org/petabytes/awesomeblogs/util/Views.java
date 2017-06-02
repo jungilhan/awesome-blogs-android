@@ -1,7 +1,9 @@
 package org.petabytes.awesomeblogs.util;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 public class Views {
 
@@ -29,5 +31,16 @@ public class Views {
         for (View view : views) {
             view.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public static void showSoftInput(@NonNull View view) {
+        view.requestFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public static void hideSoftInput(@NonNull View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getRootView().getWindowToken(), 0);
     }
 }

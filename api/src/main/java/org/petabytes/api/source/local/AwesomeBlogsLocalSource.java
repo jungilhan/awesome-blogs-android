@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -97,6 +98,20 @@ public class AwesomeBlogsLocalSource implements DataSource {
     public Observable<RealmResults<Read>> getHistory() {
         final Realm realm = Realm.getInstance(config);
         return realm.where(Read.class).findAllSorted("readAt", Sort.DESCENDING).asObservable()
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
+    }
+
+    public Observable<RealmResults<Entry>> search(@NonNull String keyword) {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Entry.class)
+            .contains("title", keyword, Case.INSENSITIVE)
+            .findAllSorted("createdAt", Sort.DESCENDING)
+            .distinct("link").asObservable()
             .doOnUnsubscribe(new Action0() {
                 @Override
                 public void call() {

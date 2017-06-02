@@ -143,6 +143,10 @@ public class Api implements DataSource {
         return localSource.getHistory();
     }
 
+    public Observable<RealmResults<Entry>> search(@NonNull String keyword) {
+        return localSource.search(keyword);
+    }
+
     public Observable<Boolean> isRead(@NonNull String link) {
         return localSource.isRead(link);
     }

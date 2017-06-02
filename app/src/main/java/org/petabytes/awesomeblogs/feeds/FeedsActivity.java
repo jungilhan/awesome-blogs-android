@@ -16,6 +16,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.base.AwesomeActivity;
+import org.petabytes.awesomeblogs.search.SearchActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
 import org.petabytes.awesomeblogs.util.Truss;
 import org.petabytes.awesomeblogs.util.Views;
@@ -24,6 +25,11 @@ import org.petabytes.coordinator.ActivityGraph;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static org.petabytes.awesomeblogs.feeds.DrawerCoordinator.ALL;
+import static org.petabytes.awesomeblogs.feeds.DrawerCoordinator.DEVELOPER;
+import static org.petabytes.awesomeblogs.feeds.DrawerCoordinator.INSIGHTFUL;
+import static org.petabytes.awesomeblogs.feeds.DrawerCoordinator.TECH_COMPANY;
+
 public class FeedsActivity extends AwesomeActivity {
 
     private static String CATEGORY = "category";
@@ -31,6 +37,7 @@ public class FeedsActivity extends AwesomeActivity {
 
     @BindView(R.id.menu) ImageView menuButton;
     @BindView(R.id.sliding_menu) SlidingMenu slidingMenu;
+    @BindView(R.id.category) TextView categoryView;
     @BindView(R.id.page) TextView pageView;
 
     @Override
@@ -47,7 +54,6 @@ public class FeedsActivity extends AwesomeActivity {
             .layoutResId(R.layout.main)
             .coordinator(R.id.bottom_sheet, feedsCoordinator = new FeedsCoordinator(this, (page, total, color) -> {
                 menuButton.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-                pageView.setTextColor(color);
                 pageView.setText(new Truss()
                     .pushSpan(new StyleSpan(android.graphics.Typeface.BOLD))
                     .append(page + 1)
@@ -60,6 +66,7 @@ public class FeedsActivity extends AwesomeActivity {
             .coordinator(R.id.drawer, new DrawerCoordinator(this, new Pair<>(getCategory(), getFreshEntries()), category -> {
                 Views.setInvisible(pageView);
                 feedsCoordinator.onCategorySelect(category);
+                categoryView.setText(getCategoryText(category));
                 slidingMenu.showContent();
             }))
             .build();
@@ -68,6 +75,11 @@ public class FeedsActivity extends AwesomeActivity {
     @OnClick(R.id.menu)
     void onDrawerButtonClick() {
         slidingMenu.showMenu();
+    }
+
+    @OnClick(R.id.search)
+    void onSearchClick() {
+        startActivity(SearchActivity.intent(this));
     }
 
     @OnClick(R.id.page)
@@ -90,6 +102,21 @@ public class FeedsActivity extends AwesomeActivity {
 
     private int getFreshEntries() {
         return getIntent().getIntExtra(FRESH_ENTRIES, 0);
+    }
+
+    private static String getCategoryText(@DrawerCoordinator.Category String category) {
+        switch (category) {
+            case ALL:
+                return "ALL";
+            case DEVELOPER:
+                return "DEVELOPER";
+            case TECH_COMPANY:
+                return "TECH COMPANY";
+            case INSIGHTFUL:
+                return "INSIGHTFUL";
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
     public static Intent intent(@NonNull Context context) {

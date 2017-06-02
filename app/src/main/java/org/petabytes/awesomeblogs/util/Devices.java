@@ -1,8 +1,6 @@
 package org.petabytes.awesomeblogs.util;
 
 import android.content.Context;
-import android.content.pm.PackageInstaller;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;

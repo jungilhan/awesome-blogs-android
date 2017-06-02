@@ -34,6 +34,8 @@
                   android:theme="@style/AppTheme"/>
 
         <activity android:name=".author.AuthorActivity"/>
+        
+        <activity android:name=".search.SearchActivity"/>
 
         <activity
             android:name=".auth.SignInActivity"
