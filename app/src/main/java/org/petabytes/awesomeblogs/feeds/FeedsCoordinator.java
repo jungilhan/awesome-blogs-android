@@ -46,7 +46,6 @@ import rx.Observable;
 import rx.functions.Action3;
 import rx.schedulers.Schedulers;
 
-import static org.petabytes.awesomeblogs.R.id.company;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.CIRCLE;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.DIAGONAL;
 import static org.petabytes.awesomeblogs.feeds.FeedsCoordinator.Type.ENTIRE;
@@ -61,6 +60,7 @@ class FeedsCoordinator extends Coordinator {
 
     private final Context context;
     private final Action3<Integer, Integer, Integer> onPageSelectedAction;
+    private boolean refreshedAllCategories;
     private @DrawerCoordinator.Category String category;
     private ViewPager.SimpleOnPageChangeListener onPageChangeListener;
 
@@ -128,9 +128,10 @@ class FeedsCoordinator extends Coordinator {
             .map(this::categorize)
             .subscribeOn(Schedulers.io())
             .doOnNext($ -> {
-                if (refresh) {
+                if (refreshedAllCategories || refresh) {
                     return;
                 }
+                refreshedAllCategories = true;
                 Set<String> categories = new HashSet<String>() {{
                     add("all"); add("dev"); add("company"); add("insightful");
                 }};
