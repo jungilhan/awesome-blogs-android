@@ -23,6 +23,11 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.6 참 잘했어요 🤞
+ * 제목, URL, 작성자 이름으로 검색하기 기능 추가
+ * 즐겨찾기 기능 추가
+ * 그 외 소소한 개선 및 버그 수정
+
 ### v1.5 봄은 언제나 두근두근 🌱 2017-04-09
  * 새소식 알림을 무음으로 받거나 비활성화 시킬 수 있는 설정 추가
  * '최근 읽은 글' 기능 추가
