@@ -28,6 +28,8 @@
 
         <activity android:name=".summary.SummaryActivity"/>
 
+        <activity android:name=".favorite.FavoritesActivity"/>
+
         <activity android:name=".history.HistoryActivity"/>
 
         <activity android:name=".settings.SettingsActivity"

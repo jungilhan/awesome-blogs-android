@@ -12,6 +12,9 @@
     <string name="dev">DEVELOPER</string>
     <string name="tech_company">TECH COMPANY</string>
     <string name="insightful">INSIGHTFUL</string>
+    <string name="favorites_1">FAVORITES</string>
+    <string name="favorites_2">즐겨찾기</string>
+    <string name="empty_favorites">즐겨찾기 한 글이 없습니다.</string>
     <string name="recently_read_1">RECENTLY READ</string>
     <string name="recently_read_2">최근 읽은 글</string>
     <string name="empty_recently_read">최근 읽은 글이 없습니다.</string>
