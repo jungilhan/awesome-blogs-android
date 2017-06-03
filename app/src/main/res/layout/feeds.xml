@@ -8,65 +8,105 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <FrameLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="24dp"
+            android:paddingTop="2dp"
+            android:background="@color/white">
 
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/loading"
-                style="@style/SpinKitView.FoldingCube"
+            <TextView
+                android:id="@+id/category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:SpinKit_Color="@color/colorAccent" />
-
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <fr.castorflex.android.verticalviewpager.VerticalViewPager
-                    android:id="@+id/feeds"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"/>
-            </android.support.v4.widget.SwipeRefreshLayout>
-
-            <ImageView
-                android:id="@+id/menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:layout_margin="16dp"
-                android:src="@drawable/circle_black"
-                style="@style/AppWidget.SelectableBorderless"/>
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                android:layout_gravity="center_vertical|left"
+                tools:text="ALL"/>
 
             <TextView
                 android:id="@+id/page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/black"
                 android:textSize="11sp"
-                android:layout_margin="16dp"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 tools:text="01 / 12"/>
+
+            <TextView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="center"
+                android:text="@string/search_1"/>
         </FrameLayout>
 
-        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-            android:id="@+id/progress_bar"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:spb_sections_count="4"
-            app:spb_stroke_separator_length="0dp"
-            app:spb_progressiveStart_activated="false"
-            app:spb_generate_background_with_colors="false"
-            app:spb_interpolator="spb_interpolator_acceleratedecelerate"/>
-    </FrameLayout>
+            android:layout_height="2px"
+            android:background="@color/divider"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/loading"
+                    style="@style/SpinKitView.Wave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:SpinKit_Color="@color/colorAccent" />
+
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/refresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <fr.castorflex.android.verticalviewpager.VerticalViewPager
+                        android:id="@+id/feeds"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"/>
+                </android.support.v4.widget.SwipeRefreshLayout>
+
+                <ImageView
+                    android:id="@+id/menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/circle_black"
+                    style="@style/AppWidget.SelectableBorderless"/>
+            </FrameLayout>
+
+            <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:spb_sections_count="4"
+                app:spb_stroke_separator_length="0dp"
+                app:spb_progressiveStart_activated="false"
+                app:spb_generate_background_with_colors="false"
+                app:spb_interpolator="spb_interpolator_acceleratedecelerate"/>
+        </FrameLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 </com.flipboard.bottomsheet.BottomSheetLayout>

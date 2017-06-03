@@ -13,6 +13,7 @@ import com.annimon.stream.Optional;
 import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.R;
+import org.petabytes.awesomeblogs.favorite.FavoritesActivity;
 import org.petabytes.awesomeblogs.history.HistoryActivity;
 import org.petabytes.awesomeblogs.settings.SettingsActivity;
 import org.petabytes.awesomeblogs.util.Analytics;
@@ -67,6 +68,11 @@ class DrawerCoordinator extends Coordinator {
     void onCategoryClick(@NonNull ViewGroup view) {
         selectView(view);
         categoryPreference.set(getCategory(view));
+    }
+
+    @OnClick(R.id.favorites)
+    void onFavoritesClick() {
+        context.startActivity(FavoritesActivity.intent(context));
     }
 
     @OnClick(R.id.history)

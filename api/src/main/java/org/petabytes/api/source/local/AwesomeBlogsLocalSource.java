@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -94,9 +95,16 @@ public class AwesomeBlogsLocalSource implements DataSource {
         });
     }
 
-    public Observable<RealmResults<Read>> getHistory() {
+    public Observable<RealmResults<Entry>> search(@NonNull String keyword) {
         final Realm realm = Realm.getInstance(config);
-        return realm.where(Read.class).findAllSorted("readAt", Sort.DESCENDING).asObservable()
+        return realm.where(Entry.class)
+            .contains("title", keyword, Case.INSENSITIVE)
+            .or()
+            .contains("author", keyword, Case.INSENSITIVE)
+            .or()
+            .contains("link", keyword, Case.INSENSITIVE)
+            .findAllSorted("createdAt", Sort.DESCENDING)
+            .distinct("link").asObservable()
             .doOnUnsubscribe(new Action0() {
                 @Override
                 public void call() {
@@ -225,6 +233,17 @@ public class AwesomeBlogsLocalSource implements DataSource {
             }));
     }
 
+    public Observable<RealmResults<Read>> getHistory() {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Read.class).findAllSorted("readAt", Sort.DESCENDING).asObservable()
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
+    }
+
     public Observable<Boolean> isRead(@NonNull final String link) {
         final Realm realm = Realm.getInstance(config);
         return realm.where(Read.class).equalTo("link", link).findAll().asObservable()
@@ -255,6 +274,64 @@ public class AwesomeBlogsLocalSource implements DataSource {
                 read.setLink(entry.getLink());
                 read.setReadAt(readAt);
                 realm.insertOrUpdate(read);
+            }
+        });
+        realm.close();
+    }
+
+
+    public Observable<RealmResults<Favorite>> getFavorites() {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Favorite.class).findAllSorted("favoriteAt", Sort.DESCENDING).asObservable()
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
+    }
+
+    public Observable<Boolean> isFavorite(@NonNull final String link) {
+        final Realm realm = Realm.getInstance(config);
+        return realm.where(Favorite.class).equalTo("link", link).findAll().asObservable()
+            .map(new Func1<RealmResults<Favorite>, Boolean>() {
+                @Override
+                public Boolean call(RealmResults<Favorite> reads) {
+                    return !reads.isEmpty();
+                }
+            })
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+                    realm.close();
+                }
+            });
+    }
+
+    public void markAsFavorite(@NonNull final Entry entry, final long favoriteAt) {
+        Realm realm = Realm.getInstance(config);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(final Realm realm) {
+                Favorite read = new Favorite();
+                read.setTitle(entry.getTitle());
+                read.setAuthor(entry.getAuthor());
+                read.setUpdatedAt(entry.getUpdatedAt());
+                read.setSummary(entry.getSummary());
+                read.setLink(entry.getLink());
+                read.setFavoriteAt(favoriteAt);
+                realm.insertOrUpdate(read);
+            }
+        });
+        realm.close();
+    }
+
+    public void unMarkAsFavorite(@NonNull final Entry entry) {
+        Realm realm = Realm.getInstance(config);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(Favorite.class).equalTo("link", entry.getLink()).findAll().deleteAllFromRealm();
             }
         });
         realm.close();
@@ -300,7 +377,7 @@ public class AwesomeBlogsLocalSource implements DataSource {
     private RealmConfiguration createRealmConfiguration() {
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
             .name("awesome_blogs.realm")
-            .schemaVersion(1)
+            .schemaVersion(3)
             .migration(new Migration());
         return builder.build();
     }

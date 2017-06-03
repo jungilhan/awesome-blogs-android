@@ -1,4 +1,4 @@
-package org.petabytes.awesomeblogs.settings;
+package org.petabytes.awesomeblogs.search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,17 +8,17 @@ import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.base.AwesomeActivity;
 import org.petabytes.coordinator.ActivityGraph;
 
-public class SettingsActivity extends AwesomeActivity {
+public class SearchActivity extends AwesomeActivity {
 
     @Override
     protected ActivityGraph createActivityGraph() {
         return new ActivityGraph.Builder()
-            .layoutResId(R.layout.settings)
-            .coordinator(R.id.container, new SettingsCoordinator(this, this::finish))
+            .layoutResId(R.layout.search)
+            .coordinator(R.id.container, new SearchCoordinator(this, this::finish))
             .build();
     }
 
     public static Intent intent(@NonNull Context context) {
-        return new Intent(context, SettingsActivity.class);
+        return new Intent(context, SearchActivity.class);
     }
 }

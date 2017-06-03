@@ -12,6 +12,9 @@
     <string name="dev">DEVELOPER</string>
     <string name="tech_company">TECH COMPANY</string>
     <string name="insightful">INSIGHTFUL</string>
+    <string name="favorites_1">FAVORITES</string>
+    <string name="favorites_2">즐겨찾기</string>
+    <string name="empty_favorites">즐겨찾기 한 글이 없습니다.</string>
     <string name="recently_read_1">RECENTLY READ</string>
     <string name="recently_read_2">최근 읽은 글</string>
     <string name="empty_recently_read">최근 읽은 글이 없습니다.</string>
@@ -21,6 +24,10 @@
     <string name="settings_digest">새 소식 알림 받기</string>
     <string name="settings_digest_description">매일 아침 9시와 저녁 7시 즈음에 새로운 소식에 대한 알림이 전송됩니다.</string>
     <string name="settings_silent">무음으로 알림 받기</string>
+    <string name="settings_about">정보</string>
+    <string name="settings_version">어썸블로그 버전 %1$s</string>
+    <string name="settings_version_description">다운로드해 주셔서 감사합니다. 피드백 및 문의사항은 플레이 스토어 또는 GitHub 페이지에 남겨주세요.</string>
+    <string name="settings_github">GitHub 방문하기</string>
     <string name="error_title">이런!</string>
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>
@@ -36,4 +43,8 @@
     <string name="next_entry">다음 글</string>
     <string name="author_entries_1">블로거의 다른 글</string>
     <string name="author_entries_2">블로거의 글</string>
+    <string name="search_1">SEARCH</string>
+    <string name="search_2">Search</string>
+    <string name="search_3">제목, URL, 작성자 이름으로\n 검색합니다.</string>
+    <string name="empty_search_results">검색 결과가 없습니다.</string>
 </resources>

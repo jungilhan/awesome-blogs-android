@@ -6,8 +6,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
@@ -34,12 +34,11 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static org.petabytes.awesomeblogs.R.id.summary;
-
 class SummaryCoordinator extends Coordinator {
 
     @BindView(R.id.bottom_sheet) BottomSheetLayout bottomSheetView;
-    @BindView(summary) MarkdownView summaryView;
+    @BindView(R.id.summary) MarkdownView summaryView;
+    @BindView(R.id.favorite) ImageView favoriteButton;
 
     private final Context context;
     private final String link;
@@ -62,6 +61,8 @@ class SummaryCoordinator extends Coordinator {
         super.attach(view);
         bind(AwesomeBlogsApp.get().api().getEntry(link)
             .doOnNext(entry -> this.entry = entry), this::onEntryChanged);
+        bind(AwesomeBlogsApp.get().api().isFavorite(link), isFavorite ->
+            favoriteButton.setImageResource(isFavorite ? R.drawable.favorite : R.drawable.favorite_outline));
 
         summaryView.setOnProgressChangedListener(onLoading::call);
         summaryView.setOnOverrideUrlAction(
@@ -95,6 +96,17 @@ class SummaryCoordinator extends Coordinator {
     @OnClick(R.id.close)
     void onCloseClick() {
         onCloseAction.call();
+    }
+
+    @OnClick(R.id.favorite)
+    void onFavoriteClick() {
+        bind(AwesomeBlogsApp.get().api().isFavorite(link).first(), isFavorite -> {
+            if (isFavorite) {
+                AwesomeBlogsApp.get().api().unMarkAsFavorite(entry);
+            } else {
+                AwesomeBlogsApp.get().api().markAsFavorite(entry, System.currentTimeMillis());
+            }
+        });
     }
 
     @OnClick(R.id.share)

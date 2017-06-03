@@ -42,6 +42,7 @@
     <color name="background_22">#84898E</color>
     <color name="background_row">#fcfcfc</color>
     <color name="drawer">@color/colorPrimaryDark</color>
+    <color name="search">#FDD835</color>
 
     <string-array name="progress_bar_1">
         <item>@color/white</item>

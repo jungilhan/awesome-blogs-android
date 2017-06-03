@@ -6,6 +6,8 @@ import com.annimon.stream.function.Supplier;
 
 import org.petabytes.api.DataSource;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
@@ -32,6 +34,9 @@ public class AwesomeBlogsRemoteSource implements DataSource {
         OkHttpClient client = new OkHttpClient.Builder()
             .addNetworkInterceptor(new NetworkInterceptor(userAgentSupplier, deviceIdSupplier, fcmTokenSupplier, accessTokenSupplier))
             .addNetworkInterceptor(loggingInterceptor)
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
             .build();
 
         Retrofit retrofit = new Retrofit.Builder()

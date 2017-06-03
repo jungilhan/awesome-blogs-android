@@ -46,7 +46,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="@string/recently_read_2" />
+                    android:text="@string/favorites_2" />
 
                 <TextView
                     android:id="@+id/count"
@@ -101,6 +101,6 @@
             android:textSize="16sp"
             android:textColor="@color/grey"
             android:textStyle="bold"
-            android:text="@string/empty_recently_read" />
+            android:text="@string/empty_favorites" />
     </android.support.design.widget.CoordinatorLayout>
 </com.flipboard.bottomsheet.BottomSheetLayout>

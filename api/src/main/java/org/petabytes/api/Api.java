@@ -10,6 +10,7 @@ import com.annimon.stream.function.Supplier;
 
 import org.petabytes.api.source.local.AwesomeBlogsLocalSource;
 import org.petabytes.api.source.local.Entry;
+import org.petabytes.api.source.local.Favorite;
 import org.petabytes.api.source.local.Feed;
 import org.petabytes.api.source.local.Read;
 import org.petabytes.api.source.remote.AwesomeBlogsRemoteSource;
@@ -143,6 +144,10 @@ public class Api implements DataSource {
         return localSource.getHistory();
     }
 
+    public Observable<RealmResults<Entry>> search(@NonNull String keyword) {
+        return localSource.search(keyword);
+    }
+
     public Observable<Boolean> isRead(@NonNull String link) {
         return localSource.isRead(link);
     }
@@ -152,6 +157,22 @@ public class Api implements DataSource {
         if (!BuildConfig.DEBUG) {
             remoteSource.markAsRead(entry);
         }
+    }
+
+    public Observable<RealmResults<Favorite>> getFavorites() {
+        return localSource.getFavorites();
+    }
+
+    public Observable<Boolean> isFavorite(@NonNull String link) {
+        return localSource.isFavorite(link);
+    }
+
+    public void markAsFavorite(@NonNull Entry entry, long favoriteAt) {
+        localSource.markAsFavorite(entry, favoriteAt);
+    }
+
+    public void unMarkAsFavorite(@NonNull Entry entry) {
+        localSource.unMarkAsFavorite(entry);
     }
 
     public Observable<Date> getExpiryDate(@NonNull String category) {

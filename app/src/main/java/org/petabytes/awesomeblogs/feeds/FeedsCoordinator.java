@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
+import com.annimon.stream.Stream;
 import com.squareup.coordinators.Coordinators;
 
 import org.petabytes.api.source.local.Entry;
@@ -31,14 +32,17 @@ import org.petabytes.coordinator.PagerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import butterknife.BindView;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import hugo.weaving.DebugLog;
+import rx.Observable;
 import rx.functions.Action3;
 import rx.schedulers.Schedulers;
 
@@ -56,6 +60,7 @@ class FeedsCoordinator extends Coordinator {
 
     private final Context context;
     private final Action3<Integer, Integer, Integer> onPageSelectedAction;
+    private boolean refreshedAllCategories;
     private @DrawerCoordinator.Category String category;
     private ViewPager.SimpleOnPageChangeListener onPageChangeListener;
 
@@ -121,7 +126,23 @@ class FeedsCoordinator extends Coordinator {
             .filter($ -> TextUtils.equals(this.category, category))
             .map(Feed::getEntries)
             .map(this::categorize)
-            .subscribeOn(Schedulers.io()), this::onLoad, $ -> onLoadError());
+            .subscribeOn(Schedulers.io())
+            .doOnNext($ -> {
+                if (refreshedAllCategories || refresh) {
+                    return;
+                }
+                refreshedAllCategories = true;
+                Set<String> categories = new HashSet<String>() {{
+                    add("all"); add("dev"); add("company"); add("insightful");
+                }};
+                categories.remove(category);
+                Stream.of(categories).forEach(c ->
+                    AwesomeBlogsApp.get().api()
+                        .getFeed(c, true)
+                        .subscribeOn(Schedulers.io())
+                        .onErrorResumeNext(Observable.empty())
+                        .subscribe());
+            }), this::onLoad, $ -> onLoadError());
     }
 
     private void onLoad(@NonNull List<Map<Type, List<Entry>>> entries) {

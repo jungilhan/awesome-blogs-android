@@ -36,6 +36,15 @@
                 android:layout_weight="1" />
 
             <ImageView
+                android:id="@+id/favorite"
+                style="@style/AppWidget.SelectableBorderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:padding="12dp"
+                app:srcCompat="@drawable/favorite_outline" />
+
+            <ImageView
                 android:id="@+id/share"
                 style="@style/AppWidget.SelectableBorderless"
                 android:layout_width="wrap_content"

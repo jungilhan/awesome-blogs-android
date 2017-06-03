@@ -29,6 +29,10 @@ public final class Analytics {
         public static final String VIEW_SUMMARY = "view_summary";
         public static final String VIEW_HISTORY = "view_history";
         public static final String VIEW_HISTORY_ITEM = "view_history_item";
+        public static final String VIEW_FAVORITES = "view_favorites";
+        public static final String VIEW_FAVORITES_ITEM = "view_favorites_item";
+        public static final String VIEW_SEARCH = "view_search";
+        public static final String VIEW_SEARCH_ITEM = "view_search_item";
         public static final String REFRESH = "refresh";
         public static final String NOTIFY_FRESH_ENTRIES = "notify_fresh_entries";
         public static final String VIEW_FRESH_ENTRIES = "view_fresh_entries";
@@ -51,6 +55,8 @@ public final class Analytics {
         public static final String AUTHOR = "author";
         public static final String SIBLING = "sibling";
         public static final String HISTORY = "history";
+        public static final String FAVORITES = "favorites";
+        public static final String SEARCH = "search";
         public static final String TYPE = "type";
         public static final String SIZE = "size";
         public static final String FROM = "from";

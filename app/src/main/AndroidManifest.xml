@@ -28,12 +28,16 @@
 
         <activity android:name=".summary.SummaryActivity"/>
 
+        <activity android:name=".favorite.FavoritesActivity"/>
+
         <activity android:name=".history.HistoryActivity"/>
 
         <activity android:name=".settings.SettingsActivity"
                   android:theme="@style/AppTheme"/>
 
         <activity android:name=".author.AuthorActivity"/>
+        
+        <activity android:name=".search.SearchActivity"/>
 
         <activity
             android:name=".auth.SignInActivity"

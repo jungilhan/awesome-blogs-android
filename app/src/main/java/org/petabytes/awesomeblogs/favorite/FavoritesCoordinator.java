@@ -1,4 +1,4 @@
-package org.petabytes.awesomeblogs.history;
+package org.petabytes.awesomeblogs.favorite;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.squareup.coordinators.Coordinators;
 
 import org.jsoup.Jsoup;
-import org.petabytes.api.source.local.Read;
+import org.petabytes.api.source.local.Favorite;
 import org.petabytes.awesomeblogs.AwesomeBlogsApp;
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.summary.SummaryActivity;
@@ -28,7 +28,7 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
-class HistoryCoordinator extends Coordinator {
+class FavoritesCoordinator extends Coordinator {
 
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.count) TextView countView;
@@ -37,9 +37,9 @@ class HistoryCoordinator extends Coordinator {
 
     private final Context context;
     private final Action0 closeAction;
-    private RecyclerAdapter<Read> adapter;
+    private RecyclerAdapter<Favorite> adapter;
 
-    HistoryCoordinator(@NonNull Context context, @NonNull Action0 closeAction) {
+    FavoritesCoordinator(@NonNull Context context, @NonNull Action0 closeAction) {
         this.context = context;
         this.closeAction = closeAction;
     }
@@ -49,13 +49,13 @@ class HistoryCoordinator extends Coordinator {
         super.attach(view);
         titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
         recyclerView.setAdapter(adapter = new RecyclerAdapter<>(() -> {
-            View v = LayoutInflater.from(context).inflate(R.layout.history_item, null, false);
-            HistoryItemCoordinator coordinator = new HistoryItemCoordinator(context);
+            View v = LayoutInflater.from(context).inflate(R.layout.favorites_item, null, false);
+            FavoriteItemCoordinator coordinator = new FavoriteItemCoordinator(context);
             Coordinators.bind(v, $ -> coordinator);
             return new RecyclerAdapter.ViewHolder<>(v, coordinator);
         }));
 
-        bind(AwesomeBlogsApp.get().api().getHistory(), entries -> {
+        bind(AwesomeBlogsApp.get().api().getFavorites(), entries -> {
             if (!entries.isEmpty()) {
                 adapter.setItems(entries);
             } else {
@@ -64,9 +64,9 @@ class HistoryCoordinator extends Coordinator {
             }
             countView.setText(String.valueOf(entries.size()));
         });
-        bind(AwesomeBlogsApp.get().api().getHistory()
+        bind(AwesomeBlogsApp.get().api().getFavorites()
             .first(), entries ->
-                Analytics.event(Analytics.Event.VIEW_HISTORY, Analytics.Param.SIZE, String.valueOf(entries.size())));
+                Analytics.event(Analytics.Event.VIEW_FAVORITES, Analytics.Param.SIZE, String.valueOf(entries.size())));
     }
 
     @OnClick(R.id.close)
@@ -74,7 +74,7 @@ class HistoryCoordinator extends Coordinator {
         closeAction.call();
     }
 
-    static class HistoryItemCoordinator extends Coordinator implements RecyclerAdapter.OnBindViewHolderListener<Read> {
+    static class FavoriteItemCoordinator extends Coordinator implements RecyclerAdapter.OnBindViewHolderListener<Favorite> {
 
         @BindView(R.id.title) TextView titleView;
         @BindView(R.id.summary) TextView summaryView;
@@ -82,17 +82,17 @@ class HistoryCoordinator extends Coordinator {
 
         private final Context context;
 
-        HistoryItemCoordinator(@NonNull Context context) {
+        FavoriteItemCoordinator(@NonNull Context context) {
             this.context = context;
         }
 
         @Override
-        public void onBindViewHolder(@NonNull Read read, int position) {
-            titleView.setText(read.getTitle());
+        public void onBindViewHolder(@NonNull Favorite favorite, int position) {
+            titleView.setText(favorite.getTitle());
             titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
-            authorView.setText(Read.getFormattedAuthorUpdatedAt(read));
+            authorView.setText(Favorite.getFormattedAuthorUpdatedAt(favorite));
 
-            bind(Observable.just(read.getSummary())
+            bind(Observable.just(favorite.getSummary())
                 .map(summary -> Jsoup.parse(summary).text())
                 .map(summary -> summary.substring(0, Math.min(200, summary.length())))
                 .subscribeOn(Schedulers.io()), summary -> {
@@ -101,10 +101,10 @@ class HistoryCoordinator extends Coordinator {
                 });
 
             getView().setOnClickListener($ -> {
-                context.startActivity(SummaryActivity.intent(context, read.getLink(), Analytics.Param.HISTORY));
-                Analytics.event(Analytics.Event.VIEW_HISTORY_ITEM, new HashMap<String, String>(2) {{
-                    put(Analytics.Param.TITLE, read.getTitle());
-                    put(Analytics.Param.LINK, read.getLink());
+                context.startActivity(SummaryActivity.intent(context, favorite.getLink(), Analytics.Param.FAVORITES));
+                Analytics.event(Analytics.Event.VIEW_FAVORITES_ITEM, new HashMap<String, String>(2) {{
+                    put(Analytics.Param.TITLE, favorite.getTitle());
+                    put(Analytics.Param.LINK, favorite.getLink());
                 }});
             });
             getView().setBackgroundResource(position % 2 == 0 ? R.color.white : R.color.background_row);

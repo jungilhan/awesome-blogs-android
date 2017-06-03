@@ -99,9 +99,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
-        android:paddingTop="8dp"
+        android:paddingTop="6dp"
         android:paddingRight="24dp"
-        android:paddingBottom="24dp"
+        android:paddingBottom="6dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         style="@style/AppWidget.Selectable">
@@ -111,6 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="left"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:text="@string/settings_silent"/>
@@ -122,5 +124,65 @@
             android:alpha="0"
             android:layout_gravity="right"
             tools:alpha="1"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="24dp"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:text="@string/settings_about"/>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingTop="12dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="24dp"
+        android:orientation="vertical"
+        style="@style/AppWidget.Selectable">
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="@string/settings_version"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="14sp"
+            android:textColor="@color/grey"
+            android:text="@string/settings_version_description"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingTop="6dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="6dp"
+        android:orientation="vertical"
+        style="@style/AppWidget.Selectable">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_gravity="left"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="@string/settings_github"/>
     </android.support.v7.widget.LinearLayoutCompat>
 </LinearLayout>
