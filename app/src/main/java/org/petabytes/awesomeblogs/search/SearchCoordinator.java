@@ -39,7 +39,7 @@ import rx.schedulers.Schedulers;
 class SearchCoordinator extends Coordinator {
 
     @BindView(R.id.search) EditText searchView;
-    @BindView(R.id.placeholder) View placeholderView;
+    @BindView(R.id.placeholder) TextView placeholderView;
     @BindView(R.id.recycler) RecyclerView recyclerView;
 
     private final Context context;
@@ -75,6 +75,7 @@ class SearchCoordinator extends Coordinator {
             .flatMap(keyword ->
                 AwesomeBlogsApp.get().api().search(keyword)), entries -> {
                     if (entries.isEmpty()) {
+                        placeholderView.setText(R.string.empty_search_results);
                         Views.setVisibleOrGone(placeholderView, true);
                         Views.setVisibleOrGone(recyclerView, false);
                     } else {
@@ -89,6 +90,7 @@ class SearchCoordinator extends Coordinator {
     @OnTextChanged(R.id.search)
     void onSearchChanged(@NonNull Editable keyword) {
         keywordRelay.call(keyword.toString().trim());
+        placeholderView.setText(R.string.search_3);
         Views.setVisibleOrGone(placeholderView, keyword.length() == 0);
         Views.setVisibleOrGone(recyclerView, keyword.length() > 0);
     }
