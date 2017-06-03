@@ -31,23 +31,50 @@
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:layout_marginRight="17dp"
             android:hint="@string/search_2"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:singleLine="true"
             android:maxLines="1"
             android:imeOptions="actionSearch"
             android:textCursorDrawable="@drawable/cursor_black"
             android:background="@color/transparent"/>
-
     </android.support.v7.widget.LinearLayoutCompat>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:orientation="vertical"
-        android:clipToPadding="false"
-        app:layoutManager="LinearLayoutManager"/>
+        android:layout_height="0.5dp"
+        android:background="@color/divider"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"
+            android:drawablePadding="12dp"
+            android:drawableTop="@drawable/search"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="@string/search_3" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            app:layoutManager="LinearLayoutManager"/>
+    </FrameLayout>
 </android.support.v7.widget.LinearLayoutCompat>

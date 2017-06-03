@@ -38,4 +38,5 @@
     <string name="author_entries_2">블로거의 글</string>
     <string name="search_1">SEARCH</string>
     <string name="search_2">Search</string>
+    <string name="search_3">제목, URL,\n작성자 이름으로 검색합니다.</string>
 </resources>

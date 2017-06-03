@@ -110,6 +110,10 @@ public class AwesomeBlogsLocalSource implements DataSource {
         final Realm realm = Realm.getInstance(config);
         return realm.where(Entry.class)
             .contains("title", keyword, Case.INSENSITIVE)
+            .or()
+            .contains("author", keyword, Case.INSENSITIVE)
+            .or()
+            .contains("link", keyword, Case.INSENSITIVE)
             .findAllSorted("createdAt", Sort.DESCENDING)
             .distinct("link").asObservable()
             .doOnUnsubscribe(new Action0() {

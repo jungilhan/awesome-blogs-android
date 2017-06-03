@@ -39,6 +39,7 @@ import rx.schedulers.Schedulers;
 class SearchCoordinator extends Coordinator {
 
     @BindView(R.id.search) EditText searchView;
+    @BindView(R.id.placeholder) View placeholderView;
     @BindView(R.id.recycler) RecyclerView recyclerView;
 
     private final Context context;
@@ -73,7 +74,10 @@ class SearchCoordinator extends Coordinator {
         bind(keywordRelay.debounce(250, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
             .flatMap(keyword ->
                 AwesomeBlogsApp.get().api().search(keyword)), entries -> {
-                    if (!entries.isEmpty()) {
+                    if (entries.isEmpty()) {
+                        Views.setVisibleOrGone(placeholderView, true);
+                        Views.setVisibleOrGone(recyclerView, false);
+                    } else {
                         recyclerView.scrollToPosition(0);
                     }
                     adapter.setItems(entries);
@@ -85,6 +89,7 @@ class SearchCoordinator extends Coordinator {
     @OnTextChanged(R.id.search)
     void onSearchChanged(@NonNull Editable keyword) {
         keywordRelay.call(keyword.toString().trim());
+        Views.setVisibleOrGone(placeholderView, keyword.length() == 0);
         Views.setVisibleOrGone(recyclerView, keyword.length() > 0);
     }
 
@@ -112,7 +117,8 @@ class SearchCoordinator extends Coordinator {
             titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
             titleView.setText(Strings.colorizeBackground(entry.getTitle(),
                 keywordSupplier.get(), context.getResources().getColor(R.color.search), true));
-            authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
+            authorView.setText(Strings.colorizeBackground(Entry.getFormattedAuthorUpdatedAt(entry),
+                keywordSupplier.get(), context.getResources().getColor(R.color.search), true));
 
             bind(Observable.just(entry.getSummary())
                 .map(summary -> Jsoup.parse(summary).text())
