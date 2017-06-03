@@ -24,6 +24,10 @@
     <string name="settings_digest">새 소식 알림 받기</string>
     <string name="settings_digest_description">매일 아침 9시와 저녁 7시 즈음에 새로운 소식에 대한 알림이 전송됩니다.</string>
     <string name="settings_silent">무음으로 알림 받기</string>
+    <string name="settings_about">정보</string>
+    <string name="settings_version">어썸블로그 버전 %1$s</string>
+    <string name="settings_version_description">다운로드해 주셔서 감사합니다. 피드백 및 문의사항은 플레이 스토어 또는 GitHub 페이지에 남겨주세요.</string>
+    <string name="settings_github">GitHub 방문하기</string>
     <string name="error_title">이런!</string>
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>

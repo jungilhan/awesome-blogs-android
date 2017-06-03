@@ -14,7 +14,7 @@ public class SettingsActivity extends AwesomeActivity {
     protected ActivityGraph createActivityGraph() {
         return new ActivityGraph.Builder()
             .layoutResId(R.layout.settings)
-            .coordinator(R.id.container, new SettingsCoordinator(this::finish))
+            .coordinator(R.id.container, new SettingsCoordinator(this, this::finish))
             .build();
     }
 
