@@ -60,7 +60,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="80dp"
             android:drawablePadding="12dp"
-            android:drawableTop="@drawable/search"
+            android:drawableTop="@drawable/search_wrap"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:textSize="16sp"
