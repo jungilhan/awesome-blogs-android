@@ -67,6 +67,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".migration.MigrationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name=".referrer.InstallReferrerReceiver"
             android:exported="true">
