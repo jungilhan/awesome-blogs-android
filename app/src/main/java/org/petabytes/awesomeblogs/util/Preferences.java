@@ -47,6 +47,6 @@ public final class Preferences {
     }
 
     public static Preference<Boolean> silent() {
-        return AwesomeBlogsApp.get().preferences().getBoolean(SETTINGS_SILENT, Boolean.FALSE);
+        return AwesomeBlogsApp.get().preferences().getBoolean(SETTINGS_SILENT, Boolean.TRUE);
     }
 }

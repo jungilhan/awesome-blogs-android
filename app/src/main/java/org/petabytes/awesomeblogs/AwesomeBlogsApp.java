@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
 import com.annimon.stream.Optional;
@@ -43,6 +44,7 @@ public class AwesomeBlogsApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         Fabric.with(this, new Crashlytics());
         instance = this;
 
