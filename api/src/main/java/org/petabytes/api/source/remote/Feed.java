@@ -47,7 +47,7 @@ class Feed {
         feed.setCategory(category);
         feed.setTitle(title);
         feed.setUpdatedAt(updatedAt);
-        feed.setExpires(System.currentTimeMillis() + (5 * DateUtils.MINUTE_IN_MILLIS));
+        feed.setExpires(System.currentTimeMillis() + (30 * DateUtils.MINUTE_IN_MILLIS));
         RealmList<org.petabytes.api.source.local.Entry> entries = new RealmList<>();
         for (Entry e : this.entries) {
             entries.add(e.toPersist());

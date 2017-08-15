@@ -23,6 +23,14 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.8 8.15 🇰🇷 2017-03-27
+ * 개발팀 후원하기 기능 추가
+ * 로컬 피드 만료 시간 5분에서 30분으로 조정
+ 
+### v1.7 짜장면 먹고 싶은 날 🤤 2017-08-05 
+ * 새 소식 알림 무음으로 표시하도록 처리
+ * 안드로이드 4.2에서 검색 화면 진입 시 비정상 종료되는 버그 수정
+ 
 ### v1.6 참 잘했어요 🤞2017-06-03
  * 제목, URL, 작성자 이름으로 검색하기 기능 추가
  * 즐겨찾기 기능 추가

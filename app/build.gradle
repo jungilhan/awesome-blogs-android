@@ -48,8 +48,8 @@ android {
         applicationId 'org.petabytes.awesomeblogs'
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 13
-        versionName "1.7"
+        versionCode 18
+        versionName "1.8"
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
         vectorDrawables.useSupportLibrary = true
@@ -90,6 +90,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions {
+        jumboMode true
+    }
 }
 
 dependencies {
@@ -105,6 +108,7 @@ dependencies {
     compile rootProject.ext.firebase_messaging
     compile rootProject.ext.support_customtabs
     compile rootProject.ext.play_services_auth
+    compile rootProject.ext.iab
     compile rootProject.ext.alerter
     compile rootProject.ext.flipboard_bottomsheet
     compile rootProject.ext.rxpreferences

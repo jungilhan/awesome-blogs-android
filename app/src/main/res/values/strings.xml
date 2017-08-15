@@ -2,6 +2,7 @@
     <string name="app_name">어썸블로그</string>
     <string name="sign_in_with_google">구글로 로그인</string>
     <string name="ok">확인</string>
+    <string name="cancel">취소</string>
     <string name="menu">더보기</string>
     <string name="more">더보기 ...</string>
     <string name="copy_link">링크 복사하기</string>
@@ -28,10 +29,14 @@
     <string name="settings_version">어썸블로그 버전 %1$s</string>
     <string name="settings_version_description">다운로드해 주셔서 감사합니다. 피드백 및 문의사항은 플레이 스토어 또는 GitHub 페이지에 남겨주세요.</string>
     <string name="settings_github">GitHub 방문하기</string>
+    <string name="settings_donate">개발팀 후원하기</string>
+    <string name="settings_donate_description">커피 한 잔으로 개발팀에게 꿈과 희망을 전달하세요.</string>
+    <string name="settings_donate_empty">구매할 수 있는 항목이 없습니다.</string>
     <string name="error_title">이런!</string>
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>
     <string name="error_sign_in">로그인 도중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="error_billing">결제 중 에러가 발생했습니다.</string>
     <string name="digest_title">새로운 소식 %1$d개</string>
     <string name="digest_message_1">\'%1$s\' 소식이 있습니다.</string>
     <string name="digest_message_2">\'%1$s\', \'%2$s\' 소식이 있습니다.</string>

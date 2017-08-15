@@ -38,6 +38,7 @@ ext {
     firebase_auth = "com.google.firebase:firebase-auth:$ver_firebase"
     firebase_messaging = "com.google.firebase:firebase-messaging:$ver_firebase"
     play_services_auth = "com.google.android.gms:play-services-auth:$ver_firebase"
+    iab = 'com.anjlab.android.iab.v3:library:1.0.44'
     alerter = 'com.tapadoo.android:alerter:1.0.1'
     flipboard_bottomsheet = 'com.flipboard:bottomsheet-core:1.5.0'
     calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
