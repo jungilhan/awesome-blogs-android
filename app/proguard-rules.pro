@@ -170,3 +170,6 @@
 # Remark
 -dontwarn com.overzealous.remark.**
 -keep class com.overzealous.remark.** { *; }
+
+# Billing
+-keep class com.android.vending.billing.**
