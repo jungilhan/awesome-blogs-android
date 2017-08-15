@@ -48,7 +48,7 @@ android {
         applicationId 'org.petabytes.awesomeblogs'
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 17
+        versionCode 18
         versionName "1.8"
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
