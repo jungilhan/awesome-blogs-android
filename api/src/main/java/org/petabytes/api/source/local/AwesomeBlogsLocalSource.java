@@ -119,11 +119,11 @@ public class AwesomeBlogsLocalSource implements DataSource {
             for (int i = freshFeed.getEntries().size() - 1; i >= 0; i--) {
                 Entry entry = freshFeed.getEntries().get(i);
                 Long createdAt = createdAtMap.get(entry.getLink());
-                entry.setCreatedAt(createdAt == null ? System.currentTimeMillis() : createdAt);
+                entry.setCreatedAt(createdAt == null ? System.nanoTime() : createdAt);
             }
         } else {
             for (int i = freshFeed.getEntries().size() - 1; i >= 0; i--) {
-                freshFeed.getEntries().get(i).setCreatedAt(System.currentTimeMillis());
+                freshFeed.getEntries().get(i).setCreatedAt(System.nanoTime());
             }
         }
         return freshFeed;
