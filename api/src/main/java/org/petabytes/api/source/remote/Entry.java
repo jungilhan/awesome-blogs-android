@@ -21,6 +21,9 @@ class Entry {
     @SerializedName("link")
     private String link;
 
+    @SerializedName("hidden")
+    private boolean hidden;
+
     private Entry(@NonNull String author, @NonNull String title,
                   @NonNull String updatedAt, @NonNull String summary, @NonNull String link) {
         this.author = author;
@@ -50,6 +53,10 @@ class Entry {
         return link;
     }
 
+    public boolean isHidden() {
+        return hidden;
+    }
+
     @Override
     public String toString() {
         return "Entry{" +
@@ -58,6 +65,7 @@ class Entry {
             ", updatedAt='" + updatedAt + '\'' +
             ", summary='" + summary + '\'' +
             ", link='" + link + '\'' +
+            ", hidden=" + hidden +
             '}';
     }
 
