@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.SkuDetails;
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.annimon.stream.Stream;
 import com.f2prateek.rx.preferences.Preference;
 
 import org.petabytes.awesomeblogs.BuildConfig;
@@ -24,10 +24,6 @@ import org.petabytes.awesomeblogs.util.Preferences;
 import org.petabytes.awesomeblogs.util.Views;
 import org.petabytes.awesomeblogs.util.Xors;
 import org.petabytes.coordinator.Coordinator;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -135,11 +131,8 @@ class SettingsCoordinator extends Coordinator implements BillingProcessor.IBilli
     @DebugLog
     @Override
     public void onBillingInitialized() {
-        List<SkuDetails> purchasedItems = billingProcessor
-            .getPurchaseListingDetails(new ArrayList<>(Arrays.asList("donation_1", "donation_2", "donation_3")));
-        for (SkuDetails purchasedItem : purchasedItems) {
-            billingProcessor.consumePurchase(purchasedItem.productId);
-        }
+        Stream.of(billingProcessor.listOwnedProducts())
+            .forEach(billingProcessor::consumePurchase);
     }
 
     @DebugLog
@@ -151,7 +144,7 @@ class SettingsCoordinator extends Coordinator implements BillingProcessor.IBilli
     @DebugLog
     @Override
     public void onPurchaseHistoryRestored() {
-
+        
     }
 
     @DebugLog
