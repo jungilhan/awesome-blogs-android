@@ -113,6 +113,10 @@ class FeedsCoordinator extends Coordinator {
         load(this.category = category, false);
     }
 
+    void scrollTo(int index) {
+        pagerView.setCurrentItem(index, true);
+    }
+
     private void load(@DrawerCoordinator.Category String category, boolean refresh) {
         if (!refresh) {
             Views.setVisible(loadingView);
