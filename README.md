@@ -23,6 +23,10 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.9 곱창이 땡겨 🌀 2017-08-30
+ * 개발과 관련없는 글 필터링 처리
+ * 좌상단 카테고리명 클릭 시 첫 페이지로 이동할 수 있도록
+ 
 ### v1.8 8.15 🇰🇷 2017-08-15
  * 개발팀 후원하기 기능 추가
  * 로컬 피드 만료 시간 5분에서 30분으로 조정
