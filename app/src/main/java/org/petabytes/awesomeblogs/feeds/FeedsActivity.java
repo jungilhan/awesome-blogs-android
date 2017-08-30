@@ -40,6 +40,8 @@ public class FeedsActivity extends AwesomeActivity {
     @BindView(R.id.category) TextView categoryView;
     @BindView(R.id.page) TextView pageView;
 
+    private FeedsCoordinator feedsCoordinator;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,6 @@ public class FeedsActivity extends AwesomeActivity {
 
     @Override
     protected ActivityGraph createActivityGraph() {
-        FeedsCoordinator feedsCoordinator;
         return new ActivityGraph.Builder()
             .layoutResId(R.layout.main)
             .coordinator(R.id.bottom_sheet, feedsCoordinator = new FeedsCoordinator(this, (page, total, color) -> {
@@ -77,14 +78,19 @@ public class FeedsActivity extends AwesomeActivity {
         slidingMenu.showMenu();
     }
 
-    @OnClick(R.id.search)
-    void onSearchClick() {
-        startActivity(SearchActivity.intent(this));
+    @OnClick(R.id.category)
+    void onCategoryClick() {
+        feedsCoordinator.scrollTo(0);
     }
 
     @OnClick(R.id.page)
     void onPageClick() {
 
+    }
+
+    @OnClick(R.id.search)
+    void onSearchClick() {
+        startActivity(SearchActivity.intent(this));
     }
 
     @Override
