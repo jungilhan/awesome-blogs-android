@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import org.petabytes.api.util.Dates;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Entry extends RealmObject {
@@ -15,6 +16,7 @@ public class Entry extends RealmObject {
     private String updatedAt;
     private String summary;
     private long createdAt;
+    private @Ignore boolean isHidden;
     private @PrimaryKey String link;
 
     public String getTitle() {
@@ -55,6 +57,14 @@ public class Entry extends RealmObject {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.isHidden = hidden;
     }
 
     public String getLink() {

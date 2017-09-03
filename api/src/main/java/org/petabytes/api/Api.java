@@ -80,6 +80,12 @@ public class Api implements DataSource {
                                 silentRefreshSubject.onNext(new Pair<>(category, false));
                             }
                         })
+                        .flatMap(new Func1<Feed, Observable<Feed>>() {
+                            @Override
+                            public Observable<Feed> call(Feed freshFeed) {
+                                return Observable.just(localSource.filterAndDeleteHiddenEntries(freshFeed));
+                            }
+                        })
                         .doOnNext(new Action1<Feed>() {
                             @Override
                             public void call(Feed freshFeed) {
@@ -108,6 +114,12 @@ public class Api implements DataSource {
                 @Override
                 public Observable<Feed> call() {
                     return remoteSource.getFeed(category)
+                        .flatMap(new Func1<Feed, Observable<Feed>>() {
+                            @Override
+                            public Observable<Feed> call(Feed freshFeed) {
+                                return Observable.just(localSource.filterAndDeleteHiddenEntries(freshFeed));
+                            }
+                        })
                         .map(new Func1<Feed, Feed>() {
                             @Override
                             public Feed call(Feed freshFeed) {

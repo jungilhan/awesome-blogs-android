@@ -75,6 +75,7 @@ class Entry {
         entry.setTitle(title);
         entry.setUpdatedAt(updatedAt);
         entry.setSummary(summary);
+        entry.setHidden(hidden);
         entry.setLink(link);
         return entry;
     }

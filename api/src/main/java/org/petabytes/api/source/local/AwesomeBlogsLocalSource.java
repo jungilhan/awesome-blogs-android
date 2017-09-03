@@ -25,6 +25,8 @@ import java.util.concurrent.Callable;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rx.Observable;
@@ -33,8 +35,6 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.subjects.BehaviorSubject;
-
-import static android.R.attr.category;
 
 public class AwesomeBlogsLocalSource implements DataSource {
 
@@ -369,6 +369,63 @@ public class AwesomeBlogsLocalSource implements DataSource {
                 if (feed != null) {
                     feed.setExpires(0L);
                 }
+            }
+        });
+        realm.close();
+    }
+
+    public Feed filterAndDeleteHiddenEntries(@NonNull Feed feed) {
+        deleteHiddenEntries(feed);
+        RealmList<Entry> collect = Stream.of(feed.getEntries())
+            .filter(new Predicate<Entry>() {
+                @Override
+                public boolean test(Entry entry) {
+                    return !entry.isHidden();
+                }
+            }).collect(Collectors.toCollection(new Supplier<RealmList<Entry>>() {
+                @Override
+                public RealmList<Entry> get() {
+                    return new RealmList<>();
+                }
+            }));
+        feed.setEntries(collect);
+        return feed;
+    }
+
+    private void deleteHiddenEntries(@NonNull Feed feed) {
+        String[] values = Stream.of(feed.getEntries())
+            .filter(new Predicate<Entry>() {
+                @Override
+                public boolean test(Entry entry) {
+                    return entry.isHidden();
+                }
+            }).map(new Function<Entry, String>() {
+                @Override
+                public String apply(Entry entry) {
+                    return entry.getLink();
+                }
+            }).toArray(new IntFunction<String[]>() {
+                @Override
+                public String[] apply(int size) {
+                    return new String[size];
+                }
+            });
+        if (values.length > 0) {
+            deleteEntries(Entry.class, "link", values);
+            deleteEntries(Read.class, "link", values);
+            deleteEntries(Favorite.class, "link", values);
+        }
+    }
+
+    private <E extends RealmModel> void deleteEntries(@NonNull final Class<E> className,
+                                                      @NonNull final String field,
+                                                      @NonNull final String[] values) {
+        Realm realm = Realm.getInstance(config);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<E> hiddenEntries = realm.where(className).in(field, values).findAll();
+                hiddenEntries.deleteAllFromRealm();
             }
         });
         realm.close();
