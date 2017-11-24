@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'io.fabric'
 apply plugin: 'jacoco-android'
@@ -18,7 +17,6 @@ buildscript {
 
     dependencies {
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
         classpath 'io.fabric.tools:gradle:1.22.1'
     }
 }
@@ -43,7 +41,7 @@ def gitTimestamp() {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId 'org.petabytes.awesomeblogs'
         minSdkVersion 16
@@ -63,6 +61,7 @@ android {
             keyPassword System.getenv("KEY_PASSWORD")
         }
     }
+    flavorDimensions "default"
     buildTypes {
         debug {
             debuggable true
