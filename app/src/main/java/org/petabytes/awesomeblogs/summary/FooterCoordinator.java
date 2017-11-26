@@ -86,14 +86,9 @@ class FooterCoordinator extends Coordinator {
             });
 
         bind(Preferences.category().asObservable()
-            .flatMap(new Func1<String, Observable<Pair<Feed, Entry>>>() {
-                @Override
-                public Observable<Pair<Feed, Entry>> call(String category) {
-                    return Observable.combineLatest(
-                        AwesomeBlogsApp.get().api().getFeed(category),
-                        AwesomeBlogsApp.get().api().getEntry(link), Pair::new);
-                }
-            })
+            .flatMap(category -> Observable.combineLatest(
+                AwesomeBlogsApp.get().api().getFeed(category),
+                AwesomeBlogsApp.get().api().getEntry(link), Pair::new))
             .first(), pair -> {
                 List<Entry> entries = pair.first.getEntries();
                 int index = entries.indexOf(pair.second);
