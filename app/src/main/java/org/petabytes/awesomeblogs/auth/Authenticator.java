@@ -24,9 +24,8 @@ public class Authenticator {
         userRelay = BehaviorRelay.create();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(auth ->
-            userRelay.call((auth != null && auth.getCurrentUser() != null)
+            userRelay.call(auth.getCurrentUser() != null
                 ? Optional.of(User.of(auth.getCurrentUser())) : Optional.empty()));
-
     }
 
     public Observable<Optional<User>> user() {
