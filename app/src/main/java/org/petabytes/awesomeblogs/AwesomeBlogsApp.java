@@ -95,7 +95,7 @@ public class AwesomeBlogsApp extends Application {
                 Preference<String> preference = Preferences.deviceId();
                 String deviceId = preference.get();
                 if (TextUtils.isEmpty(deviceId)) {
-                    deviceId = Devices.getId(this);
+                    deviceId = Devices.getId();
                     preference.set(deviceId);
                 }
                 return deviceId;

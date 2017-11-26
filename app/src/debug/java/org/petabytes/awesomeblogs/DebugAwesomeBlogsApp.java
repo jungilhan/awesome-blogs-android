@@ -42,7 +42,7 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
                 Preference<String> preference = Preferences.deviceId();
                 String deviceId = preference.get();
                 if (TextUtils.isEmpty(deviceId)) {
-                    deviceId = Devices.getId(this);
+                    deviceId = Devices.getId();
                     preference.set(deviceId);
                 }
                 return deviceId;
