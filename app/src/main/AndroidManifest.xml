@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme.Feeds">
 
         <activity
-            android:name="org.petabytes.awesomeblogs.feeds.FeedsActivity"
+            android:name=".feeds.FeedsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

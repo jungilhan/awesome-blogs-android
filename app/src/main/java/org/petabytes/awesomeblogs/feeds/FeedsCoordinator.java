@@ -117,8 +117,8 @@ class FeedsCoordinator extends Coordinator {
         pagerView.setCurrentItem(index, true);
     }
 
-    private void load(@DrawerCoordinator.Category String category, boolean refresh) {
-        if (!refresh) {
+    void load(@DrawerCoordinator.Category String category, boolean forceRefresh) {
+        if (!forceRefresh) {
             Views.setVisible(loadingView);
             Views.setGone(pagerView);
             refreshView.setEnabled(false);
@@ -126,13 +126,13 @@ class FeedsCoordinator extends Coordinator {
         Views.setGone(progressBar);
 
         bind(AwesomeBlogsApp.get().api()
-            .getFeed(category, refresh)
+            .getFeed(category, forceRefresh)
             .filter($ -> TextUtils.equals(this.category, category))
             .map(Feed::getEntries)
             .map(this::categorize)
             .subscribeOn(Schedulers.io())
             .doOnNext($ -> {
-                if (refreshedAllCategories || refresh) {
+                if (refreshedAllCategories || forceRefresh) {
                     return;
                 }
                 refreshedAllCategories = true;

@@ -50,6 +50,12 @@ public class FeedsActivity extends AwesomeActivity {
     }
 
     @Override
+    protected void onNewIntent(@NonNull Intent intent) {
+        super.onNewIntent(intent);
+        feedsCoordinator.load(getCategory().orElse(ALL), false);
+    }
+
+    @Override
     protected ActivityGraph createActivityGraph() {
         return new ActivityGraph.Builder()
             .layoutResId(R.layout.main)
