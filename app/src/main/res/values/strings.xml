@@ -36,7 +36,6 @@
     <string name="error_unknown_feed">피드 정보를 받는 도중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="error_invalid_link">이동할 수 없는 웹 사이트 주소입니다.</string>
     <string name="error_sign_in">로그인 도중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.</string>
-    <string name="error_billing">결제 중 에러가 발생했습니다.</string>
     <string name="digest_title">새로운 소식 %1$d개</string>
     <string name="digest_message_1">\'%1$s\' 소식이 있습니다.</string>
     <string name="digest_message_2">\'%1$s\', \'%2$s\' 소식이 있습니다.</string>
@@ -52,4 +51,12 @@
     <string name="search_2">Search</string>
     <string name="search_3">제목, URL, 작성자 이름으로\n 검색합니다.</string>
     <string name="empty_search_results">검색 결과가 없습니다.</string>
+    <string name="error_billing_1">결제 중 에러가 발생했습니다.</string>
+    <string name="error_billing_2">네트워크 연결이 끊어졌습니다.</string>
+    <string name="error_billing_3">해당 요청을 지원하지 않는 Billing API입니다.</string>
+    <string name="error_billing_4">요청한 제품을 구매할 수 없습니다.</string>
+    <string name="error_billing_5">API에 잘못된 파라미터가 전달되었습니다.</string>
+    <string name="error_billing_6">API 작업 중 오류가 발생했습니다.</string>
+    <string name="error_billing_7">해당 아이템을 이미 소유하고 있어 구매에 실패했습니다.</string>
+    <string name="error_billing_8">해당 아이템을 소유하고 있지 않아 소비에 실패했습니다.</string>
 </resources>

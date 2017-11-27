@@ -1,5 +1,6 @@
 package org.petabytes.awesomeblogs.util;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.format.DateUtils;
@@ -7,7 +8,6 @@ import android.text.format.DateUtils;
 import com.tapadoo.alerter.Alerter;
 
 import org.petabytes.awesomeblogs.R;
-import org.petabytes.coordinator.Activity;
 
 public final class Alerts {
 

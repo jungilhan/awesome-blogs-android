@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.SkuDetails;
+import com.annimon.stream.Optional;
 
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Strings;
@@ -53,29 +54,32 @@ class BillingDialogCoordinator extends Coordinator {
         ArrayList<String> items = new ArrayList<>(Arrays.asList("donation_1", "donation_2", "donation_3"));
         Bundle query = new Bundle();
         query.putStringArrayList("ITEM_ID_LIST", items);
-        List<SkuDetails> details = billingProcessor.getPurchaseListingDetails(items);
-        for (int i = details.size() - 1; i >= 0; i--) {
-            View itemView = LayoutInflater.from(context).inflate(R.layout.dialog_billing_item, null, false);
-            ImageView iconView = ButterKnife.findById(itemView, R.id.icon);
-            TextView titleView = ButterKnife.findById(itemView, R.id.title);
-            TextView priceView = ButterKnife.findById(itemView, R.id.price);
-            SkuDetails detail = details.get(i);
-            switch (i) {
-                case 0: iconView.setImageResource(R.drawable.coffee_1); break;
-                case 1: iconView.setImageResource(R.drawable.coffee_2); break;
-                case 2: iconView.setImageResource(R.drawable.coffee_3); break;
-            }
-            titleView.setText(detail.title.replace("(어썸블로그)", Strings.EMPTY));
-            titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
-            priceView.setText(detail.priceText);
-            priceView.setTypeface(priceView.getTypeface(), Typeface.BOLD);
-            itemView.setOnClickListener($ -> {
-                purchaseAction.call(detail);
-                cancelAction.call();
+        Optional<List<SkuDetails>> details = Optional.ofNullable(billingProcessor.getPurchaseListingDetails(items));
+        details.executeIfAbsent(cancelAction::call)
+            .ifPresent(d -> {
+                for (int i = d.size() - 1; i >= 0; i--) {
+                    View itemView = LayoutInflater.from(context).inflate(R.layout.dialog_billing_item, null, false);
+                    ImageView iconView = ButterKnife.findById(itemView, R.id.icon);
+                    TextView titleView = ButterKnife.findById(itemView, R.id.title);
+                    TextView priceView = ButterKnife.findById(itemView, R.id.price);
+                    SkuDetails detail = d.get(i);
+                    switch (i) {
+                        case 0: iconView.setImageResource(R.drawable.coffee_1); break;
+                        case 1: iconView.setImageResource(R.drawable.coffee_2); break;
+                        case 2: iconView.setImageResource(R.drawable.coffee_3); break;
+                    }
+                    titleView.setText(detail.title.replace("(어썸블로그)", Strings.EMPTY));
+                    titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
+                    priceView.setText(detail.priceText);
+                    priceView.setTypeface(priceView.getTypeface(), Typeface.BOLD);
+                    itemView.setOnClickListener($ -> {
+                        purchaseAction.call(detail);
+                        cancelAction.call();
+                    });
+                    itemsView.addView(itemView, 0);
+                }
             });
-            itemsView.addView(itemView, 0);
-        }
-        Views.setVisibleOrGone(emptyView, details.isEmpty());
+        Views.setVisibleOrGone(emptyView, details.isPresent());
     }
 
     @OnClick(R.id.cancel)
