@@ -5,15 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.Optional;
+
 import org.petabytes.awesomeblogs.util.Analytics;
-import org.petabytes.awesomeblogs.util.Strings;
 
 public class InstallReferrerReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-        String referrer = intent.getExtras() == null
-            ? Strings.EMPTY : intent.getExtras().getString("referrer", Strings.EMPTY);
-        Analytics.event(Analytics.Event.INSTALL_REFERRER, "referrer", referrer);
+        Optional<String> referrer = intent.getExtras() == null
+            ? Optional.empty() : Optional.ofNullable(intent.getExtras().getString("referrer", null));
+        referrer.ifPresent(r ->
+            Analytics.event(Analytics.Event.INSTALL_REFERRER, "referrer", r));
     }
 }
