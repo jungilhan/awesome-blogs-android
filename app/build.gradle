@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'io.fabric'
 apply plugin: 'jacoco-android'
+apply plugin: 'de.timfreiheit.resourceplaceholders.plugin'
 
 repositories {
     maven { url 'https://jitpack.io' }
@@ -94,6 +95,9 @@ android {
     }
 }
 
+resourcePlaceholders {
+    files = ['xml-v25/shortcuts.xml']
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':api')

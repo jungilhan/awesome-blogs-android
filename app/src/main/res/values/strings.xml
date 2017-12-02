@@ -51,6 +51,9 @@
     <string name="search_2">Search</string>
     <string name="search_3">제목, URL, 작성자 이름으로\n 검색합니다.</string>
     <string name="empty_search_results">검색 결과가 없습니다.</string>
+    <string name="shortcut_search">Search</string>
+    <string name="shortcut_favorites">Favorites</string>
+    <string name="shortcut_history">Recently Read</string>
     <string name="error_billing_1">결제 중 에러가 발생했습니다.</string>
     <string name="error_billing_2">네트워크 연결이 끊어졌습니다.</string>
     <string name="error_billing_3">해당 요청을 지원하지 않는 Billing API입니다.</string>

@@ -26,20 +26,38 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
         </activity>
 
-        <activity android:name=".summary.SummaryActivity"/>
+        <activity android:name=".summary.SummaryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.petabytes.awesomeblogs.feeds.FeedsActivity"/>
+        </activity>
 
-        <activity android:name=".favorite.FavoritesActivity"/>
+        <activity android:name=".favorite.FavoritesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.petabytes.awesomeblogs.feeds.FeedsActivity"/>
+        </activity>
 
-        <activity android:name=".history.HistoryActivity"/>
+        <activity android:name=".history.HistoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.petabytes.awesomeblogs.feeds.FeedsActivity"/>
+        </activity>
 
         <activity android:name=".settings.SettingsActivity"
                   android:theme="@style/AppTheme"/>
 
         <activity android:name=".author.AuthorActivity"/>
         
-        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".search.SearchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.petabytes.awesomeblogs.feeds.FeedsActivity"/>
+        </activity>
 
         <activity
             android:name=".auth.SignInActivity"
@@ -100,5 +118,4 @@
             android:name="io.fabric.ApiKey"
             android:value="d681fa3447fdb8f13e18ee327c6ce8a00bcfb3dc"/>
     </application>
-
 </manifest>

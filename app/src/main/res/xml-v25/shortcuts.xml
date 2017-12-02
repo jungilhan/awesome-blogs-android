@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="favorites"
+        android:shortcutLongLabel="@string/shortcut_favorites"
+        android:shortcutShortLabel="@string/shortcut_favorites"
+        android:icon="@drawable/ic_shortcut_favorites">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="org.petabytes.awesomeblogs.favorite.FavoritesActivity"
+            android:targetPackage="${applicationId}" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="history"
+        android:shortcutLongLabel="@string/shortcut_history"
+        android:shortcutShortLabel="@string/shortcut_history"
+        android:icon="@drawable/ic_shortcut_history">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="org.petabytes.awesomeblogs.history.HistoryActivity"
+            android:targetPackage="${applicationId}" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="search"
+        android:shortcutLongLabel="@string/shortcut_search"
+        android:shortcutShortLabel="@string/shortcut_search"
+        android:icon="@drawable/ic_shortcut_search">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="org.petabytes.awesomeblogs.search.SearchActivity"
+            android:targetPackage="${applicationId}" />
+    </shortcut>
+</shortcuts>
