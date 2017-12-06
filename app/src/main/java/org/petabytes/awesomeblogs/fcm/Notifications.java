@@ -8,8 +8,6 @@ import android.media.RingtoneManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 
-import com.annimon.stream.Optional;
-
 import org.petabytes.awesomeblogs.R;
 import org.petabytes.awesomeblogs.util.Preferences;
 
@@ -26,6 +24,6 @@ public class Notifications {
             .setWhen(System.currentTimeMillis())
             .setSound(Preferences.silent().get() ? null : RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
-        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(System.identityHashCode(message), notificationBuilder.build());
+        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(1, notificationBuilder.build());
     }
 }
