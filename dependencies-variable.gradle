@@ -1,5 +1,10 @@
 ext {
 
+    ver_build_tools = '26.0.2'
+    ver_compile_sdk = 26
+    ver_target_sdk = 25
+    ver_min_sdk = 16
+
     ver_retrofit = '2.1.0'
     ver_android_compat = '25.1.1'
     ver_firebase = '10.0.1'
