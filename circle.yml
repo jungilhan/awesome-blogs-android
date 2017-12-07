@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   pre:
-    - echo y | android update sdk --no-ui --all --filter "android-25","build-tools-26.0.2","extra-android-m2repository"
+    - echo y | android update sdk --no-ui --all --filter "android-26","build-tools-26.1.0","extra-android-m2repository"
 
 test:
   override:
