@@ -51,7 +51,6 @@ class EntryRowsCoordinator extends Coordinator {
 
         IntStream.range(0, entries.size())
             .forEach(i -> {
-                titleViews[i].setTypeface(titleViews[i].getTypeface(), Typeface.BOLD);
                 bind(AwesomeBlogsApp.get().api()
                     .isRead(entries.get(i).getLink()), isRead -> {
                         titleViews[i].setText(Html.fromHtml(entries.get(i).getTitle()));

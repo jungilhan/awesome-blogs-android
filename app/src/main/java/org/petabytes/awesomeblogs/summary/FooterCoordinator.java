@@ -79,8 +79,6 @@ class FooterCoordinator extends Coordinator {
                 if (entries.size() > 5) {
                     View moreView = LayoutInflater.from(context).inflate(R.layout.footer_author_more, (ViewGroup) view, false);
                     moreView.setOnClickListener($ -> context.startActivity(AuthorActivity.intent(context, entries.get(0).getAuthor())));
-                    TextView textView = (TextView) moreView.findViewById(R.id.author_more);
-                    textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
                     authorEntries.addView(moreView);
                 }
             });

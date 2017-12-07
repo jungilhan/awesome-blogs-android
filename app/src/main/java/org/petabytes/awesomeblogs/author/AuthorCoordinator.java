@@ -47,7 +47,6 @@ class AuthorCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
         recyclerView.setAdapter(adapter = new RecyclerAdapter<>(() -> {
             View v = LayoutInflater.from(context).inflate(R.layout.author_item, null, false);
             AuthorItemCoordinator coordinator = new AuthorItemCoordinator(context);
@@ -81,7 +80,6 @@ class AuthorCoordinator extends Coordinator {
         @Override
         public void onBindViewHolder(@NonNull Entry entry, int position) {
             titleView.setText(entry.getTitle());
-            titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
             authorView.setText(Entry.getFormattedAuthorUpdatedAt(entry));
 
             bind(Observable.just(entry.getSummary())

@@ -122,14 +122,12 @@ dependencies {
     compile rootProject.ext.flipboard_bottomsheet
     compile rootProject.ext.rxpreferences
     compile rootProject.ext.rxrelay
-    compile rootProject.ext.calligraphy
     compile rootProject.ext.spinkit
     compile rootProject.ext.smoothprogressbar
     compile rootProject.ext.verticalviewpager
     compile rootProject.ext.topsnackbar
-    compile rootProject.ext.crashlytics
     compile(rootProject.ext.crashlytics) {
-        transitive = true;
+        transitive = true
     }
 
     annotationProcessor rootProject.ext.butterknife_compiler

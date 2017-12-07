@@ -47,7 +47,6 @@ class FavoritesCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
         recyclerView.setAdapter(adapter = new RecyclerAdapter<>(() -> {
             View v = LayoutInflater.from(context).inflate(R.layout.favorites_item, null, false);
             FavoriteItemCoordinator coordinator = new FavoriteItemCoordinator(context);
@@ -89,7 +88,6 @@ class FavoritesCoordinator extends Coordinator {
         @Override
         public void onBindViewHolder(@NonNull Favorite favorite, int position) {
             titleView.setText(favorite.getTitle());
-            titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
             authorView.setText(Favorite.getFormattedAuthorUpdatedAt(favorite));
 
             bind(Observable.just(favorite.getSummary())

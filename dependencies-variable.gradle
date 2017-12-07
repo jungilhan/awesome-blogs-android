@@ -6,7 +6,7 @@ ext {
     ver_min_sdk = 16
 
     ver_retrofit = '2.1.0'
-    ver_android_compat = '25.1.1'
+    ver_android_compat = '26.1.0'
     ver_firebase = '10.0.1'
 
     support_appcompat_v7 = "com.android.support:appcompat-v7:$ver_android_compat"
@@ -47,7 +47,6 @@ ext {
     iab = 'com.anjlab.android.iab.v3:library:1.0.44'
     alerter = 'com.tapadoo.android:alerter:1.0.1'
     flipboard_bottomsheet = 'com.flipboard:bottomsheet-core:1.5.0'
-    calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
     spinkit = 'com.github.ybq:Android-SpinKit:1.1.0'
     smoothprogressbar = 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     verticalviewpager = 'com.github.castorflex.verticalviewpager:library:19.0.1'

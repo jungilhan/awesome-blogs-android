@@ -47,7 +47,6 @@ class HistoryCoordinator extends Coordinator {
     @Override
     public void attach(@NonNull View view) {
         super.attach(view);
-        titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
         recyclerView.setAdapter(adapter = new RecyclerAdapter<>(() -> {
             View v = LayoutInflater.from(context).inflate(R.layout.history_item, null, false);
             HistoryItemCoordinator coordinator = new HistoryItemCoordinator(context);
@@ -89,7 +88,6 @@ class HistoryCoordinator extends Coordinator {
         @Override
         public void onBindViewHolder(@NonNull Read read, int position) {
             titleView.setText(read.getTitle());
-            titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
             authorView.setText(Read.getFormattedAuthorUpdatedAt(read));
 
             bind(Observable.just(read.getSummary())

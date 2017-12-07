@@ -13,6 +13,5 @@
     android:maxLines="3"
     android:textColor="@color/white"
     android:textSize="19sp"
-    android:textStyle="bold"
     tools:text="안드로이드 미립자 뉴스"
     tools:background="@color/colorPrimaryDark"/>

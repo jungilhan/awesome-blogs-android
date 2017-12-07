@@ -1,7 +1,6 @@
 package org.petabytes.awesomeblogs.settings;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -69,9 +68,7 @@ class BillingDialogCoordinator extends Coordinator {
                         case 2: iconView.setImageResource(R.drawable.coffee_3); break;
                     }
                     titleView.setText(detail.title.replace("(어썸블로그)", Strings.EMPTY));
-                    titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
                     priceView.setText(detail.priceText);
-                    priceView.setTypeface(priceView.getTypeface(), Typeface.BOLD);
                     itemView.setOnClickListener($ -> {
                         purchaseAction.call(detail);
                         cancelAction.call();
