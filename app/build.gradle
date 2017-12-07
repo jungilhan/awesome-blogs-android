@@ -69,12 +69,14 @@ android {
     buildTypes {
         debug {
             debuggable true
+            multiDexEnabled true
             minifyEnabled false
             applicationIdSuffix '.debug'
             testCoverageEnabled false
         }
         release {
             debuggable false
+            multiDexEnabled false
             minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -112,6 +114,7 @@ dependencies {
     compile rootProject.ext.firebase_core
     compile rootProject.ext.firebase_auth
     compile rootProject.ext.firebase_messaging
+    compile rootProject.ext.support_multidex
     compile rootProject.ext.support_customtabs
     compile rootProject.ext.play_services_auth
     compile rootProject.ext.iab

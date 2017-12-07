@@ -14,6 +14,7 @@ ext {
     support_annotation = "com.android.support:support-annotations:$ver_android_compat"
     support_recyclerview = "com.android.support:recyclerview-v7:$ver_android_compat"
     support_customtabs = "com.android.support:customtabs:$ver_android_compat"
+    support_multidex = 'com.android.support:multidex:1.0.1'
     support_espressocore = 'com.android.support.test.espresso:espresso-core:2.2.2'
 
     rxjava = 'io.reactivex:rxjava:1.2.6'
