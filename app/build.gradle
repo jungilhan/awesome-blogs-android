@@ -50,8 +50,8 @@ android {
         minSdkVersion rootProject.ext.ver_min_sdk
         targetSdkVersion rootProject.ext.ver_target_sdk
         applicationId 'org.petabytes.awesomeblogs'
-        versionCode 19
-        versionName "1.9"
+        versionCode 20
+        versionName "1.10"
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
         vectorDrawables.useSupportLibrary = true
