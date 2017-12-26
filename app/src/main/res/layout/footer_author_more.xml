@@ -19,5 +19,6 @@
         android:paddingBottom="14dp"
         android:textColor="@color/white"
         android:textSize="19sp"
+        android:textStyle="bold"
         android:text="@string/more"/>
 </FrameLayout>

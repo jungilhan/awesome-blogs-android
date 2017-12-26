@@ -7,9 +7,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class DatesTest {

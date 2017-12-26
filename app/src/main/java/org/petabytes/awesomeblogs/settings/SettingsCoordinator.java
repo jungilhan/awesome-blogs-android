@@ -30,6 +30,13 @@ import butterknife.OnClick;
 import hugo.weaving.DebugLog;
 import rx.functions.Action0;
 
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE;
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_DEVELOPER_ERROR;
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_ERROR;
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_ITEM_ALREADY_OWNED;
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_ITEM_NOT_OWNED;
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_ITEM_UNAVAILABLE;
+import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_SERVICE_UNAVAILABLE;
 import static com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_USER_CANCELED;
 
 class SettingsCoordinator extends Coordinator implements BillingProcessor.IBillingHandler {
@@ -73,7 +80,7 @@ class SettingsCoordinator extends Coordinator implements BillingProcessor.IBilli
         versionView.setText(context.getString(R.string.settings_version, BuildConfig.VERSION_NAME));
 
         billingProcessor.initialize();
-        Views.setVisibleOrGone(donateView, BillingProcessor.isIabServiceAvailable(context));
+        Views.setVisibleOrGone(donateView, isIabAvailable(context));
 
         Analytics.event(Analytics.Event.VIEW_SETTINGS);
     }
@@ -150,8 +157,37 @@ class SettingsCoordinator extends Coordinator implements BillingProcessor.IBilli
     @DebugLog
     @Override
     public void onBillingError(int errorCode, @Nullable Throwable error) {
-        if (errorCode != BILLING_RESPONSE_RESULT_USER_CANCELED) {
-            Alerts.show((org.petabytes.coordinator.Activity) context, R.string.error_title, R.string.error_billing);
+        switch (errorCode) {
+            case BILLING_RESPONSE_RESULT_USER_CANCELED:
+                break;
+            case BILLING_RESPONSE_RESULT_SERVICE_UNAVAILABLE:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_2);
+                break;
+            case BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_3);
+                break;
+            case BILLING_RESPONSE_RESULT_ITEM_UNAVAILABLE:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_4);
+                break;
+            case BILLING_RESPONSE_RESULT_DEVELOPER_ERROR:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_5);
+                break;
+            case BILLING_RESPONSE_RESULT_ERROR:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_6);
+                break;
+            case BILLING_RESPONSE_RESULT_ITEM_ALREADY_OWNED:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_7);
+                break;
+            case BILLING_RESPONSE_RESULT_ITEM_NOT_OWNED:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_8);
+                break;
+            default:
+                Alerts.show((Activity) context, R.string.error_title, R.string.error_billing_1);
+                break;
         }
+    }
+
+    public static boolean isIabAvailable(@NonNull Context context) {
+        return BuildConfig.APPLICATION_ID.equals("org.petabytes.awesomeblogs") && BillingProcessor.isIabServiceAvailable(context);
     }
 }

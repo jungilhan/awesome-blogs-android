@@ -4,17 +4,12 @@ import android.support.annotation.NonNull;
 
 import org.petabytes.api.util.Dates;
 
-import java.text.ParsePosition;
 import java.util.Set;
 
 import io.realm.DynamicRealm;
-import io.realm.DynamicRealmObject;
 import io.realm.FieldAttribute;
 import io.realm.RealmMigration;
-import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
-
-import static okhttp3.Protocol.get;
 
 class Migration implements RealmMigration {
 
@@ -30,13 +25,10 @@ class Migration implements RealmMigration {
                 if (!fields.contains("createdAt")) {
                     schema.get("Entry")
                         .addField("createdAt", long.class)
-                        .transform(new RealmObjectSchema.Function() {
-                            @Override
-                            public void apply(DynamicRealmObject obj) {
-                                String date = obj.getString("updatedAt");
-                                long time = Dates.getDefaultDateFormats().parseDateTime(date).getMillis();
-                                obj.setLong("createdAt", time);
-                            }
+                        .transform(obj -> {
+                            String date = obj.getString("updatedAt");
+                            long time = Dates.getDefaultDateFormats().parseDateTime(date).getMillis();
+                            obj.setLong("createdAt", time);
                         });
                 }
             case 2:

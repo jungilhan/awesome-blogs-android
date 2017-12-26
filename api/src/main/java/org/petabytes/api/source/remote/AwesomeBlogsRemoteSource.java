@@ -20,7 +20,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class AwesomeBlogsRemoteSource implements DataSource {
@@ -52,29 +51,14 @@ public class AwesomeBlogsRemoteSource implements DataSource {
     @Override
     public Observable<org.petabytes.api.source.local.Feed> getFeed(@NonNull final String category) {
         return awesomeBlogs.feeds(category)
-            .filter(new Func1<Response<Feed>, Boolean>() {
-                @Override
-                public Boolean call(Response<Feed> response) {
-                    return response.isSuccessful();
-                }
-            })
-            .map(new Func1<Response<Feed>, Feed>() {
-                @Override
-                public Feed call(Response<Feed> response) {
-                    return response.body();
-                }
-            })
-            .map(new Func1<Feed, org.petabytes.api.source.local.Feed>() {
-                @Override
-                public org.petabytes.api.source.local.Feed call(Feed feed) {
-                    return feed.toPersist(category);
-                }
-            });
+            .filter(Response::isSuccessful)
+            .map(Response::body)
+            .map(feed -> feed.toPersist(category));
     }
 
     public void markAsRead(@NonNull final org.petabytes.api.source.local.Entry entry) {
         awesomeBlogs.read(entry.getLink())
-            .onErrorResumeNext(Observable.<Response<Object>>empty())
+            .onErrorResumeNext(Observable.empty())
             .subscribeOn(Schedulers.io())
             .subscribe();
     }

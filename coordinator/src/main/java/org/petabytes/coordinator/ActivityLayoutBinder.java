@@ -8,12 +8,8 @@ public interface ActivityLayoutBinder {
 
     ViewGroup bind(@NonNull Activity activity);
 
-    ActivityLayoutBinder DEFAULT = new ActivityLayoutBinder() {
-        @NonNull
-        @Override
-        public ViewGroup bind(@NonNull Activity activity) {
-            activity.setContentView(R.layout.activity);
-            return (ViewGroup) activity.findViewById(R.id.activity);
-        }
+    ActivityLayoutBinder DEFAULT = activity -> {
+        activity.setContentView(R.layout.activity);
+        return (ViewGroup) activity.findViewById(R.id.activity);
     };
 }

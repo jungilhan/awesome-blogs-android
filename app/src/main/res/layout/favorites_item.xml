@@ -16,6 +16,7 @@
         android:maxLines="2"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp"
+        android:textStyle="bold"
         tools:text="Title"/>
 
     <TextView

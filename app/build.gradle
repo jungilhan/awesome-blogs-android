@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'io.fabric'
 apply plugin: 'jacoco-android'
+apply plugin: 'de.timfreiheit.resourceplaceholders.plugin'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 repositories {
     maven { url 'https://jitpack.io' }
@@ -18,8 +19,8 @@ buildscript {
 
     dependencies {
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
         classpath 'io.fabric.tools:gradle:1.22.1'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
     }
 }
 
@@ -42,14 +43,15 @@ def gitTimestamp() {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion rootProject.ext.ver_compile_sdk
+    buildToolsVersion rootProject.ext.ver_build_tools
+
     defaultConfig {
+        minSdkVersion rootProject.ext.ver_min_sdk
+        targetSdkVersion rootProject.ext.ver_target_sdk
         applicationId 'org.petabytes.awesomeblogs'
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 19
-        versionName "1.9"
+        versionCode 20
+        versionName "1.10"
         buildConfigField 'String', 'GIT_SHA', "\"${gitSha()}\""
         buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp()}L"
         vectorDrawables.useSupportLibrary = true
@@ -63,15 +65,18 @@ android {
             keyPassword System.getenv("KEY_PASSWORD")
         }
     }
+    flavorDimensions "default"
     buildTypes {
         debug {
             debuggable true
+            multiDexEnabled true
             minifyEnabled false
             applicationIdSuffix '.debug'
             testCoverageEnabled false
         }
         release {
             debuggable false
+            multiDexEnabled false
             minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -95,6 +100,9 @@ android {
     }
 }
 
+resourcePlaceholders {
+    files = ['xml-v25/shortcuts.xml']
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':api')
@@ -106,6 +114,7 @@ dependencies {
     compile rootProject.ext.firebase_core
     compile rootProject.ext.firebase_auth
     compile rootProject.ext.firebase_messaging
+    compile rootProject.ext.support_multidex
     compile rootProject.ext.support_customtabs
     compile rootProject.ext.play_services_auth
     compile rootProject.ext.iab
@@ -113,14 +122,12 @@ dependencies {
     compile rootProject.ext.flipboard_bottomsheet
     compile rootProject.ext.rxpreferences
     compile rootProject.ext.rxrelay
-    compile rootProject.ext.calligraphy
     compile rootProject.ext.spinkit
     compile rootProject.ext.smoothprogressbar
     compile rootProject.ext.verticalviewpager
     compile rootProject.ext.topsnackbar
-    compile rootProject.ext.crashlytics
     compile(rootProject.ext.crashlytics) {
-        transitive = true;
+        transitive = true
     }
 
     annotationProcessor rootProject.ext.butterknife_compiler

@@ -9,12 +9,7 @@ public class AwesomeBlogsRemoteSourceTest {
 
     @Test
     public void feed() throws Exception {
-        Supplier<String> emptySupplier = new Supplier<String>() {
-            @Override
-            public String get() {
-                return "";
-            }
-        };
+        Supplier<String> emptySupplier = () -> "";
         new AwesomeBlogsRemoteSource(emptySupplier, emptySupplier, emptySupplier, emptySupplier, true)
             .getFeed("dev")
             .test()

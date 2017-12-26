@@ -116,7 +116,6 @@ class SearchCoordinator extends Coordinator {
 
         @Override
         public void onBindViewHolder(@NonNull Entry entry, int position) {
-            titleView.setTypeface(titleView.getTypeface(), Typeface.BOLD);
             titleView.setText(Strings.colorizeBackground(entry.getTitle(),
                 keywordSupplier.get(), context.getResources().getColor(R.color.search), true));
             authorView.setText(Strings.colorizeBackground(Entry.getFormattedAuthorUpdatedAt(entry),

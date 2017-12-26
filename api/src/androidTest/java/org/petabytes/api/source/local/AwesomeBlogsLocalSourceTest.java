@@ -27,12 +27,7 @@ public class AwesomeBlogsLocalSourceTest {
     public void getFeed() throws Exception {
         {
             Realm.getInstance(localSource.config)
-                .executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.deleteAll();
-                    }
-                });
+                .executeTransaction(realm -> realm.deleteAll());
             List<Feed> values = localSource.getFeed("dev")
                 .test()
                 .awaitTerminalEvent()
@@ -47,13 +42,10 @@ public class AwesomeBlogsLocalSourceTest {
             Feed feed = new Feed();
             feed.setCategory("dev");
             Realm.getInstance(localSource.config)
-                .executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        Feed feed = new Feed();
-                        feed.setCategory("dev");
-                        realm.insert(feed);
-                    }
+                .executeTransaction(realm -> {
+                    Feed feed1 = new Feed();
+                    feed1.setCategory("dev");
+                    realm.insert(feed1);
                 });
 
             List<Feed> values = localSource.getFeed("dev")

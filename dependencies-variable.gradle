@@ -1,7 +1,12 @@
 ext {
 
+    ver_build_tools = '26.0.2'
+    ver_compile_sdk = 26
+    ver_target_sdk = 25
+    ver_min_sdk = 16
+
     ver_retrofit = '2.1.0'
-    ver_android_compat = '25.1.1'
+    ver_android_compat = '26.1.0'
     ver_firebase = '10.0.1'
 
     support_appcompat_v7 = "com.android.support:appcompat-v7:$ver_android_compat"
@@ -9,6 +14,7 @@ ext {
     support_annotation = "com.android.support:support-annotations:$ver_android_compat"
     support_recyclerview = "com.android.support:recyclerview-v7:$ver_android_compat"
     support_customtabs = "com.android.support:customtabs:$ver_android_compat"
+    support_multidex = 'com.android.support:multidex:1.0.1'
     support_espressocore = 'com.android.support.test.espresso:espresso-core:2.2.2'
 
     rxjava = 'io.reactivex:rxjava:1.2.6'
@@ -41,7 +47,6 @@ ext {
     iab = 'com.anjlab.android.iab.v3:library:1.0.44'
     alerter = 'com.tapadoo.android:alerter:1.0.1'
     flipboard_bottomsheet = 'com.flipboard:bottomsheet-core:1.5.0'
-    calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
     spinkit = 'com.github.ybq:Android-SpinKit:1.1.0'
     smoothprogressbar = 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     verticalviewpager = 'com.github.castorflex.verticalviewpager:library:19.0.1'

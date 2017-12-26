@@ -29,7 +29,6 @@ import org.petabytes.coordinator.ActivityLayoutBinder;
 import hugo.weaving.DebugLog;
 import io.fabric.sdk.android.Fabric;
 import rx.Observable;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class AwesomeBlogsApp extends Application {
 
@@ -47,11 +46,6 @@ public class AwesomeBlogsApp extends Application {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         Fabric.with(this, new Crashlytics());
         instance = this;
-
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-            .setDefaultFontPath("fonts/NanumBarunGothicLight.otf")
-            .setFontAttrId(R.attr.fontPath)
-            .build());
 
         registerActivityLifecycleCallbacks(new LifeCycles.Activity() {
             @DebugLog
@@ -95,7 +89,7 @@ public class AwesomeBlogsApp extends Application {
                 Preference<String> preference = Preferences.deviceId();
                 String deviceId = preference.get();
                 if (TextUtils.isEmpty(deviceId)) {
-                    deviceId = Devices.getId(this);
+                    deviceId = Devices.getId();
                     preference.set(deviceId);
                 }
                 return deviceId;

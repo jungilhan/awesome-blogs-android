@@ -20,10 +20,6 @@ import java.util.List;
 
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
@@ -55,73 +51,27 @@ public class Api implements DataSource {
 
     public Observable<Feed> getFeed(@NonNull final String category, final boolean forceRefresh) {
         return localSource.getFeed(category)
-            .filter(new Func1<Feed, Boolean>() {
-                @Override
-                public Boolean call(Feed feed) {
-                    return !forceRefresh;
+            .filter(feed -> !forceRefresh)
+            .doOnNext(cachedFeed -> {
+                if (!cachedFeed.isExpires()) {
+                    return;
                 }
+                remoteSource.getFeed(category)
+                    .doOnSubscribe(() -> silentRefreshSubject.onNext(new Pair<>(category, true)))
+                    .doOnTerminate(() -> silentRefreshSubject.onNext(new Pair<>(category, false)))
+                    .flatMap(freshFeed -> Observable.just(localSource.filterAndDeleteHiddenEntries(freshFeed)))
+                    .doOnNext(freshFeed -> localSource.notifyFreshEntries(freshFeed)
+                        .subscribe())
+                    .map(freshFeed -> localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.of(cachedFeed))))
+                    .doOnNext(localSource::saveFeed)
+                    .onErrorResumeNext(Observable.empty())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
             })
-            .doOnNext(new Action1<Feed>() {
-                @Override
-                public void call(final Feed cachedFeed) {
-                    if (!cachedFeed.isExpires()) {
-                        return;
-                    }
-                    remoteSource.getFeed(category)
-                        .doOnSubscribe(new Action0() {
-                            @Override
-                            public void call() {
-                                silentRefreshSubject.onNext(new Pair<>(category, true));
-                            }
-                        })
-                        .doOnTerminate(new Action0() {
-                            @Override
-                            public void call() {
-                                silentRefreshSubject.onNext(new Pair<>(category, false));
-                            }
-                        })
-                        .doOnNext(new Action1<Feed>() {
-                            @Override
-                            public void call(Feed freshFeed) {
-                                localSource.notifyFreshEntries(freshFeed)
-                                    .subscribe();
-                            }
-                        })
-                        .map(new Func1<Feed, Feed>() {
-                            @Override
-                            public Feed call(Feed freshFeed) {
-                                return localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.of(cachedFeed)));
-                            }
-                        })
-                        .doOnNext(new Action1<Feed>() {
-                            @Override
-                            public void call(Feed freshFeed) {
-                                localSource.saveFeed(freshFeed);
-                            }
-                        })
-                        .onErrorResumeNext(Observable.<Feed>empty())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe();
-                }
-            })
-            .switchIfEmpty(Observable.defer(new Func0<Observable<Feed>>() {
-                @Override
-                public Observable<Feed> call() {
-                    return remoteSource.getFeed(category)
-                        .map(new Func1<Feed, Feed>() {
-                            @Override
-                            public Feed call(Feed freshFeed) {
-                                return localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.<Feed>empty()));
-                            }
-                        })
-                        .doOnNext(new Action1<Feed>() {
-                            @Override
-                            public void call(Feed freshFeed) {
-                                localSource.saveFeed(freshFeed);
-                            }
-                        });
-                }
-            }));
+            .switchIfEmpty(Observable.defer(() -> remoteSource.getFeed(category)
+                .flatMap(freshFeed -> Observable.just(localSource.filterAndDeleteHiddenEntries(freshFeed)))
+                .map(freshFeed -> localSource.sortByCreatedAt(localSource.fillInCreatedAt(freshFeed, Optional.<Feed>empty())))
+                .doOnNext(localSource::saveFeed)));
     }
 
     public Observable<Pair<String, List<Entry>>> getFreshEntries() {

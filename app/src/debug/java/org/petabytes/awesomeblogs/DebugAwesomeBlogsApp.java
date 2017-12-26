@@ -1,5 +1,7 @@
 package org.petabytes.awesomeblogs;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.annimon.stream.Optional;
@@ -17,6 +19,11 @@ import org.petabytes.coordinator.ActivityLayoutBinder;
 import timber.log.Timber;
 
 public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
+
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
@@ -42,7 +49,7 @@ public class DebugAwesomeBlogsApp extends AwesomeBlogsApp {
                 Preference<String> preference = Preferences.deviceId();
                 String deviceId = preference.get();
                 if (TextUtils.isEmpty(deviceId)) {
-                    deviceId = Devices.getId(this);
+                    deviceId = Devices.getId();
                     preference.set(deviceId);
                 }
                 return deviceId;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ class DrawerCoordinator extends Coordinator {
         for (ViewGroup categoryView : categoryViews) {
             categoryView.setSelected(false);
             TextView textView = (TextView) categoryView.getChildAt(0);
-            textView.setTypeface(textView.getTypeface(), Typeface.NORMAL);
+            textView.setTypeface(ResourcesCompat.getFont(context, R.font.nanum));
         }
         view.setSelected(true);
         TextView textView = (TextView) view.getChildAt(0);

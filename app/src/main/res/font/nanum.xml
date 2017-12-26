@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="UnusedAttribute">
+
+    <font
+        android:font="@font/nanum_barun_gothic_light"
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        app:font="@font/nanum_barun_gothic_light"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+</font-family>
