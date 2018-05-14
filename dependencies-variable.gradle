@@ -5,7 +5,7 @@ ext {
     ver_target_sdk = 25
     ver_min_sdk = 16
 
-    ver_retrofit = '2.1.0'
+    ver_retrofit = '2.4.0'
     ver_android_compat = '26.1.0'
     ver_firebase = '10.0.1'
 
@@ -25,7 +25,9 @@ ext {
     retrofit = "com.squareup.retrofit2:retrofit:$ver_retrofit"
     retrofit_rxadapter = "com.squareup.retrofit2:adapter-rxjava:$ver_retrofit"
     retrofit_gsonconverter = "com.squareup.retrofit2:converter-gson:$ver_retrofit"
-    retrofit_logging = 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    retrofit_logging = 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+    okhttp = 'com.squareup.okhttp3:okhttp:3.10.0'
 
     coordinator = 'com.squareup.coordinators:coordinators:0.2'
     butterknife = 'com.jakewharton:butterknife:8.0.1'
