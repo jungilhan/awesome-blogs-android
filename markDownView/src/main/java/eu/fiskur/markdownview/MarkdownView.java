@@ -9,6 +9,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -95,8 +96,8 @@ public class MarkdownView extends RelativeLayout {
   }
 
   private void setup(){
-    LayoutInflater.from(getContext()).inflate(R.layout.markdown_view, this);
-    webView = (WebView) findViewById(R.id.markdown_web_view);
+    View view = LayoutInflater.from(getContext()).inflate(R.layout.markdown_view, null, false);
+    webView = view.findViewById(R.id.markdown_web_view);
 
     webSettings = webView.getSettings();
     webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -114,6 +115,7 @@ public class MarkdownView extends RelativeLayout {
       }
     });
     allowGestures(false);
+    addView(webView);
   }
 
   public void setOnProgressChangedListener(OnProgressChangedListener onProgressChangedListener) {
