@@ -23,6 +23,10 @@
 <a href="https://play.google.com/store/apps/details?id=org.petabytes.awesomeblogs"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="20%"></a>
 
 ## 업데이트 내역
+### v1.11 버그 수정 🔧 2018-05-14
+ * 새로운 피드를 받지 못하는 현상 수정
+ * 상세화면에서 하단 여백 생기는 현상 수정
+
 ### v1.10 따뜻한 연말연시 ♨️️ 2017-12-26
  * 검색, 즐겨찾기, 최근 읽은 목록에 대한 앱 바로가기 기능 추가 (>= api 25)
  * 여러개의 새소식 알림이 쌓이지 않도록 수정
